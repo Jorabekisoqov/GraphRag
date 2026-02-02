@@ -1,0 +1,234 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3542_20240805.json",
+        "document_title": "Asosiy xo‘jalik faoliyatidan daromadlar (2-sonli BHMS)",
+        "doc_number": "132-son",
+        "reg_number": "3542",
+        "date_signed": "2024-06-14",
+        "date_registered": "2024-08-05",
+        "date_effective": "2024-08-05",
+        "authority": "Iqtisodiyot va moliya vazirligi",
+        "okoz_code": "07.29.08.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "header_and_approval",
+            "original_text": "1. O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (2-sonli BHMS) “Asosiy xo‘jalik faoliyatidan daromadlar” ilovaga muvofiq tasdiqlansin. 2. ...1998-yil 20-avgustda 41-son bilan tasdiqlangan ... (ro‘yxat raqami 483) o‘z kuchini yo‘qotgan deb topilsin.",
+            "nodes": [
+                {
+                    "id": "Buyruq_132_2024",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2024-06-14",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_2_Yangi",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Asosiy xo‘jalik faoliyatidan daromadlar",
+                        "versiya": "2024"
+                    }
+                },
+                {
+                    "id": "BHMS_2_Eski",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Asosiy xo‘jalik faoliyatidan daromadlar (1998)",
+                        "reg_raqami": "483",
+                        "holati": "Inactive"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_132_2024",
+                    "target": "BHMS_2_Yangi",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "Buyruq_132_2024",
+                    "target": "BHMS_2_Eski",
+                    "type": "BEKOR_QILDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "definitions_bob_1",
+            "original_text": "3. Asosiy xo‘jalik faoliyatidan daromadlar — tashkilotning odatdagi faoliyati davri davomida vujudga keladigan... tushum. 4. Xo‘jalik faoliyatidan daromadlar asosiy va moliyaviy faoliyatdan daromadlarni o‘z ichiga oladi.",
+            "nodes": [
+                {
+                    "id": "Daromad",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Asosiy_Faoliyat_Daromadi",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Moliyaviy_Faoliyat_Daromadi",
+                    "type": "Tushuncha"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_2_Yangi",
+                    "target": "Daromad",
+                    "type": "BELGILAYDI"
+                },
+                {
+                    "source": "Daromad",
+                    "target": "Asosiy_Faoliyat_Daromadi",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Daromad",
+                    "target": "Moliyaviy_Faoliyat_Daromadi",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "exclusions_para_10",
+            "original_text": "10. Mazkur BHMS talablari quyidagilar natijasida yuzaga keladigan daromadlarga nisbatan qo‘llanilmaydi: lizing bitimlari; investitsiyadan keladigan dividendlar; sug‘urta bitimlari...",
+            "nodes": [
+                {
+                    "id": "Lizing",
+                    "type": "Faoliyat_Turi"
+                },
+                {
+                    "id": "Dividend",
+                    "type": "Daromad_Turi"
+                },
+                {
+                    "id": "Sug'urta",
+                    "type": "Faoliyat_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_2_Yangi",
+                    "target": "Lizing",
+                    "type": "QO‘LLANILMAYDI"
+                },
+                {
+                    "source": "BHMS_2_Yangi",
+                    "target": "Dividend",
+                    "type": "QO‘LLANILMAYDI"
+                },
+                {
+                    "source": "BHMS_2_Yangi",
+                    "target": "Sug'urta",
+                    "type": "QO‘LLANILMAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "goods_sales_criteria",
+            "original_text": "16. Tovarlarni sotishdan daromad quyidagi shartlar bajarilganda tan olinadi: tovarlarga egalik qilishning xatar va afzalliklarining katta qismi xaridorga o‘tganida; nazorat qilish samaradorligini yo‘qotganida; daromad summasini ishonchli baholash mumkin bo‘lganda...",
+            "nodes": [
+                {
+                    "id": "Tovarlarni_Sotish",
+                    "type": "Faoliyat_Turi"
+                },
+                {
+                    "id": "Daromadni_Tan_Olish",
+                    "type": "Jarayon"
+                },
+                {
+                    "id": "Xatarning_O'tishi",
+                    "type": "Shart"
+                },
+                {
+                    "id": "Nazoratning_O'tishi",
+                    "type": "Shart"
+                },
+                {
+                    "id": "Ishonchli_Baholash",
+                    "type": "Shart"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Tovarlarni_Sotish",
+                    "target": "Daromadni_Tan_Olish",
+                    "type": "AMALGA_OSHIRILADI_AGAR"
+                },
+                {
+                    "source": "Daromadni_Tan_Olish",
+                    "target": "Xatarning_O'tishi",
+                    "type": "TALAB_QILADI"
+                },
+                {
+                    "source": "Daromadni_Tan_Olish",
+                    "target": "Nazoratning_O'tishi",
+                    "type": "TALAB_QILADI"
+                },
+                {
+                    "source": "Daromadni_Tan_Olish",
+                    "target": "Ishonchli_Baholash",
+                    "type": "TALAB_QILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "services_method",
+            "original_text": "18. Xizmat ko‘rsatish... daromad bitimning bajarilishi bosqichiga qarab tan olinadi (Percentage of Completion Method).",
+            "nodes": [
+                {
+                    "id": "Xizmat_Ko'rsatish",
+                    "type": "Faoliyat_Turi"
+                },
+                {
+                    "id": "Bajarilish_Bosqichi_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Percentage of Completion"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Xizmat_Ko'rsatish",
+                    "target": "Bajarilish_Bosqichi_Usuli",
+                    "type": "FOYDALANADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "interest_royalties",
+            "original_text": "24. Foizlar, royaltilar... bitim shartlariga muvofiq hisoblash usuli (accrual basis) asosida tan olinadi.",
+            "nodes": [
+                {
+                    "id": "Foizlar",
+                    "type": "Daromad_Turi"
+                },
+                {
+                    "id": "Royalti",
+                    "type": "Daromad_Turi"
+                },
+                {
+                    "id": "Hisoblash_Usuli",
+                    "type": "Prinsip",
+                    "properties": {
+                        "eng": "Accrual Basis"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Foizlar",
+                    "target": "Hisoblash_Usuli",
+                    "type": "ASOSLANADI"
+                },
+                {
+                    "source": "Royalti",
+                    "target": "Hisoblash_Usuli",
+                    "type": "ASOSLANADI"
+                }
+            ]
+        }
+    ]
+}

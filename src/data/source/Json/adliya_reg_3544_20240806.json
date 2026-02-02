@@ -1,0 +1,245 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3544_20240806.json",
+        "document_title": "Moliyaviy hisobotni taqdim etish va hisob siyosati (1-sonli BHMS)",
+        "doc_number": "130-son",
+        "reg_number": "3544",
+        "date_signed": "2024-06-14",
+        "date_registered": "2024-08-06",
+        "date_effective": "2025-01-01",
+        "authority": "Iqtisodiyot va moliya vazirligi",
+        "okoz_code": "07.29.00.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "header_and_approval",
+            "original_text": "1. O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (1-sonli BHMS) “Moliyaviy hisobotni taqdim etish va hisob siyosati” 1-ilovaga muvofiq tasdiqlansin.\n3. Mazkur buyruq 2025-yil 1-yanvardan e’tiboran kuchga kiradi.",
+            "nodes": [
+                {
+                    "id": "Buyruq_130_2024",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2024-06-14",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_1_Yangi",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Moliyaviy hisobotni taqdim etish va hisob siyosati",
+                        "versiya": "2024",
+                        "kuchga_kirish": "2025-01-01"
+                    }
+                },
+                {
+                    "id": "Iqtisodiyot_Moliya_Vazirligi",
+                    "type": "Organ"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Iqtisodiyot_Moliya_Vazirligi",
+                    "target": "Buyruq_130_2024",
+                    "type": "QABUL_QILDI"
+                },
+                {
+                    "source": "Buyruq_130_2024",
+                    "target": "BHMS_1_Yangi",
+                    "type": "TASDIQLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "repeals_ilova_2",
+            "original_text": "2-ILOVA: O‘z kuchini yo‘qotgan deb topilayotgan hujjatlar: 1. BHMS 1 (ro‘yxat raqami 474)... 3. BHMS 3 (ro‘yxat raqami 484)... 4. BHMS 15 (ro‘yxat raqami 1226)... 6. BHMS 14 (ro‘yxat raqami 1335)...",
+            "nodes": [
+                {
+                    "id": "BHMS_1_Eski",
+                    "type": "Standart",
+                    "properties": {
+                        "reg_raqami": "474",
+                        "nomi": "Hisob siyosati va moliyaviy hisobot (Eski)"
+                    }
+                },
+                {
+                    "id": "BHMS_3",
+                    "type": "Standart",
+                    "properties": {
+                        "reg_raqami": "484",
+                        "nomi": "Moliyaviy natijalar to‘g‘risidagi hisobot"
+                    }
+                },
+                {
+                    "id": "BHMS_15",
+                    "type": "Standart",
+                    "properties": {
+                        "reg_raqami": "1226",
+                        "nomi": "Buxgalteriya balansi"
+                    }
+                },
+                {
+                    "id": "BHMS_14",
+                    "type": "Standart",
+                    "properties": {
+                        "reg_raqami": "1335",
+                        "nomi": "Xususiy kapital to‘g‘risida hisobot"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_130_2024",
+                    "target": "BHMS_1_Eski",
+                    "type": "BEKOR_QILDI"
+                },
+                {
+                    "source": "Buyruq_130_2024",
+                    "target": "BHMS_3",
+                    "type": "BEKOR_QILDI"
+                },
+                {
+                    "source": "Buyruq_130_2024",
+                    "target": "BHMS_15",
+                    "type": "BEKOR_QILDI"
+                },
+                {
+                    "source": "Buyruq_130_2024",
+                    "target": "BHMS_14",
+                    "type": "BEKOR_QILDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "definitions_bob_1",
+            "original_text": "6. Mazkur BHMSda hisob siyosati deganda tashkilotning rahbari buxgalteriya hisobini yuritish va moliyaviy hisobot tuzish uchun qo‘llaydigan usullari... tushuniladi. 12. Moliyaviy hisobotlar to‘plami: buxgalteriya balansi, moliyaviy natijalar, xususiy kapital, pul oqimlari, izohlar.",
+            "nodes": [
+                {
+                    "id": "Hisob_Siyosati",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Moliyaviy_Hisobot_To'plami",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Buxgalteriya_Balansi",
+                    "type": "Hisobot_Shakli"
+                },
+                {
+                    "id": "Moliyaviy_Natijalar_Hisoboti",
+                    "type": "Hisobot_Shakli"
+                },
+                {
+                    "id": "Xususiy_Kapital_Hisoboti",
+                    "type": "Hisobot_Shakli"
+                },
+                {
+                    "id": "Pul_Oqimlari_Hisoboti",
+                    "type": "Hisobot_Shakli"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_1_Yangi",
+                    "target": "Hisob_Siyosati",
+                    "type": "BELGILAYDI"
+                },
+                {
+                    "source": "Moliyaviy_Hisobot_To'plami",
+                    "target": "Buxgalteriya_Balansi",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Moliyaviy_Hisobot_To'plami",
+                    "target": "Moliyaviy_Natijalar_Hisoboti",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Moliyaviy_Hisobot_To'plami",
+                    "target": "Xususiy_Kapital_Hisoboti",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Moliyaviy_Hisobot_To'plami",
+                    "target": "Pul_Oqimlari_Hisoboti",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "principles_bob_3",
+            "original_text": "15. Pul oqimi to‘g‘risidagi hisobotdan tashqari moliyaviy hisobotlar hisoblash usuli asosida tuziladi. 18. ...tashkilot moliyaviy hisobotlarni faoliyatning uzluksizligi asosida tayyorlaydi.",
+            "nodes": [
+                {
+                    "id": "Hisoblash_Usuli",
+                    "type": "Prinsip",
+                    "properties": {
+                        "eng": "Accrual Basis"
+                    }
+                },
+                {
+                    "id": "Faoliyatning_Uzluksizligi",
+                    "type": "Prinsip",
+                    "properties": {
+                        "eng": "Going Concern"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_1_Yangi",
+                    "target": "Hisoblash_Usuli",
+                    "type": "TALAB_QILADI"
+                },
+                {
+                    "source": "BHMS_1_Yangi",
+                    "target": "Faoliyatning_Uzluksizligi",
+                    "type": "TALAB_QILADI"
+                },
+                {
+                    "source": "Hisoblash_Usuli",
+                    "target": "Pul_Oqimlari_Hisoboti",
+                    "type": "QO‘LLANILMAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "classification_bob_3_joriy",
+            "original_text": "65. Aktivlar... 12 oy mobaynida foydalanish kutilayotgan bo‘lsa... joriy aktiv sifatida tasnif etilishi kerak. 73. Hisobot kunidan boshlab 12 oy mobaynida hisob-kitob qilinadigan majburiyatlar joriy majburiyat hisoblanadi.",
+            "nodes": [
+                {
+                    "id": "Joriy_Aktiv",
+                    "type": "Tushuncha",
+                    "properties": {
+                        "muddat": "< 12 oy"
+                    }
+                },
+                {
+                    "id": "Uzoq_Muddatli_Aktiv",
+                    "type": "Tushuncha",
+                    "properties": {
+                        "muddat": "> 12 oy"
+                    }
+                },
+                {
+                    "id": "Joriy_Majburiyat",
+                    "type": "Tushuncha"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_1_Yangi",
+                    "target": "Joriy_Aktiv",
+                    "type": "TASNIFLAYDI"
+                },
+                {
+                    "source": "Joriy_Aktiv",
+                    "target": "Uzoq_Muddatli_Aktiv",
+                    "type": "FARQLANADI"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,214 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3259_20200630.json",
+        "document_title": "Tovar-moddiy zaxiralar (4-sonli BHMS)",
+        "doc_number": "24-son",
+        "reg_number": "3259",
+        "date_signed": "2020-05-28",
+        "date_registered": "2020-06-30",
+        "authority": "Moliya vazirligi",
+        "okoz_code": "07.29.00.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_scope",
+            "original_text": "1. O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (4-sonli BHMS) “Tovar-moddiy zaxiralar” tasdiqlansin. 1. Mazkur Standart moliyaviy instrumentlar hisobini yuritishga nisbatan tadbiq etilmaydi.",
+            "nodes": [
+                {
+                    "id": "Buyruq_24_2020",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2020-05-28",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_4",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Tovar-moddiy zaxiralar",
+                        "versiya": "2020"
+                    }
+                },
+                {
+                    "id": "Moliyaviy_Instrumentlar",
+                    "type": "Aktiv_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_24_2020",
+                    "target": "BHMS_4",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "BHMS_4",
+                    "target": "Moliyaviy_Instrumentlar",
+                    "type": "QO‘LLANILMAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "definition_composition",
+            "original_text": "3. Tovar-moddiy zaxiralar (TMZ) — sotish maqsadida saqlab turiladigan, ishlab chiqarish jarayonida bo‘lgan... moddiy aktivlar. 4. TMZ tarkibi: xomashyo, tugallanmagan ishlab chiqarish, tayyor mahsulot, tovarlar.",
+            "nodes": [
+                {
+                    "id": "TMZ",
+                    "type": "Tushuncha",
+                    "properties": {
+                        "full_name": "Tovar-moddiy zaxiralar"
+                    }
+                },
+                {
+                    "id": "Xomashyo",
+                    "type": "TMZ_Turi"
+                },
+                {
+                    "id": "Tugallanmagan_Ishlab_Chiqarish",
+                    "type": "TMZ_Turi"
+                },
+                {
+                    "id": "Tayyor_Mahsulot",
+                    "type": "TMZ_Turi"
+                },
+                {
+                    "id": "Tovarlar",
+                    "type": "TMZ_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_4",
+                    "target": "TMZ",
+                    "type": "BELGILAYDI"
+                },
+                {
+                    "source": "TMZ",
+                    "target": "Xomashyo",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "TMZ",
+                    "target": "Tugallanmagan_Ishlab_Chiqarish",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "TMZ",
+                    "target": "Tayyor_Mahsulot",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "TMZ",
+                    "target": "Tovarlar",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "valuation_rule",
+            "original_text": "12. Tovar-moddiy zaxiralarni baholash quyidagi ikkita qiymatlardan eng pasti bo‘yicha amalga oshiriladi: tannarx yoki realizatsiya qilishning sof qiymati.",
+            "nodes": [
+                {
+                    "id": "Baholash_Qoidasi",
+                    "type": "Prinsip",
+                    "properties": {
+                        "qoida": "Eng kichik qiymat (LCNRV)"
+                    }
+                },
+                {
+                    "id": "Tannarx",
+                    "type": "Qiymat_Turi"
+                },
+                {
+                    "id": "Realizatsiya_Sof_Qiymati",
+                    "type": "Qiymat_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "TMZ",
+                    "target": "Baholash_Qoidasi",
+                    "type": "BAHOLANADI"
+                },
+                {
+                    "source": "Baholash_Qoidasi",
+                    "target": "Tannarx",
+                    "type": "SOLISHTIRADI"
+                },
+                {
+                    "source": "Baholash_Qoidasi",
+                    "target": "Realizatsiya_Sof_Qiymati",
+                    "type": "SOLISHTIRADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "costing_methods",
+            "original_text": "62. Tovar-moddiy zaxiralar qiymatini aniqlash quyidagi usullardan biri orqali amalga oshiriladi: identifikatsiyalangan tannarx, o‘rtacha tortilgan qiymat (AVECO), FIFO.",
+            "nodes": [
+                {
+                    "id": "Identifikatsiyalangan_Tannarx",
+                    "type": "Hisob_Usuli"
+                },
+                {
+                    "id": "AVECO",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "nomi": "O'rtacha tortilgan qiymat"
+                    }
+                },
+                {
+                    "id": "FIFO",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "nomi": "Birinchi kirim - birinchi chiqim"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "TMZ",
+                    "target": "Identifikatsiyalangan_Tannarx",
+                    "type": "FOYDALANISHI_MUMKIN"
+                },
+                {
+                    "source": "TMZ",
+                    "target": "AVECO",
+                    "type": "FOYDALANISHI_MUMKIN"
+                },
+                {
+                    "source": "TMZ",
+                    "target": "FIFO",
+                    "type": "FOYDALANISHI_MUMKIN"
+                }
+            ]
+        },
+        {
+            "chunk_id": "power_of_attorney",
+            "original_text": "93. Yetkazib beruvchilardan TMZ olish uchun ishonchli shaxsga yozma ishonchnoma beradi. 97. Amal qilish muddati qonunchilikda belgilangan muddatdan oshmasligi kerak.",
+            "nodes": [
+                {
+                    "id": "Ishonchnoma",
+                    "type": "Hujjat_Turi"
+                },
+                {
+                    "id": "Ishonchnomalar_Daftari",
+                    "type": "Registr"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "TMZ",
+                    "target": "Ishonchnoma",
+                    "type": "OLISH_UCHUN_TALAB_ETILADI"
+                },
+                {
+                    "source": "Ishonchnoma",
+                    "target": "Ishonchnomalar_Daftari",
+                    "type": "RO‘YXATGA_OLINADI"
+                }
+            ]
+        }
+    ]
+}

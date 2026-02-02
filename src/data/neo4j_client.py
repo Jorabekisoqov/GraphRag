@@ -13,6 +13,11 @@ def get_neo4j_graph():
     url = os.getenv("NEO4J_URI")
     username = os.getenv("NEO4J_USERNAME")
     password = os.getenv("NEO4J_PASSWORD")
+    
+    # Relax SSL verification if needed (e.g. self-signed or missing root CAs)
+    if url and url.startswith("neo4j+s://"):
+        print("Warning: Downgrading to neo4j+ssc:// to bypass SSL verification errors.")
+        url = url.replace("neo4j+s://", "neo4j+ssc://")
 
     if not all([url, username, password]):
         raise ValueError("Neo4j configuration not found in environment variables.")
