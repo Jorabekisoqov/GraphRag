@@ -1,0 +1,241 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3546_20240809.json",
+        "document_title": "Asosiy vositalar (5-sonli BHMS)",
+        "doc_number": "133-son",
+        "reg_number": "3546",
+        "date_signed": "2024-06-14",
+        "date_registered": "2024-08-09",
+        "date_effective": "2025-01-01",
+        "authority": "Iqtisodiyot va moliya vazirligi",
+        "okoz_code": "07.21.17.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_validity",
+            "original_text": "1. O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (5-sonli BHMS) “Asosiy vositalar” tasdiqlansin. 3. Mazkur buyruq 2025-yil 1-yanvardan e’tiboran kuchga kiradi.",
+            "nodes": [
+                {
+                    "id": "Buyruq_133_2024",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2024-06-14",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_5_Yangi",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Asosiy vositalar",
+                        "versiya": "2024",
+                        "kuchga_kirish": "2025-01-01"
+                    }
+                },
+                {
+                    "id": "BHMS_5_Eski",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Asosiy vositalar (2004)",
+                        "reg_raqami": "1299",
+                        "holati": "Inactive"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_133_2024",
+                    "target": "BHMS_5_Yangi",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "Buyruq_133_2024",
+                    "target": "BHMS_5_Eski",
+                    "type": "BEKOR_QILDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "definition_and_criteria",
+            "original_text": "3. Asosiy vositalar — uzoq muddat davomida (bir yildan ortiq) xo‘jalik faoliyatini yuritishda... foydalaniladigan moddiy aktivlar. 8. Aktiv sifatida tan olinadi, agar: iqtisodiy naf kelishi ehtimoli mavjud bo‘lsa; qiymatini aniq baholash mumkin bo‘lsa.",
+            "nodes": [
+                {
+                    "id": "Asosiy_Vosita",
+                    "type": "Tushuncha",
+                    "properties": {
+                        "muddat": "> 1 yil"
+                    }
+                },
+                {
+                    "id": "Tan_Olish_Mezoni",
+                    "type": "Qoida"
+                },
+                {
+                    "id": "Iqtisodiy_Naf",
+                    "type": "Shart"
+                },
+                {
+                    "id": "Aniq_Baholash",
+                    "type": "Shart"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_5_Yangi",
+                    "target": "Asosiy_Vosita",
+                    "type": "BELGILAYDI"
+                },
+                {
+                    "source": "Asosiy_Vosita",
+                    "target": "Tan_Olish_Mezoni",
+                    "type": "BO'YSUNADI"
+                },
+                {
+                    "source": "Tan_Olish_Mezoni",
+                    "target": "Iqtisodiy_Naf",
+                    "type": "TALAB_QILADI"
+                },
+                {
+                    "source": "Tan_Olish_Mezoni",
+                    "target": "Aniq_Baholash",
+                    "type": "TALAB_QILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "initial_cost_inclusions",
+            "original_text": "13. Boshlang‘ich qiymati xarid qilish qiymati... bojxona bojlari, soliqlar (qoplanmaydigan), yetkazib berish, montaj qilish xarajatlarini o‘z ichiga oladi. Kredit foizlari kiritilmaydi (qurilish davridan tashqari).",
+            "nodes": [
+                {
+                    "id": "Boshlang'ich_Qiymat",
+                    "type": "Qiymat_Turi"
+                },
+                {
+                    "id": "Xarid_Narxi",
+                    "type": "Xarajat_Elementi"
+                },
+                {
+                    "id": "Bojxona_To'lovi",
+                    "type": "Xarajat_Elementi"
+                },
+                {
+                    "id": "Montaj_Xarajatlari",
+                    "type": "Xarajat_Elementi"
+                },
+                {
+                    "id": "Kredit_Foizlari",
+                    "type": "Xarajat_Elementi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Boshlang'ich_Qiymat",
+                    "target": "Xarid_Narxi",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Boshlang'ich_Qiymat",
+                    "target": "Bojxona_To'lovi",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Boshlang'ich_Qiymat",
+                    "target": "Montaj_Xarajatlari",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Boshlang'ich_Qiymat",
+                    "target": "Kredit_Foizlari",
+                    "type": "KIRITILMAYDI",
+                    "properties": {
+                        "istisno": "Qurilish davri"
+                    }
+                }
+            ]
+        },
+        {
+            "chunk_id": "depreciation_methods",
+            "original_text": "39. Amortizatsiya quyidagi usullarni qo‘llash yo‘li bilan hisoblanadi: a) bir maromli (to‘g‘ri chiziqli); b) bajarilgan ishlar hajmiga mutanosib (ishlab chiqarish usuli); 40. Jadallashtirilgan amortizatsiya.",
+            "nodes": [
+                {
+                    "id": "Amortizatsiya",
+                    "type": "Jarayon"
+                },
+                {
+                    "id": "To'g'ri_Chiziqli_Usul",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Straight-line"
+                    }
+                },
+                {
+                    "id": "Ishlab_Chiqarish_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Units of Production"
+                    }
+                },
+                {
+                    "id": "Jadallashtirilgan_Usul",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Accelerated"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Amortizatsiya",
+                    "target": "To'g'ri_Chiziqli_Usul",
+                    "type": "AMALGA_OSHIRILADI"
+                },
+                {
+                    "source": "Amortizatsiya",
+                    "target": "Ishlab_Chiqarish_Usuli",
+                    "type": "AMALGA_OSHIRILADI"
+                },
+                {
+                    "source": "Amortizatsiya",
+                    "target": "Jadallashtirilgan_Usul",
+                    "type": "AMALGA_OSHIRILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "non_depreciable_assets",
+            "original_text": "38. Quyidagilar amortizatsiya qilinmaydi: yer uchastkalari, muzey ashyolari, to‘liq amortizatsiyalangan asosiy vositalar.",
+            "nodes": [
+                {
+                    "id": "Yer",
+                    "type": "AV_Turi"
+                },
+                {
+                    "id": "Muzey_Ashyolari",
+                    "type": "AV_Turi"
+                },
+                {
+                    "id": "Eskirgan_AV",
+                    "type": "AV_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Amortizatsiya",
+                    "target": "Yer",
+                    "type": "QO‘LLANILMAYDI"
+                },
+                {
+                    "source": "Amortizatsiya",
+                    "target": "Muzey_Ashyolari",
+                    "type": "QO‘LLANILMAYDI"
+                },
+                {
+                    "source": "Amortizatsiya",
+                    "target": "Eskirgan_AV",
+                    "type": "QO‘LLANILMAYDI"
+                }
+            ]
+        }
+    ]
+}

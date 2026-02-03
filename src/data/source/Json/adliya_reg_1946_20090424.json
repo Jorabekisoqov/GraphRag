@@ -1,0 +1,222 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_1946_20090424.json",
+        "document_title": "Ijara hisobi (6-sonli BHMS)",
+        "doc_number": "41-son",
+        "reg_number": "1946",
+        "date_signed": "2009-04-06",
+        "date_registered": "2009-04-24",
+        "authority": "Moliya vazirligi",
+        "okoz_code": "07.29.02.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_scope",
+            "original_text": "1. 6-sonli BHMS “Ijara hisobi” tasdiqlansin. 2. Mazkur BHMS tabiat resurslari va litsenziya kelishuvlariga qo‘llanilmaydi.",
+            "nodes": [
+                {
+                    "id": "Buyruq_41_2009",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2009-04-06",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_6",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Ijara hisobi"
+                    }
+                },
+                {
+                    "id": "Tabiat_Resurslari",
+                    "type": "Obyekt"
+                },
+                {
+                    "id": "Litsenziya_Kelishuvi",
+                    "type": "Obyekt"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_41_2009",
+                    "target": "BHMS_6",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "BHMS_6",
+                    "target": "Tabiat_Resurslari",
+                    "type": "QO‘LLANILMAYDI"
+                },
+                {
+                    "source": "BHMS_6",
+                    "target": "Litsenziya_Kelishuvi",
+                    "type": "QO‘LLANILMAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "classification_criteria",
+            "original_text": "6. Moliyaviy ijara shartnomasi quyidagi shartlardan biriga javob berishi kerak: mulkni o‘tishi; muddat > 80%; qoldiq qiymat < 20%; diskontlangan qiymat > 90%. 7. Boshqa ijara - Operativ ijara.",
+            "nodes": [
+                {
+                    "id": "Ijara",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Moliyaviy_Ijara",
+                    "type": "Ijara_Turi"
+                },
+                {
+                    "id": "Operativ_Ijara",
+                    "type": "Ijara_Turi"
+                },
+                {
+                    "id": "Mulk_Huquqi_Otishi",
+                    "type": "Shart"
+                },
+                {
+                    "id": "Muddat_Mezoni",
+                    "type": "Shart",
+                    "properties": {
+                        "qiymat": "> 80% xizmat muddati"
+                    }
+                },
+                {
+                    "id": "Qiymat_Mezoni",
+                    "type": "Shart",
+                    "properties": {
+                        "qiymat": "PV > 90% joriy qiymat"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Ijara",
+                    "target": "Moliyaviy_Ijara",
+                    "type": "BO‘LINADI"
+                },
+                {
+                    "source": "Ijara",
+                    "target": "Operativ_Ijara",
+                    "type": "BO‘LINADI"
+                },
+                {
+                    "source": "Moliyaviy_Ijara",
+                    "target": "Mulk_Huquqi_Otishi",
+                    "type": "TALAB_QILADI_YOKI"
+                },
+                {
+                    "source": "Moliyaviy_Ijara",
+                    "target": "Muddat_Mezoni",
+                    "type": "TALAB_QILADI_YOKI"
+                },
+                {
+                    "source": "Moliyaviy_Ijara",
+                    "target": "Qiymat_Mezoni",
+                    "type": "TALAB_QILADI_YOKI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "lessee_accounting_financial",
+            "original_text": "25. Ijarachi hisobida moliyaviy ijara aktiv va majburiyat sifatida eng past qiymatda (joriy yoki diskontlangan) tan olinadi. 33. Amortizatsiya 5-sonli BHMSga muvofiq hisoblanadi.",
+            "nodes": [
+                {
+                    "id": "Ijarachi",
+                    "type": "Subyekt"
+                },
+                {
+                    "id": "Aktiv_Sifatida_Tan_Olish",
+                    "type": "Harakat"
+                },
+                {
+                    "id": "Majburiyat",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "BHMS_5",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Asosiy vositalar"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Ijarachi",
+                    "target": "Moliyaviy_Ijara",
+                    "type": "AKTIVLASHTIRADI"
+                },
+                {
+                    "source": "Ijarachi",
+                    "target": "Majburiyat",
+                    "type": "AKSLANTIRADI"
+                },
+                {
+                    "source": "Moliyaviy_Ijara",
+                    "target": "BHMS_5",
+                    "type": "AMORTIZATSIYA_QILINADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "lessor_accounting_financial",
+            "original_text": "38. Ijaraga beruvchi hisobida moliyaviy ijara aktiv (debitorlik qarzi) sifatida tan olinadi. 41. Foizli daromad davrlar bo'yicha taqsimlanadi.",
+            "nodes": [
+                {
+                    "id": "Ijaraga_Beruvchi",
+                    "type": "Subyekt"
+                },
+                {
+                    "id": "Debitorlik_Qarzi",
+                    "type": "Aktiv_Turi"
+                },
+                {
+                    "id": "Foizli_Daromad",
+                    "type": "Daromad_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Ijaraga_Beruvchi",
+                    "target": "Moliyaviy_Ijara",
+                    "type": "DEBITORLIK_QARZI_SIFATIDA_KORADI"
+                },
+                {
+                    "source": "Ijaraga_Beruvchi",
+                    "target": "Foizli_Daromad",
+                    "type": "TAN_OLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "operational_lease_accounting",
+            "original_text": "46. Operativ ijarada risklar ijarachiga o'tmaydi. 47. Ijarachi balansdan tashqari schyotlarda hisobga oladi.",
+            "nodes": [
+                {
+                    "id": "Balansdan_Tashqari_Schyot",
+                    "type": "Hisob_Usuli"
+                },
+                {
+                    "id": "Ijara_To'lovi",
+                    "type": "Xarajat"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Ijarachi",
+                    "target": "Operativ_Ijara",
+                    "type": "BALANSDAN_TASHQARI_YURITADI"
+                },
+                {
+                    "source": "Ijarachi",
+                    "target": "Ijara_To'lovi",
+                    "type": "XARAJATGA_OLADI"
+                }
+            ]
+        }
+    ]
+}``
