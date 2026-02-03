@@ -19,34 +19,36 @@ The system is built using:
 - **OpenAI GPT-4o**: Large Language Model for reasoning and generation.
 - **python-telegram-bot**: Interface for user interaction.
 
-## Installation
+## Deployment on Server
+
+For easy deployment on a Linux server, you can use the provided `deploy.sh` script.
 
 1.  **Clone the repository**:
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/Jorabekisoqov/GraphRag.git
     cd GraphRag
     ```
 
-2.  **Create a Virtual Environment**:
+2.  **Run the Deployment Script**:
     ```bash
-    python3 -m venv .venv
+    ./deploy.sh
+    ```
+    This script will:
+    - Check for Python 3.10+
+    - Create and activate a virtual environment
+    - Install necessary dependencies
+    - Check for your `.env` file (you'll need to create one if it doesn't exist)
+    - Give you options to run the Ingestion script or start the Telegram Bot
+
+3.  **Manual Execution** (Optional):
+    If you prefer to run commands manually after setup:
+    ```bash
     source .venv/bin/activate
+    python3 -m src.data.ingestion      # To ingest data
+    python3 -m src.bot.telegram_bot    # To start the bot
     ```
 
-3.  **Install Dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
 
-4.  **Configuration**:
-    Create a `.env` file in the root directory with the following credentials:
-    ```env
-    OPENAI_API_KEY=your_openai_key
-    NEO4J_URI=neo4j+s://your_instance.databases.neo4j.io
-    NEO4J_USERNAME=neo4j
-    NEO4J_PASSWORD=your_password
-    TELEGRAM_BOT_TOKEN=your_telegram_bot_token
-    ```
 
 ## Usage
 
