@@ -1,0 +1,272 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_2501_20130814.json",
+        "document_title": "Kichik tadbirkorlik subyektlari tomonidan buxgalteriya hisobini yuritishning soddalashtirilgan tartibi (20-sonli BHMS)",
+        "doc_number": "70-son",
+        "reg_number": "2501",
+        "date_signed": "2013-07-16",
+        "date_registered": "2013-08-14",
+        "authority": "Moliya vazirligi",
+        "okoz_code": "07.29.01.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_scope",
+            "original_text": "1. 20-sonli BHMS tasdiqlansin. 2. Mazkur BHMS barcha kichik tadbirkorlik subyektlariga nisbatan tatbiq etiladi, yakka tartibdagi tadbirkorlar va fermer xo‘jaliklari bundan mustasno.",
+            "nodes": [
+                {
+                    "id": "Buyruq_70_2013",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2013-07-16",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_20",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Soddalashtirilgan hisob tartibi"
+                    }
+                },
+                {
+                    "id": "Kichik_Tadbirkorlik_Subyekti",
+                    "type": "Subyekt"
+                },
+                {
+                    "id": "Yakka_Tartibdagi_Tadbirkor",
+                    "type": "Subyekt"
+                },
+                {
+                    "id": "Fermer_Xo'jaligi",
+                    "type": "Subyekt"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_70_2013",
+                    "target": "BHMS_20",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "BHMS_20",
+                    "target": "Kichik_Tadbirkorlik_Subyekti",
+                    "type": "QO‘LLANILADI"
+                },
+                {
+                    "source": "BHMS_20",
+                    "target": "Yakka_Tartibdagi_Tadbirkor",
+                    "type": "QO‘LLANILMAYDI"
+                },
+                {
+                    "source": "BHMS_20",
+                    "target": "Fermer_Xo'jaligi",
+                    "type": "QO‘LLANILMAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "organization_methods",
+            "original_text": "5. Rahbar buxgalteriya xizmatini tashkil etishi, buxgalteriya firmasiga yuklashi yoki mustaqil yuritishi mumkin. 6. Soddalashtirilgan tartib ixtiyoriy tanlanadi.",
+            "nodes": [
+                {
+                    "id": "Rahbar",
+                    "type": "Lavozim"
+                },
+                {
+                    "id": "Mustaqil_Yuritish",
+                    "type": "Tashkiliy_Usul"
+                },
+                {
+                    "id": "Buxgalteriya_Firmasi",
+                    "type": "Tashkiliy_Usul"
+                },
+                {
+                    "id": "Buxgalteriya_Xizmati",
+                    "type": "Tashkiliy_Usul"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Rahbar",
+                    "target": "Mustaqil_Yuritish",
+                    "type": "TANLASHI_MUMKIN"
+                },
+                {
+                    "source": "Rahbar",
+                    "target": "Buxgalteriya_Firmasi",
+                    "type": "TANLASHI_MUMKIN"
+                },
+                {
+                    "source": "Rahbar",
+                    "target": "Buxgalteriya_Xizmati",
+                    "type": "TANLASHI_MUMKIN"
+                }
+            ]
+        },
+        {
+            "chunk_id": "accounting_forms",
+            "original_text": "15. Soddalashtirilgan shakl ikki xil bo‘lishi mumkin: oddiy shakl yoki kombinatsiyalashgan shakl.",
+            "nodes": [
+                {
+                    "id": "Soddalashtirilgan_Hisob",
+                    "type": "Tizim"
+                },
+                {
+                    "id": "Oddiy_Shakl",
+                    "type": "Hisob_Shakli"
+                },
+                {
+                    "id": "Kombinatsiyalashgan_Shakl",
+                    "type": "Hisob_Shakli"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Soddalashtirilgan_Hisob",
+                    "target": "Oddiy_Shakl",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Soddalashtirilgan_Hisob",
+                    "target": "Kombinatsiyalashgan_Shakl",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "simple_form_registers",
+            "original_text": "17. Oddiy shaklda yuritish uchun Moliyaviy-xo‘jalik operatsiyalarini hisobga olish kitobi (2-ilova) qo‘llaniladi.",
+            "nodes": [
+                {
+                    "id": "Oddiy_Shakl",
+                    "type": "Hisob_Shakli"
+                },
+                {
+                    "id": "Hisobga_Olish_Kitobi",
+                    "type": "Registr",
+                    "properties": {
+                        "ilova": "2"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Oddiy_Shakl",
+                    "target": "Hisobga_Olish_Kitobi",
+                    "type": "FOYDALANADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "combined_form_registers",
+            "original_text": "24. Kombinatsiyalashgan shakl turli qaydnomalarni (Vedomost) qo‘llash orqali yuritiladi (3-19 ilovalar).",
+            "nodes": [
+                {
+                    "id": "Kombinatsiyalashgan_Shakl",
+                    "type": "Hisob_Shakli"
+                },
+                {
+                    "id": "AV_Qaydnomasi",
+                    "type": "Registr",
+                    "properties": {
+                        "nomi": "Asosiy vositalar va nomoddiy aktivlar",
+                        "ilova": "3"
+                    }
+                },
+                {
+                    "id": "TMZ_Qaydnomasi",
+                    "type": "Registr",
+                    "properties": {
+                        "nomi": "Tovar-moddiy zaxiralar",
+                        "ilova": "6"
+                    }
+                },
+                {
+                    "id": "Pul_Mablag'lari_Qaydnomasi",
+                    "type": "Registr",
+                    "properties": {
+                        "nomi": "Pul mablag'lari",
+                        "ilova": "9"
+                    }
+                },
+                {
+                    "id": "Jamlanma_Qaydnoma",
+                    "type": "Registr",
+                    "properties": {
+                        "nomi": "Jamlanma qaydnoma",
+                        "ilova": "19"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Kombinatsiyalashgan_Shakl",
+                    "target": "AV_Qaydnomasi",
+                    "type": "FOYDALANADI"
+                },
+                {
+                    "source": "Kombinatsiyalashgan_Shakl",
+                    "target": "TMZ_Qaydnomasi",
+                    "type": "FOYDALANADI"
+                },
+                {
+                    "source": "Kombinatsiyalashgan_Shakl",
+                    "target": "Pul_Mablag'lari_Qaydnomasi",
+                    "type": "FOYDALANADI"
+                },
+                {
+                    "source": "Kombinatsiyalashgan_Shakl",
+                    "target": "Jamlanma_Qaydnoma",
+                    "type": "FOYDALANADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "reporting_requirements",
+            "original_text": "46. Kichik tadbirkorlik subyektlari tomonidan faqat 1-sonli shakl (Balans) va 2-sonli shakl (Moliyaviy natijalar) taqdim etiladi.",
+            "nodes": [
+                {
+                    "id": "Kichik_Tadbirkorlik_Subyekti",
+                    "type": "Subyekt"
+                },
+                {
+                    "id": "Yillik_Moliyaviy_Hisobot",
+                    "type": "Hisobot_To'plami"
+                },
+                {
+                    "id": "Buxgalteriya_Balansi",
+                    "type": "Hisobot_Shakli",
+                    "properties": {
+                        "shakl": "1-sonli"
+                    }
+                },
+                {
+                    "id": "Moliyaviy_Natijalar_Hisoboti",
+                    "type": "Hisobot_Shakli",
+                    "properties": {
+                        "shakl": "2-sonli"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Kichik_Tadbirkorlik_Subyekti",
+                    "target": "Yillik_Moliyaviy_Hisobot",
+                    "type": "TAQDIM_ETADI"
+                },
+                {
+                    "source": "Yillik_Moliyaviy_Hisobot",
+                    "target": "Buxgalteriya_Balansi",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Yillik_Moliyaviy_Hisobot",
+                    "target": "Moliyaviy_Natijalar_Hisoboti",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                }
+            ]
+        }
+    ]
+}

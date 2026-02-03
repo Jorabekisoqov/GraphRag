@@ -1,0 +1,199 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3537_20240726.json",
+        "document_title": "Konsolidatsiyalashgan moliyaviy hisobotlar va shu’ba xo‘jalik jamiyatlariga investitsiyalar hisobi (8-sonli BHMS)",
+        "doc_number": "135-son",
+        "reg_number": "3537",
+        "date_signed": "2024-06-14",
+        "date_registered": "2024-07-26",
+        "date_effective": "2024-07-26",
+        "authority": "Iqtisodiyot va moliya vazirligi",
+        "okoz_code": "07.29.07.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_repeal",
+            "original_text": "1. O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (8-sonli) BHMS... tasdiqlansin. 2. 1998-yil 14-oktabr 50-son bilan tasdiqlangan (ro‘yxat raqami 580) eski standart o‘z kuchini yo‘qotgan deb topilsin.",
+            "nodes": [
+                {
+                    "id": "Buyruq_135_2024",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2024-06-14",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_8_Yangi",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Konsolidatsiyalashgan hisobotlar",
+                        "versiya": "2024"
+                    }
+                },
+                {
+                    "id": "BHMS_8_Eski",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Konsolidatsiyalashgan hisobotlar (1998)",
+                        "reg_raqami": "580",
+                        "holati": "Inactive"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_135_2024",
+                    "target": "BHMS_8_Yangi",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "Buyruq_135_2024",
+                    "target": "BHMS_8_Eski",
+                    "type": "BEKOR_QILDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "definitions_control",
+            "original_text": "4. Bosh tashkilot — shu’ba xo‘jalik jamiyatlarni nazorat qiluvchi subyekt. Nazorat qilish — daromadlar o‘zgarishi riskiga moyil bo‘lgan... va daromadlarga ta’sir ko‘rsatish. Guruh — bosh tashkilot va unga qarashli shu’ba jamiyatlar.",
+            "nodes": [
+                {
+                    "id": "Bosh_Tashkilot",
+                    "type": "Subyekt",
+                    "properties": {
+                        "eng": "Parent Company"
+                    }
+                },
+                {
+                    "id": "Shu'ba_Jamiyat",
+                    "type": "Subyekt",
+                    "properties": {
+                        "eng": "Subsidiary"
+                    }
+                },
+                {
+                    "id": "Guruh",
+                    "type": "Tushuncha",
+                    "properties": {
+                        "eng": "Group"
+                    }
+                },
+                {
+                    "id": "Nazorat",
+                    "type": "Mezon",
+                    "properties": {
+                        "eng": "Control"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Bosh_Tashkilot",
+                    "target": "Shu'ba_Jamiyat",
+                    "type": "NAZORAT_QILADI"
+                },
+                {
+                    "source": "Nazorat",
+                    "target": "Shu'ba_Jamiyat",
+                    "type": "ANIQLAYDI"
+                },
+                {
+                    "source": "Guruh",
+                    "target": "Bosh_Tashkilot",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Guruh",
+                    "target": "Shu'ba_Jamiyat",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "consolidation_method",
+            "original_text": "8. Konsolidatsiyalashgan hisobotlarni tayyorlashda... satrma-satr qo‘shish yo‘li bilan birlashtiriladi. Quyidagilar chiqarib tashlanishi lozim: o‘zaro hisob-kitoblar, guruh ichidagi operatsiyalar, realizatsiya qilinmagan foyda.",
+            "nodes": [
+                {
+                    "id": "Konsolidatsiya",
+                    "type": "Jarayon"
+                },
+                {
+                    "id": "Satrma_Satr_Qo'shish",
+                    "type": "Usul"
+                },
+                {
+                    "id": "Guruh_Ichidagi_Operatsiyalar",
+                    "type": "Obyekt"
+                },
+                {
+                    "id": "O'zaro_Qarzdorlik",
+                    "type": "Obyekt"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Konsolidatsiya",
+                    "target": "Satrma_Satr_Qo'shish",
+                    "type": "FOYDALANADI"
+                },
+                {
+                    "source": "Konsolidatsiya",
+                    "target": "Guruh_Ichidagi_Operatsiyalar",
+                    "type": "CHIQARIB_TASHLAYDI"
+                },
+                {
+                    "source": "Konsolidatsiya",
+                    "target": "O'zaro_Qarzdorlik",
+                    "type": "CHIQARIB_TASHLAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "separate_statements_accounting",
+            "original_text": "15. Shu’ba xo‘jalik jamiyatlariga investitsiyalar bosh tashkilotning alohida moliyaviy hisobotlarida quyidagilardan foydalanib aks ettiriladi: xususiy kapitalni hisobga olish usuli (equity method) yoki uzoq muddatli investitsiyalar qiymatini hisobga olish usuli (cost method).",
+            "nodes": [
+                {
+                    "id": "Alohida_Moliyaviy_Hisobot",
+                    "type": "Hujjat"
+                },
+                {
+                    "id": "Investitsiya",
+                    "type": "Aktiv"
+                },
+                {
+                    "id": "Ulushli_Qatnashish_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Equity Method"
+                    }
+                },
+                {
+                    "id": "Tannarx_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Cost Method"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Alohida_Moliyaviy_Hisobot",
+                    "target": "Investitsiya",
+                    "type": "AKSLANTIRADI"
+                },
+                {
+                    "source": "Investitsiya",
+                    "target": "Ulushli_Qatnashish_Usuli",
+                    "type": "BAHOLANISHI_MUMKIN"
+                },
+                {
+                    "source": "Investitsiya",
+                    "target": "Tannarx_Usuli",
+                    "type": "BAHOLANISHI_MUMKIN"
+                }
+            ]
+        }
+    ]
+}

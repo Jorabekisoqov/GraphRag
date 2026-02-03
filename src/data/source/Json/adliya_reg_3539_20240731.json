@@ -1,0 +1,188 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3539_20240731.json",
+        "document_title": "Buxgalteriya balansini tuzish sanasidan keyin xo‘jalik faoliyatida yuz beradigan hodisalar va nazarda tutilmagan holatlar (16-sonli BHMS)",
+        "doc_number": "139-son",
+        "reg_number": "3539",
+        "date_signed": "2024-06-14",
+        "date_registered": "2024-07-31",
+        "date_effective": "2024-08-03",
+        "authority": "Iqtisodiyot va moliya vazirligi",
+        "okoz_code": "07.29.01.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_repeal",
+            "original_text": "1. 16-sonli BHMS tasdiqlansin. 2. 1998-yil 30-oktabrda 57-son bilan tasdiqlangan (ro‘yxat raqami 578) eski standart o‘z kuchini yo‘qotgan deb topilsin.",
+            "nodes": [
+                {
+                    "id": "Buyruq_139_2024",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2024-06-14",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_16_Yangi",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Balansdan keyingi hodisalar",
+                        "versiya": "2024"
+                    }
+                },
+                {
+                    "id": "BHMS_16_Eski",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Nazarda tutilmagan holatlar (1998)",
+                        "reg_raqami": "578",
+                        "holati": "Inactive"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_139_2024",
+                    "target": "BHMS_16_Yangi",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "Buyruq_139_2024",
+                    "target": "BHMS_16_Eski",
+                    "type": "BEKOR_QILDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "definitions_events",
+            "original_text": "5. Hodisalar ikki turga bo'linadi: 1) Balans sanasida mavjud bo'lgan (Tuzatuvchi); 2) Mavjud bo'lmagan (Tuzatilmaydigan).",
+            "nodes": [
+                {
+                    "id": "Balans_Sanasidan_Keyingi_Hodisa",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Tuzatuvchi_Hodisa",
+                    "type": "Hodisa_Turi",
+                    "properties": {
+                        "tavsif": "Balans sanasida mavjud bo'lgan"
+                    }
+                },
+                {
+                    "id": "Tuzatilmaydigan_Hodisa",
+                    "type": "Hodisa_Turi",
+                    "properties": {
+                        "tavsif": "Balans sanasida mavjud bo'lmagan"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Balans_Sanasidan_Keyingi_Hodisa",
+                    "target": "Tuzatuvchi_Hodisa",
+                    "type": "BO‘LINADI"
+                },
+                {
+                    "source": "Balans_Sanasidan_Keyingi_Hodisa",
+                    "target": "Tuzatilmaydigan_Hodisa",
+                    "type": "BO‘LINADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "accounting_treatment_events",
+            "original_text": "21. Tuzatuvchi hodisalar bo'yicha aktiv va majburiyatlarga tuzatish kiritiladi. 23. Tuzatilmaydigan hodisalar (muhim bo'lsa) izohlarda yoritib beriladi.",
+            "nodes": [
+                {
+                    "id": "Tuzatuvchi_Hodisa",
+                    "type": "Hodisa_Turi"
+                },
+                {
+                    "id": "Tuzatilmaydigan_Hodisa",
+                    "type": "Hodisa_Turi"
+                },
+                {
+                    "id": "Moliyaviy_Hisobot",
+                    "type": "Hujjat"
+                },
+                {
+                    "id": "Izohlar",
+                    "type": "Hujjat_Qismi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Tuzatuvchi_Hodisa",
+                    "target": "Moliyaviy_Hisobot",
+                    "type": "RAQAMLARNI_O'ZGARTIRADI"
+                },
+                {
+                    "source": "Tuzatilmaydigan_Hodisa",
+                    "target": "Izohlar",
+                    "type": "FAQAT_YORITILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "contingencies",
+            "original_text": "9. Nazarda tutilmagan foyda tan olinmaydi. 11. Nazarda tutilmagan zarar majburiyat sifatida tan olinadi, agar ehtimoli yuqori va baholab bo'lsa.",
+            "nodes": [
+                {
+                    "id": "Nazarda_Tutilmagan_Foyda",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Nazarda_Tutilmagan_Zarar",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Majburiyat",
+                    "type": "Hisobot_Elementi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Nazarda_Tutilmagan_Foyda",
+                    "target": "Moliyaviy_Hisobot",
+                    "type": "TAN_OLINMAYDI"
+                },
+                {
+                    "source": "Nazarda_Tutilmagan_Zarar",
+                    "target": "Majburiyat",
+                    "type": "TAN_OLINADI_AGAR_EHTIMOLI_YUQORI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "going_concern",
+            "original_text": "22. Agar hodisa tashkilotning to'lovga qobiliyatsizligini ko'rsatsa (faoliyat uzluksizligi buzilsa), moliyaviy hisobot o'zgaradi.",
+            "nodes": [
+                {
+                    "id": "Faoliyatning_Uzluksizligi",
+                    "type": "Prinsip",
+                    "properties": {
+                        "eng": "Going Concern"
+                    }
+                },
+                {
+                    "id": "To'lovga_Qobiliyatsizlik",
+                    "type": "Holat"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "To'lovga_Qobiliyatsizlik",
+                    "target": "Faoliyatning_Uzluksizligi",
+                    "type": "BUZADI"
+                },
+                {
+                    "source": "Faoliyatning_Uzluksizligi",
+                    "target": "Moliyaviy_Hisobot",
+                    "type": "TUZATISHNI_TALAB_QILADI"
+                }
+            ]
+        }
+    ]
+}

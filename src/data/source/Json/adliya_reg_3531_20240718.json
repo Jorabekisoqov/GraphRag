@@ -1,0 +1,209 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3531_20240718.json",
+        "document_title": "Moliyaviy investitsiyalarni hisobga olish (12-sonli BHMS)",
+        "doc_number": "138-son",
+        "reg_number": "3531",
+        "date_signed": "2024-06-14",
+        "date_registered": "2024-07-18",
+        "date_effective": "2024-07-18",
+        "authority": "Iqtisodiyot va moliya vazirligi",
+        "okoz_code": "07.29.01.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_scope",
+            "original_text": "1. 12-sonli BHMS tasdiqlansin. 2. 1999-yilgi eski standart bekor qilinsin. 5. Mazkur BHMS shu’ba jamiyatlarga, birgalikda faoliyatga investitsiyalar va lizingga tatbiq etilmaydi.",
+            "nodes": [
+                {
+                    "id": "Buyruq_138_2024",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2024-06-14",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_12_Yangi",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Moliyaviy investitsiyalar",
+                        "versiya": "2024"
+                    }
+                },
+                {
+                    "id": "BHMS_12_Eski",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Moliyaviy investitsiyalar (1999)",
+                        "reg_raqami": "596",
+                        "holati": "Inactive"
+                    }
+                },
+                {
+                    "id": "Shu'ba_Jamiyat_Investitsiyasi",
+                    "type": "Investitsiya_Turi"
+                },
+                {
+                    "id": "Lizing",
+                    "type": "Investitsiya_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_138_2024",
+                    "target": "BHMS_12_Yangi",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "Buyruq_138_2024",
+                    "target": "BHMS_12_Eski",
+                    "type": "BEKOR_QILDI"
+                },
+                {
+                    "source": "BHMS_12_Yangi",
+                    "target": "Shu'ba_Jamiyat_Investitsiyasi",
+                    "type": "QO‘LLANILMAYDI"
+                },
+                {
+                    "source": "BHMS_12_Yangi",
+                    "target": "Lizing",
+                    "type": "QO‘LLANILMAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "classification",
+            "original_text": "7. Qisqa muddatli (joriy) investitsiyalar — muddati 1 yilgacha. Uzoq muddatli — 1 yildan oshadigan.",
+            "nodes": [
+                {
+                    "id": "Moliyaviy_Investitsiya",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Qisqa_Muddatli_Investitsiya",
+                    "type": "Tasnif",
+                    "properties": {
+                        "muddat": "<= 1 yil"
+                    }
+                },
+                {
+                    "id": "Uzoq_Muddatli_Investitsiya",
+                    "type": "Tasnif",
+                    "properties": {
+                        "muddat": "> 1 yil"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Moliyaviy_Investitsiya",
+                    "target": "Qisqa_Muddatli_Investitsiya",
+                    "type": "BO‘LINADI"
+                },
+                {
+                    "source": "Moliyaviy_Investitsiya",
+                    "target": "Uzoq_Muddatli_Investitsiya",
+                    "type": "BO‘LINADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "short_term_valuation",
+            "original_text": "13. Qisqa muddatli investitsiyalar ikki usulda hisoblanadi: 1) Bozor qiymati; 2) Xarid va bozor qiymatidan eng kichigi (LCM). 14. Bozor qiymati o'zgarishi daromad/zarar deb tan olinadi.",
+            "nodes": [
+                {
+                    "id": "Qisqa_Muddatli_Investitsiya",
+                    "type": "Aktiv"
+                },
+                {
+                    "id": "Bozor_Qiymati_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Market Value"
+                    }
+                },
+                {
+                    "id": "LCM_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Lower of Cost or Market"
+                    }
+                },
+                {
+                    "id": "Moliyaviy_Natija",
+                    "type": "Hisobot_Elementi",
+                    "properties": {
+                        "eng": "P&L"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Qisqa_Muddatli_Investitsiya",
+                    "target": "Bozor_Qiymati_Usuli",
+                    "type": "BAHOLANADI"
+                },
+                {
+                    "source": "Qisqa_Muddatli_Investitsiya",
+                    "target": "LCM_Usuli",
+                    "type": "BAHOLANADI"
+                },
+                {
+                    "source": "Bozor_Qiymati_Usuli",
+                    "target": "Moliyaviy_Natija",
+                    "type": "O'ZGARISHNI_AKS_ETTIRADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "long_term_valuation_revaluation",
+            "original_text": "15. Uzoq muddatli investitsiyalar: xarid qiymati, qayta baholangan qiymat yoki LCM. 21. Qayta baholashdan o'sish xususiy kapitalga (Equity) kiritiladi.",
+            "nodes": [
+                {
+                    "id": "Uzoq_Muddatli_Investitsiya",
+                    "type": "Aktiv"
+                },
+                {
+                    "id": "Xarid_Qiymati_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Cost Method"
+                    }
+                },
+                {
+                    "id": "Qayta_Baholash_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Revaluation Model"
+                    }
+                },
+                {
+                    "id": "Xususiy_Kapital",
+                    "type": "Hisobot_Elementi",
+                    "properties": {
+                        "eng": "Equity"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Uzoq_Muddatli_Investitsiya",
+                    "target": "Xarid_Qiymati_Usuli",
+                    "type": "BAHOLANADI"
+                },
+                {
+                    "source": "Uzoq_Muddatli_Investitsiya",
+                    "target": "Qayta_Baholash_Usuli",
+                    "type": "BAHOLANADI"
+                },
+                {
+                    "source": "Qayta_Baholash_Usuli",
+                    "target": "Xususiy_Kapital",
+                    "type": "O'ZGARISHNI_AKS_ETTIRADI"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,228 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3547_20240809.json",
+        "document_title": "Nomoddiy aktivlar (7-sonli BHMS)",
+        "doc_number": "134-son",
+        "reg_number": "3547",
+        "date_signed": "2024-06-14",
+        "date_registered": "2024-08-09",
+        "date_effective": "2024-08-09",
+        "authority": "Iqtisodiyot va moliya vazirligi",
+        "okoz_code": "07.21.17.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_repeal",
+            "original_text": "1. O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (7-sonli BHMS) “Nomoddiy aktivlar” tasdiqlansin. 2. 2005-yil 25-martdagi 35-son (ro‘yxat raqami 1485) va uning o'zgartirishlari o‘z kuchini yo‘qotgan deb topilsin.",
+            "nodes": [
+                {
+                    "id": "Buyruq_134_2024",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2024-06-14",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_7_Yangi",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Nomoddiy aktivlar",
+                        "versiya": "2024"
+                    }
+                },
+                {
+                    "id": "BHMS_7_Eski",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Nomoddiy aktivlar (2005)",
+                        "reg_raqami": "1485",
+                        "holati": "Inactive"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_134_2024",
+                    "target": "BHMS_7_Yangi",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "Buyruq_134_2024",
+                    "target": "BHMS_7_Eski",
+                    "type": "BEKOR_QILDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "recognition_criteria",
+            "original_text": "6. Aktivlarni nomoddiy aktivlar sifatida tan olishda bir vaqtning o‘zida quyidagi talablarga javob berishi kerak: moddiy-ashyoviy tuzilishga ega bo‘lmasligi; uzoq muddat (12 oydan yuqori); identifikatsiya qilish imkoniyati mavjudligi.",
+            "nodes": [
+                {
+                    "id": "Nomoddiy_Aktiv",
+                    "type": "Tushuncha",
+                    "properties": {
+                        "muddat": "> 12 oy"
+                    }
+                },
+                {
+                    "id": "Tan_Olish_Mezoni",
+                    "type": "Qoida"
+                },
+                {
+                    "id": "Moddiy_Shakl_Yo'qligi",
+                    "type": "Shart"
+                },
+                {
+                    "id": "Identifikatsiya",
+                    "type": "Shart"
+                },
+                {
+                    "id": "Qayta_Sotish_Maqsadi_Yo'qligi",
+                    "type": "Shart"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_7_Yangi",
+                    "target": "Nomoddiy_Aktiv",
+                    "type": "BELGILAYDI"
+                },
+                {
+                    "source": "Nomoddiy_Aktiv",
+                    "target": "Tan_Olish_Mezoni",
+                    "type": "BO'YSUNADI"
+                },
+                {
+                    "source": "Tan_Olish_Mezoni",
+                    "target": "Moddiy_Shakl_Yo'qligi",
+                    "type": "TALAB_QILADI"
+                },
+                {
+                    "source": "Tan_Olish_Mezoni",
+                    "target": "Identifikatsiya",
+                    "type": "TALAB_QILADI"
+                },
+                {
+                    "source": "Tan_Olish_Mezoni",
+                    "target": "Qayta_Sotish_Maqsadi_Yo'qligi",
+                    "type": "TALAB_QILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "amortization_methods",
+            "original_text": "48. Amortizatsiya quyidagi usullarni qo‘llash yo‘li bilan hisoblanadi: a) bir maromli (to‘g‘ri chiziqli); b) ishlab chiqarish usuli. 49. Jadallashtirilgan amortizatsiya (ikki baravar, yillar yig'indisi).",
+            "nodes": [
+                {
+                    "id": "Amortizatsiya",
+                    "type": "Jarayon"
+                },
+                {
+                    "id": "To'g'ri_Chiziqli_Usul",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Straight-line"
+                    }
+                },
+                {
+                    "id": "Ishlab_Chiqarish_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Units of Production"
+                    }
+                },
+                {
+                    "id": "Jadallashtirilgan_Usul",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Accelerated"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Amortizatsiya",
+                    "target": "To'g'ri_Chiziqli_Usul",
+                    "type": "AMALGA_OSHIRILADI"
+                },
+                {
+                    "source": "Amortizatsiya",
+                    "target": "Ishlab_Chiqarish_Usuli",
+                    "type": "AMALGA_OSHIRILADI"
+                },
+                {
+                    "source": "Amortizatsiya",
+                    "target": "Jadallashtirilgan_Usul",
+                    "type": "AMALGA_OSHIRILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "goodwill_accounting",
+            "original_text": "66. Gudvill bo‘yicha amortizatsiya ajratmalari... foydali xizmat muddati 20 yildan oshmasligi kerak. Manfiy gudvill daromadga kiritiladi.",
+            "nodes": [
+                {
+                    "id": "Gudvill",
+                    "type": "NA_Turi",
+                    "properties": {
+                        "max_amortizatsiya": "20 yil"
+                    }
+                },
+                {
+                    "id": "Manfiy_Gudvill",
+                    "type": "NA_Turi"
+                },
+                {
+                    "id": "Daromad",
+                    "type": "Moliyaviy_Natija"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_7_Yangi",
+                    "target": "Gudvill",
+                    "type": "TARTIBGA_SOLADI"
+                },
+                {
+                    "source": "Manfiy_Gudvill",
+                    "target": "Daromad",
+                    "type": "SIFATIDA_TAN_OLINADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "exclusions",
+            "original_text": "4. Mazkur Standart quyidagilarga nisbatan qo‘llanilmaydi: a) Ilmiy-tadqiqot va tajriba-konstruktorlik (11-sonli BHMS); b) Ijara (6-sonli BHMS); v) kelgusi davr xarajatlari.",
+            "nodes": [
+                {
+                    "id": "NIOKR",
+                    "type": "Faoliyat",
+                    "properties": {
+                        "bhms": "11-sonli"
+                    }
+                },
+                {
+                    "id": "Ijara",
+                    "type": "Faoliyat",
+                    "properties": {
+                        "bhms": "6-sonli"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_7_Yangi",
+                    "target": "NIOKR",
+                    "type": "QO‘LLANILMAYDI"
+                },
+                {
+                    "source": "BHMS_7_Yangi",
+                    "target": "Ijara",
+                    "type": "QO‘LLANILMAYDI"
+                }
+            ]
+        }
+    ]
+}

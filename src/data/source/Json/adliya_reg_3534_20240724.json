@@ -1,0 +1,247 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3534_20240724.json",
+        "document_title": "Davlat yordamining hisobi va u to‘g‘risidagi ma’lumotlarni yoritib berish (10-sonli BHMS)",
+        "doc_number": "136-son",
+        "reg_number": "3534",
+        "date_signed": "2024-06-14",
+        "date_registered": "2024-07-24",
+        "date_effective": "2024-07-25",
+        "authority": "Iqtisodiyot va moliya vazirligi",
+        "okoz_code": "07.29.01.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_repeal",
+            "original_text": "1. O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (10-sonli BHMS) “Davlat yordamining hisobi...” tasdiqlansin. 2. 1998-yil 19-oktabrda 52-son bilan tasdiqlangan (ro‘yxat raqami 562) eski standart o‘z kuchini yo‘qotgan deb topilsin.",
+            "nodes": [
+                {
+                    "id": "Buyruq_136_2024",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2024-06-14",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_10_Yangi",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Davlat yordamining hisobi",
+                        "versiya": "2024"
+                    }
+                },
+                {
+                    "id": "BHMS_10_Eski",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Davlat subsidiyalarining hisobi (1998)",
+                        "reg_raqami": "562",
+                        "holati": "Inactive"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_136_2024",
+                    "target": "BHMS_10_Yangi",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "Buyruq_136_2024",
+                    "target": "BHMS_10_Eski",
+                    "type": "BEKOR_QILDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "definitions_and_types",
+            "original_text": "4. Davlat yordami — budjet subsidiyalari, davlat grantlari va maqsadli tushumlar. 5. Aktivlarga oid davlat yordami — uzoq muddatli aktivlarni xarid qilishni talab etadi. Daromadga oid davlat yordami — boshqa har qanday yordam.",
+            "nodes": [
+                {
+                    "id": "Davlat_Yordami",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Aktivlarga_Oid_Yordam",
+                    "type": "Yordam_Turi"
+                },
+                {
+                    "id": "Daromadga_Oid_Yordam",
+                    "type": "Yordam_Turi"
+                },
+                {
+                    "id": "Budjet_Subsidiyasi",
+                    "type": "Yordam_Shakli"
+                },
+                {
+                    "id": "Davlat_Granti",
+                    "type": "Yordam_Shakli"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Davlat_Yordami",
+                    "target": "Aktivlarga_Oid_Yordam",
+                    "type": "BO‘LINADI"
+                },
+                {
+                    "source": "Davlat_Yordami",
+                    "target": "Daromadga_Oid_Yordam",
+                    "type": "BO‘LINADI"
+                },
+                {
+                    "source": "Davlat_Yordami",
+                    "target": "Budjet_Subsidiyasi",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Davlat_Yordami",
+                    "target": "Davlat_Granti",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "recognition_principles",
+            "original_text": "7. Tashkilot talablarga mos ekanligiga va yordam olinishiga ishonch hosil bo‘lmagunicha davlat yordami tan olinmaydi. 11. Davlat yordami hisoblash usuli (accrual basis) bo‘yicha tan olinadi.",
+            "nodes": [
+                {
+                    "id": "Tan_Olish",
+                    "type": "Jarayon"
+                },
+                {
+                    "id": "Ishonch",
+                    "type": "Shart"
+                },
+                {
+                    "id": "Hisoblash_Usuli",
+                    "type": "Prinsip",
+                    "properties": {
+                        "eng": "Accrual Basis"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Davlat_Yordami",
+                    "target": "Tan_Olish",
+                    "type": "TALAB_QILADI"
+                },
+                {
+                    "source": "Tan_Olish",
+                    "target": "Ishonch",
+                    "type": "ASOSLANADI"
+                },
+                {
+                    "source": "Tan_Olish",
+                    "target": "Hisoblash_Usuli",
+                    "type": "FOYDALANADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "asset_related_accounting",
+            "original_text": "16. Aktivlarga oid davlat yordami hisobi ikki usulda: 1) Maqsadli tushumlar (Deferred Income) sifatida va foydali xizmat muddati davomida daromadga o‘tkazish; 2) Aktivning balans qiymatini kamaytirish.",
+            "nodes": [
+                {
+                    "id": "Aktivlarga_Oid_Yordam",
+                    "type": "Yordam_Turi"
+                },
+                {
+                    "id": "Maqsadli_Tushum_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "tavsif": "Daromadga bo'lib o'tkazish"
+                    }
+                },
+                {
+                    "id": "Qiymatni_Kamaytirish_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "tavsif": "Aktiv tannarxidan ayirish"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Aktivlarga_Oid_Yordam",
+                    "target": "Maqsadli_Tushum_Usuli",
+                    "type": "AKSLANTIRILADI"
+                },
+                {
+                    "source": "Aktivlarga_Oid_Yordam",
+                    "target": "Qiymatni_Kamaytirish_Usuli",
+                    "type": "AKSLANTIRILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "income_related_accounting",
+            "original_text": "17. Daromadga oid davlat yordami hisobi ikki usulda: 1) “Boshqa daromadlar” moddasida; 2) Bog‘liq xarajatlardan chegirib tashlash.",
+            "nodes": [
+                {
+                    "id": "Daromadga_Oid_Yordam",
+                    "type": "Yordam_Turi"
+                },
+                {
+                    "id": "Boshqa_Daromad_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "account": "9300"
+                    }
+                },
+                {
+                    "id": "Xarajatdan_Chegirish_Usuli",
+                    "type": "Hisob_Usuli"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Daromadga_Oid_Yordam",
+                    "target": "Boshqa_Daromad_Usuli",
+                    "type": "AKSLANTIRILADI"
+                },
+                {
+                    "source": "Daromadga_Oid_Yordam",
+                    "target": "Xarajatdan_Chegirish_Usuli",
+                    "type": "AKSLANTIRILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "repayment",
+            "original_text": "19. Davlat yordamini qaytarish buxgalteriya smetalaridagi o‘zgarish (Change in Accounting Estimate) sifatida qaraladi, oldingi davrga tuzatish kiritilmaydi.",
+            "nodes": [
+                {
+                    "id": "Yordamni_Qaytarish",
+                    "type": "Hodisa"
+                },
+                {
+                    "id": "Smeta_O'zgarishi",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Change in Estimate"
+                    }
+                },
+                {
+                    "id": "Oldingi_Davr_Xatosi",
+                    "type": "Hisob_Usuli"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Yordamni_Qaytarish",
+                    "target": "Smeta_O'zgarishi",
+                    "type": "SIFATIDA_TAN_OLINADI"
+                },
+                {
+                    "source": "Yordamni_Qaytarish",
+                    "target": "Oldingi_Davr_Xatosi",
+                    "type": "SIFATIDA_QARALMAYDI"
+                }
+            ]
+        }
+    ]
+}
