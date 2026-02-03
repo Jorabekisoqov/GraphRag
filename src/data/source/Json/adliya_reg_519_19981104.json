@@ -1,0 +1,203 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_519_19981104.json",
+        "document_title": "Pul oqimi to‘g‘risidagi hisobot (9-sonli BHMS)",
+        "doc_number": "51-son",
+        "reg_number": "519",
+        "date_signed": "1998-10-16",
+        "date_registered": "1998-11-04",
+        "authority": "Moliya vazirligi",
+        "okoz_code": "07.29.04.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "scope_and_definitions",
+            "original_text": "3. Xo‘jalik yurituvchi subyekt pul oqimi to‘g‘risida hisobot tayyorlaydi. 5. Pul ekvivalentlari — tez va oson almashtiriladigan... qisqa muddatli (3 oy) investitsiyalar.",
+            "nodes": [
+                {
+                    "id": "Pul_Oqimi_Hisoboti",
+                    "type": "Hisobot_Shakli"
+                },
+                {
+                    "id": "Pul_Ekvivalenti",
+                    "type": "Tushuncha",
+                    "properties": {
+                        "muddat": "<= 3 oy"
+                    }
+                },
+                {
+                    "id": "Xo'jalik_Yurituvchi_Subyekt",
+                    "type": "Subyekt"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Xo'jalik_Yurituvchi_Subyekt",
+                    "target": "Pul_Oqimi_Hisoboti",
+                    "type": "TAYYORLAYDI"
+                },
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Pul_Ekvivalenti",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "activity_classification",
+            "original_text": "4. Hisobot pul oqimlarini uchta toifaga ajratadi: operatsion, investitsiya va moliyaviy faoliyat. 11. Operatsion faoliyat — asosiy daromad keltiruvchi faoliyat. 13. Investitsiya — uzoq muddatli aktivlarni olish/sotish. 14. Moliya — o‘z va qarz mablag‘lari miqdoridagi o‘zgarishlar.",
+            "nodes": [
+                {
+                    "id": "Operatsion_Faoliyat",
+                    "type": "Faoliyat_Turi"
+                },
+                {
+                    "id": "Investitsiya_Faoliyati",
+                    "type": "Faoliyat_Turi"
+                },
+                {
+                    "id": "Moliyaviy_Faoliyat",
+                    "type": "Faoliyat_Turi"
+                },
+                {
+                    "id": "Asosiy_Vositalar",
+                    "type": "Obyekt"
+                },
+                {
+                    "id": "Qarz_Mablag'lari",
+                    "type": "Obyekt"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Operatsion_Faoliyat",
+                    "type": "TASNIFLAYDI"
+                },
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Investitsiya_Faoliyati",
+                    "type": "TASNIFLAYDI"
+                },
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Moliyaviy_Faoliyat",
+                    "type": "TASNIFLAYDI"
+                },
+                {
+                    "source": "Investitsiya_Faoliyati",
+                    "target": "Asosiy_Vositalar",
+                    "type": "BILAN_BOG'LIQ"
+                },
+                {
+                    "source": "Moliyaviy_Faoliyat",
+                    "target": "Qarz_Mablag'lari",
+                    "type": "BILAN_BOG'LIQ"
+                }
+            ]
+        },
+        {
+            "chunk_id": "reporting_methods",
+            "original_text": "15. Operatsion faoliyatdan pul oqimini bevosita (Direct) yoki bilvosita (Indirect) usulda ochib berish mumkin.",
+            "nodes": [
+                {
+                    "id": "Bevosita_Usul",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Direct Method"
+                    }
+                },
+                {
+                    "id": "Bilvosita_Usul",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "eng": "Indirect Method"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Operatsion_Faoliyat",
+                    "target": "Bevosita_Usul",
+                    "type": "FOYDALANISHI_MUMKIN"
+                },
+                {
+                    "source": "Operatsion_Faoliyat",
+                    "target": "Bilvosita_Usul",
+                    "type": "FOYDALANISHI_MUMKIN"
+                }
+            ]
+        },
+        {
+            "chunk_id": "foreign_currency_and_non_cash",
+            "original_text": "19. Xorijiy valyutadagi oqimlar MB kursi bo'yicha qayta hisoblanadi. 21. Kurs farqlari pul oqimi emas. 30. Pulga daxli bo'lmagan operatsiyalar (barter, lizingga olish) hisobotga kiritilmaydi.",
+            "nodes": [
+                {
+                    "id": "Xorijiy_Valyuta_Oqimi",
+                    "type": "Oqim_Turi"
+                },
+                {
+                    "id": "Kurs_Farqi",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Pulga_Daxli_Bo'lmagan_Operatsiya",
+                    "type": "Operatsiya_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Xorijiy_Valyuta_Oqimi",
+                    "type": "QAYTA_HISOBLAYDI"
+                },
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Kurs_Farqi",
+                    "type": "KIRITMAYDI"
+                },
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Pulga_Daxli_Bo'lmagan_Operatsiya",
+                    "type": "KIRITMAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "interest_dividends_taxes",
+            "original_text": "23. Foizlar va dividendlar izchil tasniflanishi kerak. 26. Foyda solig'i operatsion faoliyatga kiradi (agar aniq investitsiyaga bog'liq bo'lmasa).",
+            "nodes": [
+                {
+                    "id": "Foizlar",
+                    "type": "To'lov_Turi"
+                },
+                {
+                    "id": "Dividendlar",
+                    "type": "To'lov_Turi"
+                },
+                {
+                    "id": "Foyda_Solig'i",
+                    "type": "Soliq_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Operatsion_Faoliyat",
+                    "target": "Foyda_Solig'i",
+                    "type": "O‘Z_ICHIGA_OLADI"
+                },
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Foizlar",
+                    "type": "ALOHIDA_KO'RSATADI"
+                },
+                {
+                    "source": "Pul_Oqimi_Hisoboti",
+                    "target": "Dividendlar",
+                    "type": "ALOHIDA_KO'RSATADI"
+                }
+            ]
+        }
+    ]
+}
