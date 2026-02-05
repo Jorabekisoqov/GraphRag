@@ -21,26 +21,37 @@ The system is built using:
 
 ## Deployment on Server
 
-For easy deployment on a Linux server, you can use the provided `deploy.sh` script.
+### 1. Prerequisites
+- Valid OpenAI API Key
+- Neo4j Database (Remote or Local)
+- Python 3.10+ (The deployment script can parse this for you, and a helper installer is included for older servers)
 
+### 2. Deployment
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/Jorabekisoqov/GraphRag.git
+    git clone https://github.com/Jorabekisoqov/GraphRag
     cd GraphRag
     ```
-
-2.  **Run the Deployment Script**:
+2.  **Run the deployment helper**:
     ```bash
     ./deploy.sh
     ```
-    This script will:
-    - Check for Python 3.10+
+    - The script will check for Python 3.10+.
+    - If your server has an older Python version (e.g., CentOS 7 with Python 3.6), it will error out.
+    - **Fix for old Python**: Run the included installer:
+      ```bash
+      sudo ./install_python.sh
+      ```
+      (This compiles Python 3.10 from source, which may take ~5-10 minutes).
+    - Then run `./deploy.sh` again.
+
+3.  **Follow the prompts**:
+    - The script will ask you to create a `.env` file if missing. 3.10+
     - Create and activate a virtual environment
     - Install necessary dependencies
     - Check for your `.env` file (you'll need to create one if it doesn't exist)
     - Give you options to run the Ingestion script or start the Telegram Bot
 
-3.  **Manual Execution** (Optional):
     If you prefer to run commands manually after setup:
     ```bash
     source .venv/bin/activate

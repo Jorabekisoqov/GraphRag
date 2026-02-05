@@ -9,29 +9,36 @@ echo "   GraphRAG Server Deployment Helper"
 echo "========================================"
 
 # 1. Check Python Version
-if ! command -v python3 &> /dev/null; then
+PYTHON_CMD=""
+
+if command -v python3.10 &> /dev/null; then
+    PYTHON_CMD="python3.10"
+elif command -v python3 &> /dev/null; then
+    PYTHON_CMD="python3"
+else
     echo "Error: python3 could not be found."
     exit 1
 fi
 
-PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+PYTHON_VERSION=$($PYTHON_CMD -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
 REQUIRED_MAJOR=3
 REQUIRED_MINOR=10
 
 # Check version using python itself to avoid strict dependency on bc or shell math quirks
-IS_COMPATIBLE=$(python3 -c "import sys; print(int(sys.version_info >= ($REQUIRED_MAJOR, $REQUIRED_MINOR)))")
+IS_COMPATIBLE=$($PYTHON_CMD -c "import sys; print(int(sys.version_info >= ($REQUIRED_MAJOR, $REQUIRED_MINOR)))")
 
 if [ "$IS_COMPATIBLE" -ne 1 ]; then
     echo "Error: Python $REQUIRED_MAJOR.$REQUIRED_MINOR or higher is required. Found $PYTHON_VERSION"
+    echo "Please run 'sudo ./install_python.sh' to install Python 3.10."
     exit 1
 fi
 
-echo "[✓] Python $PYTHON_VERSION detected."
+echo "[✓] Using $PYTHON_CMD ($PYTHON_VERSION)"
 
 # 2. Setup Virtual Environment
 if [ ! -d ".venv" ]; then
     echo "Creating virtual environment..."
-    python3 -m venv .venv
+    $PYTHON_CMD -m venv .venv
 else
     echo "[✓] Virtual environment (.venv) already exists."
 fi
@@ -75,11 +82,11 @@ read -p "Enter your choice [1-3]: " choice
 case $choice in
     1)
         echo "Starting ingestion..."
-        python3 -m src.data.ingestion
+        $PYTHON_CMD -m src.data.ingestion
         ;;
     2)
         echo "Starting Telegram bot..."
-        python3 -m src.bot.telegram_bot
+        $PYTHON_CMD -m src.bot.telegram_bot
         ;;
     3)
         echo "Exiting. You can run commands manually using 'source .venv/bin/activate'."
