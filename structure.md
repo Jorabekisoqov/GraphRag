@@ -19,7 +19,7 @@ GraphRag/
 │       ├── neo4j_client.py       # Handles connection to the Neo4j database.
 │       └── source/               # Data source files.
 │           ├── Json/             # Structured data with Nodes/Relationships.
-│           └── Raw/              # Original text files.
+│           └── Raw/              # Original text files (.txt format).
 │
 ├── .env                          # Environment variables (API Keys, DB Creds).
 ├── requirements.txt              # Python dependencies.

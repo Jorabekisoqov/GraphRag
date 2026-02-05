@@ -1,24 +1,107 @@
 import json
 import os
 import glob
+from typing import Dict, List, Any
 from src.data.neo4j_client import get_neo4j_graph
+from src.core.logging_config import get_logger
 
-def ingest_json_data(json_dir: str):
+logger = get_logger(__name__)
+
+def validate_json_structure(data: Dict[str, Any]) -> tuple[bool, str]:
+    """
+    Validates the structure of JSON data for ingestion.
+    
+    Args:
+        data: The JSON data dictionary to validate.
+        
+    Returns:
+        Tuple of (is_valid, error_message). If valid, error_message is empty.
+    """
+    if not isinstance(data, dict):
+        return False, "Data must be a dictionary."
+    
+    # Check for required top-level keys
+    if "metadata" not in data:
+        return False, "Missing required 'metadata' field."
+    
+    if "graph_data" not in data:
+        return False, "Missing required 'graph_data' field."
+    
+    metadata = data.get("metadata", {})
+    if not isinstance(metadata, dict):
+        return False, "Metadata must be a dictionary."
+    
+    # Check required metadata fields
+    required_metadata_fields = ["file_name"]
+    for field in required_metadata_fields:
+        if field not in metadata:
+            return False, f"Missing required metadata field: {field}"
+    
+    graph_data = data.get("graph_data", [])
+    if not isinstance(graph_data, list):
+        return False, "graph_data must be a list."
+    
+    # Validate each chunk in graph_data
+    for idx, chunk in enumerate(graph_data):
+        if not isinstance(chunk, dict):
+            return False, f"Chunk at index {idx} must be a dictionary."
+        
+        if "chunk_id" not in chunk:
+            return False, f"Chunk at index {idx} missing 'chunk_id' field."
+        
+        # Validate nodes
+        if "nodes" in chunk:
+            if not isinstance(chunk["nodes"], list):
+                return False, f"Chunk at index {idx}: 'nodes' must be a list."
+            for node_idx, node in enumerate(chunk["nodes"]):
+                if not isinstance(node, dict):
+                    return False, f"Chunk {idx}, node {node_idx}: must be a dictionary."
+                if "id" not in node:
+                    return False, f"Chunk {idx}, node {node_idx}: missing 'id' field."
+        
+        # Validate relationships
+        if "relationships" in chunk:
+            if not isinstance(chunk["relationships"], list):
+                return False, f"Chunk at index {idx}: 'relationships' must be a list."
+            for rel_idx, rel in enumerate(chunk["relationships"]):
+                if not isinstance(rel, dict):
+                    return False, f"Chunk {idx}, relationship {rel_idx}: must be a dictionary."
+                if "source" not in rel or "target" not in rel:
+                    return False, f"Chunk {idx}, relationship {rel_idx}: missing 'source' or 'target' field."
+    
+    return True, ""
+
+def ingest_json_data(json_dir: str) -> None:
     """
     Ingests graph data from JSON files into Neo4j.
+    
+    Args:
+        json_dir: Directory path containing JSON files to ingest.
+        
+    Raises:
+        ValueError: If json_dir is invalid or data validation fails.
     """
+    if not os.path.isdir(json_dir):
+        raise ValueError(f"Invalid directory: {json_dir}")
+    
     graph = get_neo4j_graph()
     
     # Get all json files
     json_files = glob.glob(os.path.join(json_dir, "*.json"))
     
-    print(f"Found {len(json_files)} JSON files in {json_dir}")
+    logger.info(f"Found {len(json_files)} JSON files in {json_dir}")
 
     for file_path in json_files:
-        print(f"Processing {file_path}...")
+        logger.info(f"Processing {file_path}...")
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
+            
+            # Validate JSON structure
+            is_valid, error_message = validate_json_structure(data)
+            if not is_valid:
+                logger.error("json_validation_failed", file=file_path, error=error_message)
+                continue
             
             metadata = data.get("metadata", {})
             graph_data = data.get("graph_data", [])
@@ -110,12 +193,14 @@ def ingest_json_data(json_dir: str):
                     """
                     graph.query(rel_cypher, {"source_id": source_id, "target_id": target_id})
                     
+        except json.JSONDecodeError as e:
+            logger.error("invalid_json", file=file_path, error=str(e))
         except Exception as e:
-            print(f"Error processing {file_path}: {e}")
+            logger.error("ingestion_error", file=file_path, error=str(e), exc_info=True)
     
-    print("Ingestion complete. Refreshing schema...")
+    logger.info("ingestion_complete")
     graph.refresh_schema()
-    print("Schema refreshed.")
+    logger.info("schema_refreshed")
 
 if __name__ == "__main__":
     base_path = os.path.dirname(os.path.abspath(__file__))
