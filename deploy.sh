@@ -15,10 +15,14 @@ if ! command -v python3 &> /dev/null; then
 fi
 
 PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-REQUIRED_VERSION="3.10"
+REQUIRED_MAJOR=3
+REQUIRED_MINOR=10
 
-if (( $(echo "$PYTHON_VERSION < $REQUIRED_VERSION" | bc -l) )); then
-    echo "Error: Python $REQUIRED_VERSION or higher is required. Found $PYTHON_VERSION"
+# Check version using python itself to avoid strict dependency on bc or shell math quirks
+IS_COMPATIBLE=$(python3 -c "import sys; print(int(sys.version_info >= ($REQUIRED_MAJOR, $REQUIRED_MINOR)))")
+
+if [ "$IS_COMPATIBLE" -ne 1 ]; then
+    echo "Error: Python $REQUIRED_MAJOR.$REQUIRED_MINOR or higher is required. Found $PYTHON_VERSION"
     exit 1
 fi
 
