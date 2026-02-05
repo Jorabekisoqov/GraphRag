@@ -1,0 +1,283 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_1996_20090818.json",
+        "document_title": "Qarzlar bo'yicha xarajatlar hisobi (24-sonli BHMS)",
+        "doc_number": "1996-son",
+        "reg_number": "1996",
+        "date_signed": "2009-01-18",
+        "date_registered": "2009-08-18",
+        "date_effective": "2009-08-18",
+        "authority": "Moliya vazirligi",
+        "okoz_code": "07.29.04.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "section_1",
+            "original_text": "PDF-faylidagi rasmiy manba O‘zbekiston Respublikasi Moliya vazirining O‘ZBEKISTON RESPUBLIKASI BUXGALTERIYA HISOBINING MILLIY STANDARTI (24-SONLI BHMS) “QARZLAR BO‘YIChA XARAJATLAR HISOBI”NI TASDIQLASh TO‘G‘RISIDA [O‘zbekiston Respublikasi Adliya vazirligi tomonidan 2009-yil 18-avgustda 1996-son bilan davlat ro‘yxatidan o‘tkazilgan] milliy standarti \n2. Mazkur buyruq O‘zbekiston Respublikasi Adliya vazirligida davlat ro‘yxatidan o‘tkazilgan kundan boshlab o‘n kun o‘tgandan keyin kuchga kiradi. Moliya vaziri R.S. AZIMOV Toshkent sh., 2009-yil 5-avgust, O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (24-sonli BHMS) “Qarzlar bo‘yicha xarajatlar hisobi”",
+            "nodes": [
+                {
+                    "id": "Qarz_1",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Xarajat_1",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "BHMS_24",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Qarzlar bo'yicha xarajatlar hisobi",
+                        "soni": "24"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_24",
+                    "target": "Qarz_1",
+                    "type": "TARTIBGA_SOLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "section_2",
+            "original_text": "1. Mazkur BHMSning maqsadi bo‘lib, sug‘urta tashkilotlari, banklar va boshqa kredit tashkilotlaridan tashqari tashkiliy-huquqiy shakli va idoraviy bo‘ysunuvidan qat’i nazar, barcha xo‘jalik yurituvchi subyektlarda (bundan keyingi o‘rinlarda xo‘jalik yurituvchi subyekt deb yuritilad\ni) qarzlar bo‘yicha xarajatlarning buxgalteriya hisobi uslubiyotini va ular to‘g‘risida ma’lumotlarni ochib berishni belgilash hisoblanadi. \n2. Mazkur BHMS majburiyat sifatida qaralmaydigan xususiy kapitalga (jumladan imtiyozli aksiyalarg\na) nisbatan qilingan haqiqiy yoki ko‘zda tutilayotgan xarajatlarga qo‘llanilmaydi. \n3. Mazkur BHMSda qo‘llaniladigan asosiy tushunchalar: \n4. Qarzlar bo‘yicha xarajatlar quyidagilarni o‘z ichiga oladi: \na) jalb qilingan qisqa muddatli va uzoq muddatli qarzlar bo‘yicha foizlar; ",
+            "nodes": [
+                {
+                    "id": "Qarz_2",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Xarajat_2",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "BHMS_24",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Qarzlar bo'yicha xarajatlar hisobi",
+                        "soni": "24"
+                    }
+                },
+                {
+                    "id": "Foiz_2",
+                    "type": "Tushuncha",
+                    "properties": {}
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_24",
+                    "target": "Qarz_2",
+                    "type": "TARTIBGA_SOLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "section_3",
+            "original_text": "Qarzlar bo‘yicha xarajatlarning tan olinishi 2-paragrafiga \n10. Kvalifikatsiyalangan aktivni xarid qilish, qurish yoki ishlab chiqarish bilan bevosita bog‘liq bo‘lgan qarzlar bo‘yicha xarajatlar ushbu aktivning tannarxiga olib borish yo‘li orqali kapitalizatsiya qilinishi lozim. \n11. Qarzlar bo‘yicha xarajatlar kvalifikatsiyalangan aktivning qiymatiga qo‘shish yo‘li bilan kapitalizatsiya qilinadi, agarda undan xo‘jalik yurituvchi subyekt kelgusida iqtisodiy manfaatlar olishi mumkin bo‘lsa va agar bunda xarajatlarni ishonchli o‘lchash imkoniyati mavjud bo‘lsa.",
+            "nodes": [
+                {
+                    "id": "Qarz_3",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Xarajat_3",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Kapitalizatsiya_3",
+                    "type": "Hisob_Usuli",
+                    "properties": {}
+                },
+                {
+                    "id": "Kvalifikatsiyalangan_Aktiv_3",
+                    "type": "Aktiv_Turi",
+                    "properties": {}
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_24",
+                    "target": "Qarz_3",
+                    "type": "TARTIBGA_SOLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "section_4",
+            "original_text": "Kapitalizatsiya qilish uchun ruxsat etilgan qarzlar bo‘yicha xarajatlar \n12. Kvalifikatsiyalangan aktivni xarid qilish, qurish yoki ishlab chiqarish bilan bevosita bog‘liq bo‘lgan qarzlar bo‘yicha xarajatlar — bu, agar tegishli aktiv uchun xarajatlar amalga oshirilmagan taqdirda, vujudga kelmasligi mumkin bo‘lgan qarzlar bo‘yicha xarajatlardir. Aniq bir kvalifikatsiyalangan aktivni xarid qilish uchun xo‘jalik yurituvchi subyekt mablag‘larni aynan shu maqsadda chetdan jalb qilgan hollarda, ushbu aktiv bilan bevosita bog‘liq bo‘lgan qarzlar bo‘yicha xarajatlar aniq ravishda belgilanishi (o‘rnatilish\ni) mumkin. \n13. Aniq bir qarz va kvalifikatsiyalangan aktiv o‘rtasida bevosita bog‘liqlikni aniqlash va teskari holatda jalb qilmaslik mumkin bo‘lgan qarzlarni aniqlash qiyinchiliklarni keltirib ",
+            "nodes": [
+                {
+                    "id": "Qarz_4",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Xarajat_4",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Kapitalizatsiya_4",
+                    "type": "Hisob_Usuli",
+                    "properties": {}
+                },
+                {
+                    "id": "Kvalifikatsiyalangan_Aktiv_4",
+                    "type": "Aktiv_Turi",
+                    "properties": {}
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_24",
+                    "target": "Qarz_4",
+                    "type": "TARTIBGA_SOLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "section_5",
+            "original_text": "Kvalifikatsiyalangan aktiv balans qiymatining uning joriy qiymatidan oshib ketishi \n21. Kvalifikatsiyalangan aktivning balans qiymati yoki ko‘zlangan yakuniy tannarxi uning joriy qiymatidan yoki sof sotish qiymatidan oshib ketsa, uning balans qiymati buxgalteriya hisobi bo‘yicha qonunchilik hujjatlari talablariga muvofiq qisman yoki to‘liq hisobdan chiqariladi. Bunda, ayrim holatlarda kvalifikatsiyalangan aktiv qiymatining ilgari amalga oshirilgan qisman hisobdan chiqarilgan miqdori buxgalteriya hisobi bo‘yicha qonunchilik hujjatlariga muvofiq qayta tiklanishi mumkin.",
+            "nodes": [
+                {
+                    "id": "Kvalifikatsiyalangan_Aktiv_5",
+                    "type": "Aktiv_Turi",
+                    "properties": {}
+                }
+            ],
+            "relationships": []
+        },
+        {
+            "chunk_id": "section_6",
+            "original_text": "Qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishning boshlanishi \n22. Xo‘jalik yurituvchi subyekt qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni kvalifikatsiyalangan aktiv tannarxining bir qismi sifatida kapitalizatsiya qilishni boshlash sanasidan boshlab amalga oshirishi lozim. Kapitalizatsiya qilishni boshlash sanasi bo‘lib, xo‘jalik yurituvchi subyekt bir vaqtning o‘zida birinchi marta quyida keltirilgan shartlarning barchasiga muvofiq kelish sanasi hisoblanadi: mazkur aktiv bo‘yicha xarajatlarni amalga oshirganda; qarzlar bo‘yicha xarajatlarni amalga oshirganda; aktivni belgilangan maqsadi bo‘yicha ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan faoliyatni amalga oshirganda. milliy standarti \n24. Ilgari kapitalizatsiya qilingan qarzlar bo‘yicha xarajatlarni o‘z ich",
+            "nodes": [
+                {
+                    "id": "Qarz_6",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Xarajat_6",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Kapitalizatsiya_6",
+                    "type": "Hisob_Usuli",
+                    "properties": {}
+                },
+                {
+                    "id": "Kvalifikatsiyalangan_Aktiv_6",
+                    "type": "Aktiv_Turi",
+                    "properties": {}
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_24",
+                    "target": "Qarz_6",
+                    "type": "TARTIBGA_SOLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "section_7",
+            "original_text": "Qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishning to‘xtatilishi \n26. Xo‘jalik yurituvchi subyekt kvalifikatsiyalangan aktivni tayyorlash bo‘yicha faol harakatni to‘xtatgan davomiy davrlar mobaynida qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni to‘xtatishi lozim. \n27. Xo‘jalik yurituvchi subyekt aktivni belgilangan maqsadda ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan faoliyatni to‘xtatib turgan davomiy davrlarda ham qarzga olingan mablag‘lar bo‘yicha xarajatlar qilishi mumkin. Bunday xarajatlarga kapitalizatsiya qilish sifatida turkumlanmaydigan tugallanmagan qurilishni saqlab turish xarajatlari kiradi. Biroq, odatda xo‘jalik yurituvchi subyekt asosiy (zaruriy) texnik va ma’muriy ishlarni amalga oshirayotgan davrda qarzlar bo‘yicha xarajatlarni kapitalizatsiya q",
+            "nodes": [
+                {
+                    "id": "Qarz_7",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Xarajat_7",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Kapitalizatsiya_7",
+                    "type": "Hisob_Usuli",
+                    "properties": {}
+                },
+                {
+                    "id": "Kvalifikatsiyalangan_Aktiv_7",
+                    "type": "Aktiv_Turi",
+                    "properties": {}
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_24",
+                    "target": "Qarz_7",
+                    "type": "TARTIBGA_SOLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "section_8",
+            "original_text": "Qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni tugatish \n29. Xo‘jalik yurituvchi subyekt aktivni belgilangan maqsadda ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan barcha ishlar tugatilganda qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni tugatishi lozim. \n30. Agar kunlik ma’muriy ishlar hali ham davom etayotgan bo‘lishiga qaramay, uni jismoniy yaratish tugatilgan bo‘lsa, odatda obyekt belgilangan maqsadda ishlatishga yoki sotishga tayyor deb hisoblanadi. \n31. Agarda kvalifikatsiyalanadigan aktivni qurish qismlar bo‘yicha tugatilganda va har bir qismni boshqa qismlarni qurish davomida ishlatish mumkin bo‘lsa, xo‘jalik yurituvchi subyekt aktivning ushbu qismini belgilangan maqsadda ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan barcha ishlarni tugatganda,",
+            "nodes": [
+                {
+                    "id": "Qarz_8",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Xarajat_8",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Kapitalizatsiya_8",
+                    "type": "Hisob_Usuli",
+                    "properties": {}
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_24",
+                    "target": "Qarz_8",
+                    "type": "TARTIBGA_SOLADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "section_9",
+            "original_text": "Ma’lumotni ochib berish \n32. Xo‘jalik yurituvchi subyekt moliyaviy hisobotda quyidagi ma’lumotlarni ochib berishi lozim: \na) davr davomida kapitalizatsiya qilingan qarzlar bo‘yicha xarajatlar miqdori; \nb) kapitalizatsiya qilish uchun tatbiq etilgan qarzlar bo‘yicha xarajatlar hajmini aniqlashda qo‘llanilgan kapitalizatsiya stavkasi. (O‘zbekiston Respublikasi qonun hujjatlari to‘plami, 2009-y., 35-son, 388-modda; 2017-y., 26-son, 599-modda; Qonunchilik ma’lumotlari milliy bazasi, 30.11.2021-y., 10/21/3338/1117-son)",
+            "nodes": [
+                {
+                    "id": "Qarz_9",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Xarajat_9",
+                    "type": "Tushuncha",
+                    "properties": {}
+                },
+                {
+                    "id": "Kapitalizatsiya_9",
+                    "type": "Hisob_Usuli",
+                    "properties": {}
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_24",
+                    "target": "Qarz_9",
+                    "type": "TARTIBGA_SOLADI"
+                }
+            ]
+        }
+    ]
+}

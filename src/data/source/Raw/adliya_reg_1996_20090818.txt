@@ -1,0 +1,76 @@
+[OKOZ:
+1.07.00.00.00 Moliya va kredit to'g'risidagi qonunchilik. Bank faoliyati / 07.29.00.00 Buxgalteriya hisobi. Moliyaviy hisobot / 07.29.04.00 Pul mablag'lari, valyuta, past baholi va tez emiriluvchi predmetlarning hisobi]
+[TSZ:
+1.Moliya / Buxgalteriya hisobi]
+
+"TASDIQLANGAN"
+O'zbekiston Respublikasi
+Moliya vazirligi
+Vazir
+R.S. AZIMOV T
+2009-yil 18-avgustda 1996-son
+BHMS 24
+o'zbekiston respublikasi buxgalteriya hisobi milliy standarti
+24-son bhms
+[O'zbekiston Respublikasi Adliya vazirligi tomonidan 2009-08-18 1996-son bilan davlat ro'yxatidan o'tkazilgan]
+
+PDF-faylidagi rasmiy manba O‘zbekiston Respublikasi Moliya vazirining O‘ZBEKISTON RESPUBLIKASI BUXGALTERIYA HISOBINING MILLIY STANDARTI (24-SONLI BHMS) “QARZLAR BO‘YIChA XARAJATLAR HISOBI”NI TASDIQLASh TO‘G‘RISIDA [O‘zbekiston Respublikasi Adliya vazirligi tomonidan 2009-yil 18-avgustda 1996-son bilan davlat ro‘yxatidan o‘tkazilgan] milliy standarti 
+2. Mazkur buyruq O‘zbekiston Respublikasi Adliya vazirligida davlat ro‘yxatidan o‘tkazilgan kundan boshlab o‘n kun o‘tgandan keyin kuchga kiradi. Moliya vaziri R.S. AZIMOV Toshkent sh., 2009-yil 5-avgust, O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (24-sonli BHMS) “Qarzlar bo‘yicha xarajatlar hisobi”
+I.
+Umumiy qoidalar
+
+1. Mazkur BHMSning maqsadi bo‘lib, sug‘urta tashkilotlari, banklar va boshqa kredit tashkilotlaridan tashqari tashkiliy-huquqiy shakli va idoraviy bo‘ysunuvidan qat’i nazar, barcha xo‘jalik yurituvchi subyektlarda (bundan keyingi o‘rinlarda xo‘jalik yurituvchi subyekt deb yuritilad
+i) qarzlar bo‘yicha xarajatlarning buxgalteriya hisobi uslubiyotini va ular to‘g‘risida ma’lumotlarni ochib berishni belgilash hisoblanadi. 
+2. Mazkur BHMS majburiyat sifatida qaralmaydigan xususiy kapitalga (jumladan imtiyozli aksiyalarg
+a) nisbatan qilingan haqiqiy yoki ko‘zda tutilayotgan xarajatlarga qo‘llanilmaydi. 
+3. Mazkur BHMSda qo‘llaniladigan asosiy tushunchalar: 
+4. Qarzlar bo‘yicha xarajatlar quyidagilarni o‘z ichiga oladi: 
+a) jalb qilingan qisqa muddatli va uzoq muddatli qarzlar bo‘yicha foizlar; 
+b) qarzlar bilan bog‘liq bo‘lgan diskontlar (chegirmalar), shu jumladan, obligatsiyaga tegishli diskontlarning (chegirmalarnin
+g) hisobdan chiqarilishi; milliy standarti 
+5. Aniq bir vaziyatlarga bog‘liq ravishda, belgilangan maqsadi bo‘yicha foydalanish holatigacha keltirilishi salmoqli vaqtni talab etadigan quyidagi aktivlar kvalifikatsiyalanadigan aktivlar bo‘lib hisoblanishi mumkin: binolar, inshootlar, ishlab chiqarish mashinalari va uskunalari, nomoddiy aktivlar, elektr stansiyalari, investitsiya ko‘chmas mulki va shu kabilar. Boshqa turdagi investitsiyalar va har kuni katta miqdorlarda, qayta takrorlanadigan asosda ishlab chiqariladigan tovar-moddiy zaxiralari, garchand ularning ishlab chiqarilishi uzoq muddatni talab etgan taqdirda ham (masalan, viski, vino, konyak va shu kabilarni ishlab chiqaris
+h) kvalifikatsiyalanadigan aktiv bo‘lib hisoblanmaydi. 
+6. Xarid qilish paytida belgilangan maqsadi bo‘yicha foydalanish uchun yoki sotish uchun tayyor bo‘lgan aktivlar kvalifikatsiyalangan aktiv bo‘lib hisoblanmaydi. 
+7. Yer maydoni kvalifikatsiyalangan aktiv bo‘lib hisoblanmaydi. Biroq, agarda yer maydonida biror-bir yer tuzilish ishlari amalga oshirilayotgan bo‘lsa, qarzlar bo‘yicha xarajatlarni yer maydoni qiymatiga qo‘shish mumkin, chunki ushbu xarajatlar mazkur yer maydonini foydalanishdan yoki uni sotishdan olingan daromadlar bilan solishtiriladi (qoplanadi). 
+8. Agar yer maydoni xarid qilib olingan va yer tuzilish ishlari bino yoki inshootlarni qurish maqsadida amalga oshirilayotgan bo‘lsa, bunday hollarda qarzlar bo‘yicha xarajatlar yer maydoni qiymatiga emas, balki qurilayotgan obyektlar qiymatiga qo‘shilishi lozim.
+II.
+Qarzlar bo‘yicha xarajatlar hisobining tartibi
+§ 1.
+Qarzlar bo‘yicha xarajatlarning tan olinishi 2-paragrafiga 
+10. Kvalifikatsiyalangan aktivni xarid qilish, qurish yoki ishlab chiqarish bilan bevosita bog‘liq bo‘lgan qarzlar bo‘yicha xarajatlar ushbu aktivning tannarxiga olib borish yo‘li orqali kapitalizatsiya qilinishi lozim. 
+11. Qarzlar bo‘yicha xarajatlar kvalifikatsiyalangan aktivning qiymatiga qo‘shish yo‘li bilan kapitalizatsiya qilinadi, agarda undan xo‘jalik yurituvchi subyekt kelgusida iqtisodiy manfaatlar olishi mumkin bo‘lsa va agar bunda xarajatlarni ishonchli o‘lchash imkoniyati mavjud bo‘lsa.
+§ 2.
+Kapitalizatsiya qilish uchun ruxsat etilgan qarzlar bo‘yicha xarajatlar 
+12. Kvalifikatsiyalangan aktivni xarid qilish, qurish yoki ishlab chiqarish bilan bevosita bog‘liq bo‘lgan qarzlar bo‘yicha xarajatlar — bu, agar tegishli aktiv uchun xarajatlar amalga oshirilmagan taqdirda, vujudga kelmasligi mumkin bo‘lgan qarzlar bo‘yicha xarajatlardir. Aniq bir kvalifikatsiyalangan aktivni xarid qilish uchun xo‘jalik yurituvchi subyekt mablag‘larni aynan shu maqsadda chetdan jalb qilgan hollarda, ushbu aktiv bilan bevosita bog‘liq bo‘lgan qarzlar bo‘yicha xarajatlar aniq ravishda belgilanishi (o‘rnatilish
+i) mumkin. 
+13. Aniq bir qarz va kvalifikatsiyalangan aktiv o‘rtasida bevosita bog‘liqlikni aniqlash va teskari holatda jalb qilmaslik mumkin bo‘lgan qarzlarni aniqlash qiyinchiliklarni keltirib chiqarishi mumkin. Mazkur turdagi qiyinchiliklar quyidagi hollarda: xo‘jalik yurituvchi subyektning moliyaviy faoliyati markazlashtirilgan tartibda muvofiqlashtirilgan bo‘lsa; xo‘jalik yurituvchi subyektlar guruhi turli foiz stavkalari bo‘yicha qarz mablag‘larini olish uchun qator qarz majburiyatlaridan foydalansa va ushbu mablag‘larni guruhga kiruvchi xo‘jalik jamiyatlariga turli asoslarda qarzga bersa, paydo bo‘lishi mumkin. Mazkur holat valyuta kurslarining tebranishida, shuningdek yuqori inflatsiya sharoitida chet el valyutasida denominatsiya qilingan yoki unga bog‘langan qarzlar guruh tomonidan foydalangan hollarda yanada mushkullashadi. Bular natijasida kvalifikatsiyalangan aktivni xarid qilish bilan bevosita bog‘liq bo‘lgan qarz mablag‘laridan foydalanish bo‘yicha xarajatlar miqdorini aniqlash qiyinlashadi va u xo‘jalik yurituvchi subyekt rahbariyatining professional mulohazasiga asoslangan baholashni talab etadi. 
+14. Kvalifikatsiyalangan aktivni xarid qilish uchun maxsus jalb qilingan qarz mablag‘lari doirasida mazkur aktiv bo‘yicha kapitalizatsiya qilish uchun ruxsat etilgan qarzlar bo‘yicha xarajatlar summasi, ushbu qarz bo‘yicha davr mobaynida qilingan haqiqiy xarajatlardan ushbu qarz mablag‘larini vaqtinchalik investitsiya qilishdan olingan har qanday investitsiya daromadi summasini chegirib tashlangandan so‘ng qolgan summa sifatida aniqlanishi lozim. 
+15. Kvalifikatsiyalangan aktivni moliyalashtirish bo‘yicha kelishuvlar xo‘jalik yurituvchi subyekt tomonidan qarz mablag‘larini olishga va ushbu mablag‘larning bir qismi yoki hammasi kvalifikatsiyalangan aktiv uchun qilingan xarajat sifatida ishlatilishidan oldin, ular bilan bog‘liq bo‘lgan xarajatlarning paydo bo‘lishiga olib kelishi mumkin. Bunday sharoitlarda qarz mablag‘lari ko‘p hollarda, ular kvalifikatsiyalangan aktiv uchun sarflangunga qadar vaqtincha investitsiya qilinishi mumkin. 
+16. Davr mobaynida kapitalizatsiya qilish uchun ruxsat etilgan qarzlar bo‘yicha xarajatlar summasini aniqlashda bunday mablag‘lardan olingan har qanday investitsiya daromadi amalga oshirilgan qarzlar bo‘yicha xarajatlar summasidan chegirib tashlanadi. 
+17. Umumiy maqsadlarda jalb qilingan va kvalifikatsiyalangan aktivni xarid qilish uchun foydalanilgan qarz mablag‘lari doirasida kapitalizatsiya qilish uchun ruxsat etilgan qarzlar bo‘yicha xarajatlar summasi ushbu aktiv uchun amalga oshirilgan xarajatlarga nisbatan kapitalizatsiya stavkasini qo‘llash orqali aniqlanishi lozim. 
+18. Kvalifikatsiyalangan aktivni xarid qilish uchun maxsus olingan qarzlardan tashqari, davr mobaynida xo‘jalik yurituvchi subyektning qoplanmay qolgan qarzlariga nisbatan hisoblangan qarzlar bo‘yicha xarajatlarning o‘rtacha tortilgan miqdori kapitalizatsiya stavkasi bo‘lib hisoblanadi. 
+19. Davr mobaynida kapitalizatsiya qilingan qarzlar bo‘yicha xarajatlar summasi ushbu davr mobaynida amalga oshirilgan qarzlar bo‘yicha xarajatlar summasidan oshib ketmasligi lozim. 
+20. Konsolidatsiyalashgan moliyaviy hisobotni tuzishda qarzlar bo‘yicha xarajatlarning o‘rtacha tortilgan miqdorini hisoblash maqsadida bosh va shu’ba xo‘jalik jamiyatlarining barcha qarzlarini kiritish mumkin yoki boshqa sharoitlarda har bir shu’ba xo‘jalik jamiyati uchun mazkur shu’ba xo‘jalik jamiyatining qarz mablag‘lariga nisbatan hisoblangan qarzlar bo‘yicha xarajatlarning o‘rtacha tortilgan miqdorini qo‘llash mumkin.
+§ 3.
+Kvalifikatsiyalangan aktiv balans qiymatining uning joriy qiymatidan oshib ketishi 
+21. Kvalifikatsiyalangan aktivning balans qiymati yoki ko‘zlangan yakuniy tannarxi uning joriy qiymatidan yoki sof sotish qiymatidan oshib ketsa, uning balans qiymati buxgalteriya hisobi bo‘yicha qonunchilik hujjatlari talablariga muvofiq qisman yoki to‘liq hisobdan chiqariladi. Bunda, ayrim holatlarda kvalifikatsiyalangan aktiv qiymatining ilgari amalga oshirilgan qisman hisobdan chiqarilgan miqdori buxgalteriya hisobi bo‘yicha qonunchilik hujjatlariga muvofiq qayta tiklanishi mumkin.
+§ 4.
+Qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishning boshlanishi 
+22. Xo‘jalik yurituvchi subyekt qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni kvalifikatsiyalangan aktiv tannarxining bir qismi sifatida kapitalizatsiya qilishni boshlash sanasidan boshlab amalga oshirishi lozim. Kapitalizatsiya qilishni boshlash sanasi bo‘lib, xo‘jalik yurituvchi subyekt bir vaqtning o‘zida birinchi marta quyida keltirilgan shartlarning barchasiga muvofiq kelish sanasi hisoblanadi: mazkur aktiv bo‘yicha xarajatlarni amalga oshirganda; qarzlar bo‘yicha xarajatlarni amalga oshirganda; aktivni belgilangan maqsadi bo‘yicha ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan faoliyatni amalga oshirganda. milliy standarti 
+24. Ilgari kapitalizatsiya qilingan qarzlar bo‘yicha xarajatlarni o‘z ichiga olgan davr davomidagi aktivning o‘rtacha balans qiymati odatda ushbu davrda kapitalizatsiya stavkasi qo‘llaniladigan xarajatlarning asoslangan taxminiy qiymatiga teng bo‘ladi. 
+25. Aktivni belgilangan maqsadlarda ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan faoliyat nafaqat aktivning o‘zini jismoniy yaratishini o‘z ichiga oladi. Unga aktivni jismoniy yaratishni boshlashdan oldin amalga oshiriladigan texnik va ma’muriy ishlar ham kiradi, masalan, qurilishni boshlash uchun zarur bo‘lgan ruxsatni olish bilan bog‘liq faoliyat. Biroq, bunday faoliyatga aktivga egalik qilish taalluqli emas, agarda bunda uning holatini o‘zgartiruvchi ishlab chiqarish yoki modifikatsiya bo‘lmasa. Masalan, qurilish uchun erni tayyorlash ishlari amalga oshirilgan davrda qarzlar bo‘yicha amalga oshirilgan xarajatlar ushbu ishlarni amalga oshirish davri davomida kapitalizatsiya qilinadi. Biroq, kelgusida qurilish uchun sotib olingan er, unda hech qanday tayyorlash ishlari olib borilmasdan egalik qilib turilgan davrdagi qarzlar bo‘yicha xarajatlar kapitalizatsiya qilinmaydi.
+§ 5.
+Qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishning to‘xtatilishi 
+26. Xo‘jalik yurituvchi subyekt kvalifikatsiyalangan aktivni tayyorlash bo‘yicha faol harakatni to‘xtatgan davomiy davrlar mobaynida qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni to‘xtatishi lozim. 
+27. Xo‘jalik yurituvchi subyekt aktivni belgilangan maqsadda ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan faoliyatni to‘xtatib turgan davomiy davrlarda ham qarzga olingan mablag‘lar bo‘yicha xarajatlar qilishi mumkin. Bunday xarajatlarga kapitalizatsiya qilish sifatida turkumlanmaydigan tugallanmagan qurilishni saqlab turish xarajatlari kiradi. Biroq, odatda xo‘jalik yurituvchi subyekt asosiy (zaruriy) texnik va ma’muriy ishlarni amalga oshirayotgan davrda qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni to‘xtatmaydi. 
+28. Vaqtinchalik to‘xtatib turish aktivni belgilangan maqsadda ishlatishga yoki sotishga tayyorlash jarayonining bir qismi bo‘lib hisoblanganda ham qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilish to‘xtatilmaydi. Masalan, zaxiralarni yetarli darajada yig‘ish davrida yoki suvning yuqori darajada bo‘lishi ko‘prik qurilishini kechiktirganda, agar ushbu geografik hudud uchun qurishni belgilangan davri davomida suvning bunday yuqori darajada bo‘lishi odatiy hol bo‘lsa, qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilish davom ettiriladi.
+§ 6.
+Qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni tugatish 
+29. Xo‘jalik yurituvchi subyekt aktivni belgilangan maqsadda ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan barcha ishlar tugatilganda qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilishni tugatishi lozim. 
+30. Agar kunlik ma’muriy ishlar hali ham davom etayotgan bo‘lishiga qaramay, uni jismoniy yaratish tugatilgan bo‘lsa, odatda obyekt belgilangan maqsadda ishlatishga yoki sotishga tayyor deb hisoblanadi. 
+31. Agarda kvalifikatsiyalanadigan aktivni qurish qismlar bo‘yicha tugatilganda va har bir qismni boshqa qismlarni qurish davomida ishlatish mumkin bo‘lsa, xo‘jalik yurituvchi subyekt aktivning ushbu qismini belgilangan maqsadda ishlatishga yoki sotishga tayyorlash uchun zarur bo‘lgan barcha ishlarni tugatganda, qarzlar bo‘yicha xarajatlarni kapitalizatsiya qilish tugatilishi shart. Masalan, har biri alohida ishlatishga yaroqli bo‘lgan bir necha binolardan iborat bo‘lgan biznes-markaz kvalifikatsiyalanadigan aktiv hisoblanadi va undagi har bir qism boshqa qismlarni qurish hali davom etayotgan paytda ishlatilishi mumkin bo‘lsa. Tashkiliy qismlaridan har qaysisi alohida ishlatilishi mumkin bo‘lishidan oldin to‘liq tugatilishi lozim bo‘lgan kvalifikatsiyalanadigan aktivga bir maydonda joylashgan, korxonaning turli sexlarida ketma-ketlik bilan amalga oshiriladigan bir necha ishlab chiqarish jarayonlarini birlashtiradigan sanoat korxonasi misol bo‘lishi mumkin.
+III.
+Ma’lumotni ochib berish 
+32. Xo‘jalik yurituvchi subyekt moliyaviy hisobotda quyidagi ma’lumotlarni ochib berishi lozim: 
+a) davr davomida kapitalizatsiya qilingan qarzlar bo‘yicha xarajatlar miqdori; 
+b) kapitalizatsiya qilish uchun tatbiq etilgan qarzlar bo‘yicha xarajatlar hajmini aniqlashda qo‘llanilgan kapitalizatsiya stavkasi. (O‘zbekiston Respublikasi qonun hujjatlari to‘plami, 2009-y., 35-son, 388-modda; 2017-y., 26-son, 599-modda; Qonunchilik ma’lumotlari milliy bazasi, 30.11.2021-y., 10/21/3338/1117-son)

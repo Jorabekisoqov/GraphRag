@@ -1,0 +1,46 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_3540_20240801.json",
+        "document_title": "Qayta tashkil etishni amalga oshirishda moliyaviy hisobotni shakllantirish (23-sonli BHMS)",
+        "doc_number": "23-son",
+        "reg_number": "3540",
+        "date_signed": "2024-01-02",
+        "date_registered": "2024-08-01",
+        "date_effective": "2024-08-01",
+        "authority": "Moliya vazirligi",
+        "okoz_code": "07.29.04.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "section_1",
+            "original_text": "O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (23-sonli BHMS) “Qayta tashkil etishni amalga oshirishda moliyaviy hisobotni shakllantirish”ni tasdiqlash haqida [O‘zbekiston Respublikasi Adliya vazirligi tomonidan 2024-yil 2-avgustda ro‘yxatdan o‘tkazildi, ro‘yxat raqami 3540] \n3. Mazkur buyruq rasmiy e’lon qilingan kundan e’tiboran kuchga kiradi. Vazir D. KUCHKAROV Toshkent sh., 2024-yil 14-iyun, 1-bob.",
+            "nodes": [
+                {
+                    "id": "BHMS_23",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Qayta tashkil etishni amalga oshirishda moliyaviy hisobotni shakllantirish",
+                        "soni": "23"
+                    }
+                }
+            ],
+            "relationships": []
+        },
+        {
+            "chunk_id": "section_2",
+            "original_text": "2. Mazkur BHMSning maqsadi qayta tashkil etishni amalga oshirish haqidagi ma’lumotni moliyaviy hisobotda yoritib berish tartibini belgilash hisoblanadi. \n3. Mazkur BHMSning amal qilishi budjet tashkilotlari, banklar va nobank kredit tashkilotlaridan tashqari O‘zbekiston Respublikasida faoliyat yuritayotgan yuridik shaxslarga (bundan buyon matnda tashkilotlar deb yuritilad\ni) nisbatan tatbiq qilinadi. \n4. Mazkur BHMS davlat ishtirokidagi korxonalarni xususiylashtirish bilan bog‘liq xo‘jalik operatsiyalariga nisbatan qo‘llanilmaydi. \n5. Tashkilotni qayta tashkil etish uning ta’sischilari (ishtirokchilar\ni) yoki ta’sis hujjatlarida shunga vakil qilingan yuridik shaxs organining qaroriga muvofiq quyidagi shakllarda amalga oshirilishi mumkin: \na) qo‘shib yuborish; \nb) qo‘shib olish; \nv) bo‘lish",
+            "nodes": [
+                {
+                    "id": "BHMS_23",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Qayta tashkil etishni amalga oshirishda moliyaviy hisobotni shakllantirish",
+                        "soni": "23"
+                    }
+                }
+            ],
+            "relationships": []
+        }
+    ]
+}

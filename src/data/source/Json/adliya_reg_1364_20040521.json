@@ -1,0 +1,311 @@
+{
+    "metadata": {
+        "file_name": "adliya_reg_1364_20040521.json",
+        "document_title": "Chet el valyutasida ifodalangan aktivlar va majburiyatlarning hisobi (22-sonli BHMS)",
+        "doc_number": "51-son",
+        "reg_number": "1364",
+        "date_signed": "2004-03-23",
+        "date_registered": "2004-05-21",
+        "date_effective": "2004-05-31",
+        "authority": "Moliya vazirligi",
+        "okoz_code": "07.29.04.00",
+        "tsz_code": "Buxgalteriya hisobi"
+    },
+    "graph_data": [
+        {
+            "chunk_id": "approval_and_scope",
+            "original_text": "1. O'zbekiston Respublikasi buxgalteriya hisobining milliy standarti (22-son BHMS) \"Chet el valyutasida ifodalangan aktivlar va majburiyatlarning hisobi\" ilovaga muvofiq tasdiqlansin. 2. Mazkur BHMSning amal qilishi, O'zbekiston Respublikasi hududida chet el valyutasidagi operatsiyalarni amalga oshiradigan O'zbekiston Respublikasi hududidagi barcha tashkilotlarga (banklar va boshqa kredit tashkilotlaridan tashqari) tatbiq etiladi.",
+            "nodes": [
+                {
+                    "id": "Buyruq_51_2004",
+                    "type": "Hujjat",
+                    "properties": {
+                        "sana": "2004-03-23",
+                        "holati": "Active"
+                    }
+                },
+                {
+                    "id": "BHMS_22",
+                    "type": "Standart",
+                    "properties": {
+                        "nomi": "Chet el valyutasida ifodalangan aktivlar va majburiyatlarning hisobi",
+                        "soni": "22"
+                    }
+                },
+                {
+                    "id": "Xo'jalik_Yurituvchi_Subyekt",
+                    "type": "Subyekt"
+                },
+                {
+                    "id": "Banklar",
+                    "type": "Mustasno",
+                    "properties": {
+                        "izoh": "Tatbiq etilmaydi"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Buyruq_51_2004",
+                    "target": "BHMS_22",
+                    "type": "TASDIQLADI"
+                },
+                {
+                    "source": "BHMS_22",
+                    "target": "Xo'jalik_Yurituvchi_Subyekt",
+                    "type": "TATBIQ_ETILADI"
+                },
+                {
+                    "source": "BHMS_22",
+                    "target": "Banklar",
+                    "type": "QO'LLANILMAYDI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "general_rules",
+            "original_text": "1. Mazkur BHMSning maqsadi bo'lib chet el valyutasida ifodalangan aktivlar va majburiyatlarni buxgalteriya hisobida aks ettirish va ularni moliyaviy hisobotda yoritib berish tartibini belgilash hisoblanadi. 4. O'zbekiston Respublikasida barcha xo'jalik yurituvchi subyektlar milliy valyutada — so'mda buxgalteriya hisobini yuritishi va moliyaviy hisobotlarni taqdim etishi shart.",
+            "nodes": [
+                {
+                    "id": "Chet_El_Valyutasi",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Aktivlar",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "Majburiyatlar",
+                    "type": "Tushuncha"
+                },
+                {
+                    "id": "So'm",
+                    "type": "Valyuta",
+                    "properties": {
+                        "nomi": "O'zbekiston so'mi",
+                        "turi": "Milliy valyuta"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "BHMS_22",
+                    "target": "Chet_El_Valyutasi",
+                    "type": "TARTIBGA_SOLADI"
+                },
+                {
+                    "source": "Chet_El_Valyutasi",
+                    "target": "Aktivlar",
+                    "type": "IFODALANADI"
+                },
+                {
+                    "source": "Chet_El_Valyutasi",
+                    "target": "Majburiyatlar",
+                    "type": "IFODALANADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "exchange_rate_operations",
+            "original_text": "6. Chet el valyutasidagi operatsiyalar bo'lib chet el valyutasida amalga oshiriladigan bitim hisoblanadi. 7. Chet el valyutalarining so'mga nisbatan O'zbekiston Respublikasi Markaziy banki tomonidan belgilangan kursining o'zgarishiga hamda aktivlar va majburiyatlarni qayta hisoblashga bog'liq holda ijobiy yoki salbiy kurs farqi yuzaga keladi.",
+            "nodes": [
+                {
+                    "id": "Chet_El_Valyutasidagi_Operatsiya",
+                    "type": "Operatsiya_Turi"
+                },
+                {
+                    "id": "Markaziy_Bank",
+                    "type": "Muassasa",
+                    "properties": {
+                        "nomi": "O'zbekiston Respublikasi Markaziy banki"
+                    }
+                },
+                {
+                    "id": "Kurs_Farqi",
+                    "type": "Tushuncha",
+                    "properties": {
+                        "turi": "Ijobiy yoki salbiy"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Markaziy_Bank",
+                    "target": "Kurs_Farqi",
+                    "type": "BELGILAYDI"
+                },
+                {
+                    "source": "Kurs_Farqi",
+                    "target": "Aktivlar",
+                    "type": "TA'SIR_ETADI"
+                },
+                {
+                    "source": "Kurs_Farqi",
+                    "target": "Majburiyatlar",
+                    "type": "TA'SIR_ETADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "accounting_reflection",
+            "original_text": "8. Chet el valyutasida ifodalangan aktivlar va majburiyatlar qiymati, buxgalteriya hisobida aks ettirish maqsadida, so'mda qayta hisoblanishi lozim. 9. Chet el valyutasida ifodalangan aktivlar va majburiyatlar qiymatini so'mda qayta hisoblash ushbu chet el valyutasining so'mga nisbatan Markaziy bank kursi bo'yicha amalga oshiriladi.",
+            "nodes": [
+                {
+                    "id": "Qayta_Hisoblash",
+                    "type": "Hisob_Usuli"
+                },
+                {
+                    "id": "Markaziy_Bank_Kursi",
+                    "type": "Kurs",
+                    "properties": {
+                        "belgilovchi": "Markaziy bank"
+                    }
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Aktivlar",
+                    "target": "Qayta_Hisoblash",
+                    "type": "QAYTA_HISOBLANADI"
+                },
+                {
+                    "source": "Majburiyatlar",
+                    "target": "Qayta_Hisoblash",
+                    "type": "QAYTA_HISOBLANADI"
+                },
+                {
+                    "source": "Qayta_Hisoblash",
+                    "target": "Markaziy_Bank_Kursi",
+                    "type": "FOYDALANADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "exchange_rate_difference_accounting",
+            "original_text": "14. Xo'jalik yurituvchi subyektlar har oyda balansning valyuta moddalarini hisobot oyining oxirgi sanasidagi va xo'jalik operatsiyalarini sodir etish sanasidagi Markaziy bankning kursi bo'yicha qayta baholashni amalga oshiradi. 17. Yuzaga kelgan kurs farqi, xo'jalik yurituvchi subyektning xohishiga ko'ra moliyaviy natijalarga to'g'ridan to'g'ri olib borish yo'li bilan yoki jamg'arish yo'li bilan hisobdan chiqariladi.",
+            "nodes": [
+                {
+                    "id": "Valyuta_Moddalari",
+                    "type": "Balans_Moddasi"
+                },
+                {
+                    "id": "To'g'ridan_To'g'ri_Usul",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "nomi": "To'g'ridan to'g'ri olib borish usuli"
+                    }
+                },
+                {
+                    "id": "Jamg'arish_Usuli",
+                    "type": "Hisob_Usuli",
+                    "properties": {
+                        "nomi": "Jamg'arish usuli",
+                        "holati": "2019-yil 1-yanvardan qo'llanilmaydi"
+                    }
+                },
+                {
+                    "id": "Moliyaviy_Natija",
+                    "type": "Hisobot_Elementi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Valyuta_Moddalari",
+                    "target": "Qayta_Hisoblash",
+                    "type": "QAYTA_BAHOLANADI"
+                },
+                {
+                    "source": "Kurs_Farqi",
+                    "target": "To'g'ridan_To'g'ri_Usul",
+                    "type": "HISOBLANADI"
+                },
+                {
+                    "source": "Kurs_Farqi",
+                    "target": "Jamg'arish_Usuli",
+                    "type": "HISOBLANADI"
+                },
+                {
+                    "source": "Kurs_Farqi",
+                    "target": "Moliyaviy_Natija",
+                    "type": "OLIB_BORILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "exchange_rate_treatment",
+            "original_text": "18. To'g'ridan-to'g'ri olib borish usulida kurs farqlari moliyaviy-xo'jalik faoliyati natijalariga paydo bo'lishiga qarab olib boriladi. 22. Xo'jalik yurituvchi subyektning moliyaviy natijalariga olib borilgan ijobiy (salbiy) kurs farqi moliyaviy faoliyatning daromadlari (xarajatlari) tarkibida hisobga olinadi.",
+            "nodes": [
+                {
+                    "id": "Ijobiy_Kurs_Farqi",
+                    "type": "Kurs_Farqi_Turi",
+                    "properties": {
+                        "turi": "Ijobiy"
+                    }
+                },
+                {
+                    "id": "Salbiy_Kurs_Farqi",
+                    "type": "Kurs_Farqi_Turi",
+                    "properties": {
+                        "turi": "Salbiy"
+                    }
+                },
+                {
+                    "id": "Daromadlar",
+                    "type": "Hisobot_Elementi"
+                },
+                {
+                    "id": "Xarajatlar",
+                    "type": "Hisobot_Elementi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Ijobiy_Kurs_Farqi",
+                    "target": "Daromadlar",
+                    "type": "HISOBGA_OLINADI"
+                },
+                {
+                    "source": "Salbiy_Kurs_Farqi",
+                    "target": "Xarajatlar",
+                    "type": "HISOBGA_OLINADI"
+                },
+                {
+                    "source": "Ijobiy_Kurs_Farqi",
+                    "target": "Moliyaviy_Natija",
+                    "type": "OLIB_BORILADI"
+                },
+                {
+                    "source": "Salbiy_Kurs_Farqi",
+                    "target": "Moliyaviy_Natija",
+                    "type": "OLIB_BORILADI"
+                }
+            ]
+        },
+        {
+            "chunk_id": "information_disclosure",
+            "original_text": "33. Moliyaviy hisobot va unga tushuntirishlarda quyidagilar yoritib berilishi kerak: a) xo'jalik yurituvchi subyektning moliyaviy natijalariga olib borilgan kurs farqlari miqdori; b) qo'shilgan kapital sifatida tasniflanadigan kurs farqlari summasi; v) buxgalteriya hisobining boshqa schyotlariga olib borilgan kurs farqlari miqdori.",
+            "nodes": [
+                {
+                    "id": "Moliyaviy_Hisobot",
+                    "type": "Hisobot_Shakli"
+                },
+                {
+                    "id": "Qo'shilgan_Kapital",
+                    "type": "Kapital_Turi"
+                }
+            ],
+            "relationships": [
+                {
+                    "source": "Kurs_Farqi",
+                    "target": "Moliyaviy_Hisobot",
+                    "type": "YORITILADI"
+                },
+                {
+                    "source": "Kurs_Farqi",
+                    "target": "Qo'shilgan_Kapital",
+                    "type": "TASNIFLANADI"
+                }
+            ]
+        }
+    ]
+}

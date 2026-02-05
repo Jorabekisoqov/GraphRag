@@ -1,0 +1,100 @@
+[OKOZ:
+1.07.00.00.00 Moliya va kredit to'g'risidagi qonunchilik. Bank faoliyati / 07.27.00.00 Valyutani tartibga solish va valyutani nazorat qilish / 07.27.13.00 Valyutani tartibga solish to'g'risidagi boshqa masalalar;
+2.07.00.00.00 Moliya va kredit to'g'risidagi qonunchilik. Bank faoliyati / 07.29.00.00 Buxgalteriya hisobi. Moliyaviy hisobot / 07.29.04.00 Pul mablag'lari, valyuta, past baholi va tez emiriluvchi predmetlarning hisobi]
+[TSZ:
+1.Moliya / Buxgalteriya hisobi]
+
+"TASDIQLANGAN"
+O'zbekiston Respublikasi
+Moliya vazirligi
+Vazir
+M. NURMURADOV
+2004-yil 23-mart 51-son
+CHET EL VALYUTASIDA IFODALANGAN AKTIVLAR VA MAJBURIYATLARNING HISOBI
+o'zbekiston respublikasi buxgalteriya hisobi milliy standarti
+22-son bhms
+[O'zbekiston Respublikasi Adliya vazirligi tomonidan 2004-yil 21-mayda 1364-son bilan davlat ro'yxatidan o'tkazilgan]
+
+O‘zbekiston Respublikasi Moliya vazirligining O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (22-son BHMS) “Chet el valyutasida ifodalangan aktivlar va majburiyatlarning hisobi”ni tasdiqlash to‘g‘risida [O‘zbekiston Respublikasi Adliya vazirligi tomonidan 2004-yil 21-mayda ro‘yxatdan o‘tkazildi, ro‘yxat raqami 1364] O‘zbekiston Respublikasi Moliya vazirligining 2013-yil 11-apreldagi 37-son (ro‘yxat raqami 1364-1, 2013-yil 3-may), 2017-yil 13-iyundagi 77-son (ro‘yxat raqami 1364-2, 2017-yil 16-iyu
+n) buyruqlari bilan kiritilgan o‘zgartirish va qo‘shimchalar bilan. 5-moddasiga 
+2. Mazkur buyruq O‘zbekiston Respublikasi Adliya vazirligida davlat ro‘yxatidan o‘tkazilgan kundan boshlab 10 kun o‘tgandan keyin kuchga kiradi. Moliya vaziri M. NURMURADOV Toshkent sh., 2004-yil 23-mart, O‘zbekiston Respublikasi buxgalteriya hisobining milliy standarti (22-son BHMS) “Chet el valyutasida ifodalangan aktivlar va majburiyatlarning hisobi”
+1-§.
+Umumiy qoidalar 
+1. Mazkur BHMSning maqsadi bo‘lib chet el valyutasida ifodalangan aktivlar va majburiyatlarni buxgalteriya hisobida aks ettirish va ularni moliyaviy hisobotda yoritib berish tartibini belgilash hisoblanadi. 
+2. Mazkur BHMSning amal qilishi, O‘zbekiston Respublikasi hududida chet el valyutasidagi operatsiyalarni amalga oshiradigan O‘zbekiston Respublikasi hududidagi barcha tashkilotlarga (banklar va boshqa kredit tashkilotlaridan tashqar
+i) (keyingi o‘rinlarda — xo‘jalik yurituvchi subyektla
+r) tatbiq etiladi. 
+3. Mazkur BHMS ta’sis hujjatlari va boshqalarda qayta hisoblash talab qilingan hollarda, so‘mda tuzilgan moliyaviy hisobot ko‘rsatkichlarini chet el valyutasiga qayta hisoblashda qo‘llanilmaydi. 
+4. O‘zbekiston Respublikasida barcha xo‘jalik yurituvchi subyektlar milliy valyutada ― so‘mda buxgalteriya hisobini yuritishi va moliyaviy hisobotlarni taqdim etishi shart, agarda qonunchilikda boshqa tartib ko‘zda tutilmagan bo‘lsa. 
+5. Mazkur Standartda qo‘llaniladigan atamalar: 
+6. Chet el valyutasidagi operatsiyalar bo‘lib chet el valyutasida amalga oshiriladigan bitim hisoblanadi, qachonki xo‘jalik yurituvchi subyekt: 
+a) aktivlar, ishlar va xizmatlarni chet el valyutasida xarid qiladi yoki realizatsiya qiladi; 
+b) to‘lash yoki olish summalari chet el valyutasida belgilangan kreditlar yoki qarzlarni olganda yoki taqdim etganda; 
+v) chet el valyutasidagi majburiyatlarni o‘ziga qabul qilganda yoki majburiyatlarni qoplaganda, yoxud olinadigan schyotlarga ega bo‘lganda. 
+7. Chet el valyutalarining so‘mga nisbatan O‘zbekiston Respublikasi Markaziy banki tomonidan belgilangan kursining (keyingi o‘rinlarda ― Markaziy bank kurs
+i) o‘zgarishiga hamda aktivlar va majburiyatlarni qayta hisoblashga bog‘liq holda ijobiy yoki salbiy kurs farqi yuzaga keladi.
+2-§.
+Chet el valyutasidagi operatsiyalarni buxgalteriya hisobida aks ettirish 
+8. Chet el valyutasida ifodalangan aktivlar va majburiyatlar qiymati, buxgalteriya hisobida aks ettirish maqsadida, so‘mda qayta hisoblanishi lozim. 
+9. Chet el valyutasida ifodalangan aktivlar va majburiyatlar qiymatini so‘mda qayta hisoblash ushbu chet el valyutasining so‘mga nisbatan Markaziy bank kursi bo‘yicha amalga oshiriladi. 
+10. Buxgalteriya hisobi maqsadlari uchun mazkur so‘mdagi qayta hisoblash chet el valyutasida operatsiya sodir etilgan sanadagi Markaziy bank kursi bo‘yicha amalga oshiriladi. Buxgalteriya hisobi maqsadlari uchun chet el valyutasidagi ayrim operatsiyalarning sodir etish sanalari mazkur BHMCning ilovasida keltirilgan. 
+11. Buxgalteriya hisobida konsignantga nisbatan chet el valyutasidagi kreditorlik qarzi konsignatsiyaga olingan tovarlarni sotish sanasida, ana shu sanadagi Markaziy bankning kursi bo‘yicha vujudga keladi. Qarzdorlikning keyingi hisobi mazkur BHMSga muvofiq amalga oshiriladi. 
+12. Mahsulot (ishlar, xizmatlar)ga narxlar (tariflar)ni chet el valyutasiga ekvivalentlikda belgilaydigan, o‘zaro hisob-kitoblarni esa milliy valyuta — so‘mlarda amalga oshiradigan xo‘jalik yurituvchi subyektlar xizmat ko‘rsatish sanasidan boshlab to‘lov kelib tushgan sanaga qadar davr ichida Markaziy bank kursining o‘zgarishi munosabati bilan yuzaga keladigan kurs farqini moliyaviy faoliyatdan daromad (xaraja
+t) sifatida xo‘jalik yurituvchi subyektning moliyaviy natijalariga olib boradilar.
+3-§.
+Chet el valyutasida xarid qilingan tovar-moddiy zaxiralari va boshqa aktivlarni baholash 1.1.12-bandi
+4-§.
+Kurs farqining hisobi 
+14. Xo‘jalik yurituvchi subyektlar har oyda balansning valyuta moddalarini hisobot oyining oxirgi sanasidagi va xo‘jalik operatsiyalarini sodir etish sanasidagi Markaziy bankning kursi bo‘yicha qayta baholashni amalga oshiradi. 
+15. Mazkur BHMSda qayta baholash va kurs farqlarini aniqlash maqsadida balansning valyuta moddalariga quyidagilar kiritiladi: 
+a) kassadagi va bank hisobvaraqlaridagi valyuta mablag‘lari; 
+b) to‘lanishi yoki olinishi chet el valyutasida belgilangan debitorlik va kreditorlik qarzlari, kreditlar va qarzlar, pul ekvivalentlari va boshqa aktivlar va majburiyatlar. 
+16. Quyidagilar qayta baholanmaydi: 
+a) chet el valyutasida xarid qilingan xo‘jalik yurituvchi subyektning asosiy vositalari, nomoddiy aktivlari, o‘rnatiladigan asbob-uskunalari, kapital qo‘yilmalari, tovar-moddiy zaxiralari; 
+b) xo‘jalik yurituvchi subyekt, shuningdek xorijiy investitsiyalar ishtirokidagi korxonalar ustav kapitalining miqdorlari va ta’sischilari (ishtirokchilar
+i) ulushlarining nisbati; 
+v) ustav kapitaliga va aksiyalarga investitsiyalar. 
+17. Yuzaga kelgan kurs farqi, xo‘jalik yurituvchi subyektning xohishiga ko‘ra moliyaviy natijalarga to‘g‘ridan to‘g‘ri olib borish yo‘li bilan (keyingi o‘rinlarda ― to‘g‘ridan to‘g‘ri olib borish usul
+i) yoki jamg‘arish yo‘li bilan (keyingi o‘rinlarda — jamg‘arish usul
+i) hisobdan chiqariladi. Sug‘urta tashkilotlarida kurs farqlarini hisobdan chiqarish qonunchilik hujjatlarida belgilangan tartibda amalga oshiriladi. 
+18. To‘g‘ridan-to‘g‘ri olib borish usulida kurs farqlari moliyaviy-xo‘jalik faoliyati natijalariga paydo bo‘lishiga qarab olib boriladi. 
+19. 2019-yil 1-yanvardan boshlab jamg‘arish usuli qo‘llanilmaydi. 2019-yil 1-yanvargacha jamg‘arilgan kurs farqlari moliyaviy-xo‘jalik faoliyati natijalariga quyidagicha olib borilishi mumkin: 
+a) chet el valyutasidagi debitorlik va kreditorlik qarzlari bo‘yicha ― ularning to‘lanishiga (yoki hisobdan chiqarilishig
+a) qarab; 
+b) qolgan hollarda ― balansning tegishli valyuta moddalari bilan xo‘jalik operatsiyalarining sodir etilishiga qarab. Jamg‘arilgan kurs farqlari moliyaviy natijalarga chet el valyutasining bir birligiga to‘g‘ri keladigan kurs farqlarining o‘rtacha miqdori bo‘yicha olib borilishi mumkin. 
+20. Kurs farqini olib borishda qo‘llanayotgan usullar majburiy ravishda xo‘jalik yurituvchi subyektning hisob siyosatida aks ettirilishi kerak. Balansning turli xildagi valyuta moddalariga kurs farqini olib borishning turli usullari qo‘llanishiga yo‘l qo‘yiladi. 
+21. Kurs farqlarini olib borishning jamg‘arish usulidan to‘g‘ridan to‘g‘ri olib borish usuliga o‘tishda balansning valyuta moddalarini har oyda qayta baholash natijasida oldingi jamg‘arilgan kurs farqlari xo‘jalik yurituvchi subyektning moliyaviy-xo‘jalik faoliyati natijalariga hisob siyosati qabul qilingan kalendar yilining oxirigacha har oyda (bir me’yord
+a) hisobdan chiqariladi. 
+22. Xo‘jalik yurituvchi subyektning moliyaviy natijalariga olib borilgan ijobiy (salbiy) kurs farqi moliyaviy faoliyatning daromadlari (xarajatlar
+i) tarkibida hisobga olinadi. 
+23. Buxgalteriya hisobida ta’sischilarning ustav kapitaliga ulushini chet el valyutasida kiritishi, ulushni kiritish sanasidagi Markaziy bankning kursi bo‘yicha amalga oshiriladi. 
+24. Ustav kapitali miqdori chet el valyutasida belgilangan va ustav kapitaliga ulushlar kiritish legitim so‘mlarda amalga oshirilgan hollarda ham, qayta hisoblash Markaziy bankning ulushlarni kiritish sanasidagi kursi bo‘yicha amalga oshiriladi. 
+25. Xo‘jalik yurituvchi subyektning ustav kapitalini shakllantirishda ta’sis hujjatlarini ro‘yxatdan o‘tkazish sanasidagi va ustav kapitaliga mablag‘larni haqiqatda kiritish sanasidagi Markaziy bank kurslari o‘rtasidagi vujudga keladigan kurs farqi buxgalteriya hisobida qo‘shilgan kapital sifatida aks ettiriladi.
+5-§.
+O‘zbekiston Respublikasidan tashqarida faoliyat yuritish uchun foydalaniladigan aktivlar va majburiyatlar hisobi 
+26. Moliyaviy hisobotni tuzish uchun, O‘zbekiston Respublikasidan tashqarida faoliyat yuritish uchun foydalaniladigan chet el valyutasidagi aktivlar va majburiyatlar qiymati so‘mlarda qayta hisoblanishi lozim. Chet el valyutasidagi aktivlar va majburiyatlar qiymatini so‘mlarda qayta hisoblash, ushbu chet el valyutasining so‘mga nisbatan Markaziy bankning kursi bo‘yicha amalga oshiriladi. 
+28. Xo‘jalik yurituvchi subyektning O‘zbekiston Respublikasidan tashqarida faoliyat yuritishi uchun foydalaniladigan chet el valyutasida ifodalangan asosiy vositalari, nomoddiy aktivlari, o‘rnatiladigan asbob-uskunalari, kapital qo‘yilmalari, tovar-moddiy zaxiralari qiymatini so‘mda qayta hisoblash, ushbu aktivlarni buxgalteriya hisobiga qabul qilish sanasidagi Markaziy bankning kursi bo‘yicha amalga oshiriladi. Xo‘jalik yurituvchi subyektning asosiy vositalari, nomoddiy aktivlari, o‘rnatiladigan asbob-uskunalari, kapital qo‘yilmalari, tovar-moddiy zaxiralari qiymatini O‘zbekiston Respublikasidan tashqarida faoliyat yuritish joyi — xorijiy davlatning qonunchilik hujjatlari yoki qoidalariga muvofiq qayta baholangan qiymatini qayta hisoblash, ushbu qayta baholash o‘tkazilgan sanadagi Markaziy bankning kursi bo‘yicha amalga oshiriladi. 
+29. O‘zbekiston Respublikasidan tashqarida faoliyat yuritishning moliyaviy natijalarini shakllantiradigan, chet el valyutasida ifodalangan daromadlar va xarajatlarni so‘mda qayta hisoblash, hisobot davridagi Markaziy bankning kurslari va ular amal qilish kunlari hosilalari summasini hisobot davridagi kunlar miqdoriga bo‘lish natijasida hisoblab chiqilgan kurslarning o‘rtacha miqdoridan foydalangan holda amalga oshiriladi.
+6-§.
+Konsolidatsiyalashgan moliyaviy hisobotga kiritish uchun sho‘ba (tob
+e) xo‘jalik jamiyatlari, mustaqil balansga ajratilgan tarkibiy bo‘linmalarning moliyaviy hisobotini qayta hisoblash 
+31. O‘zbekiston Respublikasidan tashqarida joylashgan sho‘ba (tob
+e) xo‘jalik jamiyatlari, mustaqil balansga ajratilgan tarkibiy bo‘linmalarning moliyaviy hisobotlarini bosh jamiyat tomonidan tuziladigan konsolidatsiyalashgan moliyaviy hisobotga kiritish uchun qayta hisoblashda bosh jamiyat quyidagi tartib-taomillarni bajarishi kerak: 
+a) O‘zbekiston Respublikasidan tashqarida joylashgan, sho‘ba (tob
+e) xo‘jalik jamiyatlari, mustaqil balansga ajratilgan tarkibiy bo‘linmalarning aktivlari va majburiyatlari hisobot davrining oxirgi sanasidagi Markaziy bankning kursi bo‘yicha qayta hisoblanishi lozim; 
+b) O‘zbekiston Respublikasidan tashqarida joylashgan sho‘ba (tob
+e) xo‘jalik jamiyatlari, mustaqil balansga ajratilgan tarkibiy bo‘linmalarning xususiy kapitali moddalari, bundan joriy yilning taqsimlanmagan foydasi (qoplanmagan zarar
+i) mustasno, hisobot davrining oxirgi sanasidagi Markaziy bankning kursi bo‘yicha qayta hisoblanishi kerak; 
+v) O‘zbekiston Respublikasidan tashqarida joylashgan shu’ba (tob
+e) xo‘jalik jamiyatlari, mustaqil balansga ajratilgan tarkibiy bo‘linmalarning daromadlari va xarajatlari moddalari, shuningdek taqsimlanmagan foydasi (qoplanmagan zarar
+i) hisobot davridagi Markaziy bankning kurslari va ular amal qilish kunlari hosilalari summasini hisobot davridagi kunlar miqdoriga bo‘lish natijasida hisoblab chiqarilgan kurslarning o‘rtacha miqdoridan foydalangan holda qayta hisoblanishi lozim. 
+32. O‘zbekiston Respublikasidan tashqarida faoliyatning tasnifi o‘zgargan hollarda, o‘zgargan tasnifga nisbatan qo‘llanadigan qayta hisoblash tartib-taomillari ushbu o‘zgarish sanasidan boshlab foydalanilishi lozim.
+7-§.
+Axborotlarni yoritib berish 
+33. Moliyaviy hisobot va unga tushuntirishlarda quyidagilar yoritib berilishi kerak: 
+a) xo‘jalik yurituvchi subyektning moliyaviy natijalariga olib borilgan kurs farqlari miqdori; 
+b) qo‘shilgan kapital sifatida tasniflanadigan kurs farqlari summasi; 
+v) buxgalteriya hisobining boshqa schyotlariga olib borilgan kurs farqlari miqdori; 
+g) hisobot sanasidan keyin yuz bergan valyuta kurslari o‘zgarishlarining oqibati, agar ular juda muhim bo‘lsa va ularni yoritib bermaslik moliyaviy hisobotdan foydalanuvchilar tomonidan to‘g‘ri baholashga va qarorlar qabul qilishga salbiy ta’sir ko‘rsatsa; 
+d) kurs farqini xo‘jalik yurituvchi subyektning moliyaviy natijalariga hisobdan chiqarish usuli; 
+e) moliyaviy hisobot tuzishning hisobot sanasidagi Markaziy bank kursi. 22-son BHMS Chet el valyutasidagi ayrim operatsiyalarni amalga oshirish sanalari (O‘zbekiston Respublikasi qonun hujjatlari to‘plami, 2004-y., 20-son, 246-modda; Qonunchilik ma’lumotlari milliy bazasi, 30.11.2021-y., 10/21/3338/1117-son)
