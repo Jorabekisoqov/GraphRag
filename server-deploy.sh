@@ -19,7 +19,18 @@ if [ "$DEPLOYMENT_TYPE" = "docker" ]; then
     # Check Docker
     if ! command -v docker &> /dev/null; then
         echo "Error: Docker is not installed."
-        echo "Install with: sudo apt-get install docker.io docker-compose"
+        echo "Install Docker and Docker Compose plugin"
+        exit 1
+    fi
+    
+    # Detect docker compose command (v2 plugin or v1 standalone)
+    if docker compose version &> /dev/null; then
+        DOCKER_COMPOSE_CMD="docker compose"
+    elif command -v docker-compose &> /dev/null; then
+        DOCKER_COMPOSE_CMD="docker-compose"
+    else
+        echo "Error: Docker Compose is not installed."
+        echo "Install Docker Compose plugin: docker compose version"
         exit 1
     fi
     
@@ -33,11 +44,12 @@ if [ "$DEPLOYMENT_TYPE" = "docker" ]; then
     
     echo "[✓] Docker found"
     echo "[✓] .env file found"
+    echo "[✓] Using: $DOCKER_COMPOSE_CMD"
     
     # Build and start
     echo ""
     echo "Building and starting containers..."
-    docker-compose up -d --build
+    $DOCKER_COMPOSE_CMD up -d --build
     
     echo ""
     echo "Waiting for Neo4j to be ready..."
@@ -47,9 +59,9 @@ if [ "$DEPLOYMENT_TYPE" = "docker" ]; then
     echo "=== Deployment Complete ==="
     echo ""
     echo "Next steps:"
-    echo "1. Ingest data: docker-compose exec graphrag-app python3 -m src.data.ingestion"
-    echo "2. Check logs: docker-compose logs -f graphrag-app"
-    echo "3. Check status: docker-compose ps"
+    echo "1. Ingest data: $DOCKER_COMPOSE_CMD exec graphrag-app python3 -m src.data.ingestion"
+    echo "2. Check logs: $DOCKER_COMPOSE_CMD logs -f graphrag-app"
+    echo "3. Check status: $DOCKER_COMPOSE_CMD ps"
     echo ""
     echo "Neo4j browser: http://localhost:7474"
     

@@ -45,12 +45,14 @@ The system is built using:
 
 3. **Start with Docker Compose**:
    ```bash
-   docker-compose up -d
+   docker compose up -d
+   # or if you have docker-compose v1: docker-compose up -d
    ```
 
 4. **Ingest data** (in a separate terminal):
    ```bash
-   docker-compose exec graphrag-app python3 -m src.data.ingestion
+   docker compose exec graphrag-app python3 -m src.data.ingestion
+   # or: docker-compose exec graphrag-app python3 -m src.data.ingestion
    ```
 
 The bot will start automatically and Neo4j will be available at `http://localhost:7474`.
@@ -115,7 +117,8 @@ python3 -m src.data.ingestion
 
 Or with Docker:
 ```bash
-docker-compose exec graphrag-app python3 -m src.data.ingestion
+docker compose exec graphrag-app python3 -m src.data.ingestion
+# or: docker-compose exec graphrag-app python3 -m src.data.ingestion
 ```
 
 ### Running the Bot
@@ -126,7 +129,8 @@ python3 -m src.bot.telegram_bot
 
 Or with Docker:
 ```bash
-docker-compose up graphrag-app
+docker compose up graphrag-app
+# or: docker-compose up graphrag-app
 ```
 
 ### Testing

@@ -18,53 +18,65 @@ nano .env  # Add your credentials
 
 ### Daily Operations
 
+**Note:** Use `docker compose` (space) for Docker Compose v2, or `docker-compose` (hyphen) for v1. The script auto-detects which to use.
+
 **Start services:**
 ```bash
-docker-compose up -d
+docker compose up -d
+# or: docker-compose up -d
 ```
 
 **Stop services:**
 ```bash
-docker-compose down
+docker compose down
+# or: docker-compose down
 ```
 
 **View logs:**
 ```bash
 # All services
-docker-compose logs -f
+docker compose logs -f
+# or: docker-compose logs -f
 
 # Bot only
-docker-compose logs -f graphrag-app
+docker compose logs -f graphrag-app
+# or: docker-compose logs -f graphrag-app
 
 # Neo4j only
-docker-compose logs -f neo4j
+docker compose logs -f neo4j
+# or: docker-compose logs -f neo4j
 ```
 
 **Check status:**
 ```bash
-docker-compose ps
+docker compose ps
+# or: docker-compose ps
 ```
 
 **Restart bot:**
 ```bash
-docker-compose restart graphrag-app
+docker compose restart graphrag-app
+# or: docker-compose restart graphrag-app
 ```
 
 **Ingest/Re-ingest data:**
 ```bash
-docker-compose exec graphrag-app python3 -m src.data.ingestion
+docker compose exec graphrag-app python3 -m src.data.ingestion
+# or: docker-compose exec graphrag-app python3 -m src.data.ingestion
 ```
 
 **Access Neo4j shell:**
 ```bash
-docker-compose exec neo4j cypher-shell -u neo4j -p your_password
+docker compose exec neo4j cypher-shell -u neo4j -p your_password
+# or: docker-compose exec neo4j cypher-shell -u neo4j -p your_password
 ```
 
 **Update code:**
 ```bash
 git pull
-docker-compose up -d --build
-docker-compose exec graphrag-app python3 -m src.data.ingestion
+docker compose up -d --build
+docker compose exec graphrag-app python3 -m src.data.ingestion
+# or: docker-compose up -d --build && docker-compose exec graphrag-app python3 -m src.data.ingestion
 ```
 
 ## Manual Deployment Commands
