@@ -9,24 +9,33 @@ Set-Location $root
 Write-Host "GraphRag local run check" -ForegroundColor Cyan
 Write-Host ""
 
-# 1. Python 3.10+
+# 1. Python 3.10, 3.11, or 3.12 only (3.13 has no numpy wheels; would need C compiler to build)
 $py = $null
-foreach ($cmd in @("python", "python3", "py")) {
+foreach ($cmd in @("py", "python", "python3")) {
     try {
         $v = & $cmd -c "import sys; print(sys.version_info.major, sys.version_info.minor)" 2>$null
         if ($v) {
             $major, $minor = $v -split " "
-            if ([int]$major -ge 3 -and [int]$minor -ge 10) {
+            if ([int]$major -eq 3 -and [int]$minor -ge 10 -and [int]$minor -le 12) {
                 $py = $cmd
                 $ver = & $cmd --version 2>$null
                 Write-Host "[OK] Python: $ver" -ForegroundColor Green
                 break
             }
+            if ([int]$major -eq 3 -and [int]$minor -eq 13) {
+                Write-Host "[FAIL] Python 3.13 is not supported (numpy has no pre-built wheels; build would need a C compiler)." -ForegroundColor Red
+                Write-Host "Use Python 3.10, 3.11, or 3.12. Example: install 3.12 from https://www.python.org/downloads/ then run:" -ForegroundColor Yellow
+                Write-Host "  Remove-Item -Recurse -Force .venv -ErrorAction SilentlyContinue" -ForegroundColor White
+                Write-Host "  py -3.12 -m venv .venv" -ForegroundColor White
+                Write-Host "  .\.venv\Scripts\Activate.ps1" -ForegroundColor White
+                Write-Host "  pip install -r requirements.txt" -ForegroundColor White
+                exit 1
+            }
         }
     } catch {}
 }
 if (-not $py) {
-    Write-Host "[FAIL] Python 3.10+ not found. Install from https://www.python.org/ and ensure it is on PATH." -ForegroundColor Red
+    Write-Host "[FAIL] Python 3.10, 3.11, or 3.12 not found (3.13 not supported). Install from https://www.python.org/" -ForegroundColor Red
     exit 1
 }
 

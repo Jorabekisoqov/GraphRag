@@ -47,7 +47,7 @@ fi
 echo "Activating virtual environment and installing dependencies..."
 source .venv/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements.txt -c constraints-langchain.txt
 
 echo "[✓] Dependencies installed."
 

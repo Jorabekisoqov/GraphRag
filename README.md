@@ -21,7 +21,7 @@ A Graph Retrieval-Augmented Generation (GraphRAG) system designed to answer ques
 ## Architecture
 
 The system is built using:
-- **Python 3.10+**
+- **Python 3.10, 3.11, or 3.12** (3.13 is not yet supported: dependencies like numpy have no pre-built wheels and would require a C compiler to build from source)
 - **Neo4j**: Graph Database for storing entities and relationships.
 - **LangChain**: Framework for RAG chains and LLM interactions.
 - **OpenAI GPT-4o**: Large Language Model for reasoning and generation.
@@ -227,13 +227,22 @@ See `structure.md` for a detailed breakdown of the codebase organization.
    ```
 3. Install dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install -r requirements.txt -c constraints-langchain.txt
    ```
 4. Install pre-commit hooks (optional):
    ```bash
    pip install pre-commit
    pre-commit install
    ```
+
+### Dependency pinning (LangChain)
+
+This repo pins only the **LangChain family** via `constraints-langchain.txt` to avoid resolver conflicts between
+`langchain`, `langchain-core`, `langchain-community`, and `langchain-openai`.
+
+- **When installing**: always include `-c constraints-langchain.txt` (or use `./deploy.sh`, which does this).
+- **When upgrading LangChain**: update the pinned versions in `constraints-langchain.txt` *as a unit* and test the
+  install + `pytest`.
 
 ### Running Tests
 

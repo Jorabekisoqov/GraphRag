@@ -129,7 +129,7 @@ sudo ./install_python.sh
 
 Follow the prompts:
 1. Creates virtual environment
-2. Installs dependencies
+2. Installs dependencies (uses `constraints-langchain.txt` to pin the LangChain stack)
 3. Checks for .env file
 4. Offers to run ingestion or start bot
 

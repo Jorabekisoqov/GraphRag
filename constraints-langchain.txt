@@ -1,0 +1,12 @@
+# LangChain constraints (single source of truth for compatible LangChain family versions).
+#
+# Why:
+# - langchain 0.2.x requires langchain-core <0.3
+# - langchain-openai 0.2.x requires langchain-core >=0.3
+# This file pins a known-compatible set to avoid pip backtracking / ResolutionImpossible.
+
+langchain==0.2.17
+langchain-core==0.2.43
+langchain-community==0.2.19
+langchain-openai==0.1.20
+
