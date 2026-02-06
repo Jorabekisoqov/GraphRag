@@ -8,6 +8,12 @@ langchain-openai>=0.1.0,<0.2.0
 # Database
 neo4j>=5.0.0,<6.0.0
 
+# CentOS 7 compatibility
+# langchain -> SQLAlchemy -> greenlet
+# Newer greenlet versions may not provide a compatible wheel on older distros,
+# causing pip to fall back to building from source (and fail with old toolchains).
+greenlet==2.0.2
+
 # Telegram Bot
 python-telegram-bot>=20.0,<21.0
 

@@ -35,6 +35,15 @@ fi
 
 echo "[✓] Using $PYTHON_CMD ($PYTHON_VERSION)"
 
+# Verify SSL works (pip needs it). This catches broken Python builds early.
+if ! $PYTHON_CMD -c "import ssl" >/dev/null 2>&1; then
+    echo "Error: The selected Python ($PYTHON_CMD) does not have SSL support (import ssl failed)."
+    echo "Fix:"
+    echo "  - Ensure you're using the correct Python build (with OpenSSL), then recreate the venv."
+    echo "  - If you're on CentOS 7, rebuild Python against OpenSSL 1.1.1+."
+    exit 1
+fi
+
 # 2. Setup Virtual Environment
 if [ ! -d ".venv" ]; then
     echo "Creating virtual environment..."
@@ -46,8 +55,8 @@ fi
 # 3. Activate and Install Dependencies
 echo "Activating virtual environment and installing dependencies..."
 source .venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt -c constraints-langchain.txt
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt -c constraints-langchain.txt
 
 echo "[✓] Dependencies installed."
 
