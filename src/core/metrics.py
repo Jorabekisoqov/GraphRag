@@ -1,6 +1,6 @@
 """Metrics collection for monitoring."""
 from prometheus_client import Counter, Histogram, Gauge
-from typing import Optional, ContextManager
+from typing import Any, Optional, ContextManager
 import time
 
 # Query metrics
