@@ -29,6 +29,16 @@ The system is built using:
 
 ## Quick Start
 
+### Check if you can run locally (Windows)
+
+From the repo root in PowerShell:
+
+```powershell
+.\scripts\run_local_check.ps1
+```
+
+This checks for Python 3.10+, creates a venv, installs dependencies, and runs tests. You need a real Python install (from [python.org](https://www.python.org/)); the Windows Store “Python” stub is not enough.
+
 ### Option 1: Docker Deployment (Recommended)
 
 1. **Clone the repository**:
