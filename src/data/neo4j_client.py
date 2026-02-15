@@ -2,7 +2,7 @@ import os
 from typing import Optional
 from dotenv import load_dotenv
 from langchain_community.graphs import Neo4jGraph
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception
 from neo4j.exceptions import ServiceUnavailable, TransientError
 from src.core.logging_config import get_logger
 
@@ -13,10 +13,19 @@ logger = get_logger(__name__)
 # Global graph instance for connection pooling
 _graph_instance: Optional[Neo4jGraph] = None
 
+def _is_connection_error(exc: BaseException) -> bool:
+    """Retry on connection-related errors (Neo4j startup, network, etc.)."""
+    if isinstance(exc, (ServiceUnavailable, TransientError)):
+        return True
+    if isinstance(exc, ValueError) and "connect" in str(exc).lower():
+        return True
+    return False
+
+
 @retry(
-    stop=stop_after_attempt(3),
-    wait=wait_exponential(multiplier=1, min=2, max=10),
-    retry=retry_if_exception_type((ServiceUnavailable, TransientError)),
+    stop=stop_after_attempt(8),
+    wait=wait_exponential(multiplier=2, min=4, max=30),
+    retry=retry_if_exception(_is_connection_error),
     reraise=True
 )
 def get_neo4j_graph() -> Neo4jGraph:
