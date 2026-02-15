@@ -4,10 +4,12 @@ Add a document to src/data/source (Raw + Json) in the format expected by ingesti
 
 Usage:
   python scripts/add_doc_to_source.py path/to/file.doc --basename soliq_kodeksi --title "Soliq kodeksi"
+  python scripts/add_doc_to_source.py path/to/file.pdf --basename buxgalteriya_utkazmasi --title "3000 ta buxgalteriya utkazmasi"
 
 Supports:
   - .doc files that are actually HTML (Word "Save as .doc" often stores HTML).
   - .txt files (copied as-is).
+  - .pdf files (text extraction via pypdf).
 """
 import argparse
 import json
@@ -33,6 +35,21 @@ def strip_html(html: str) -> str:
     return text.strip()
 
 
+def read_pdf(path: str) -> str:
+    """Extract text from a PDF file."""
+    try:
+        from pypdf import PdfReader
+    except ImportError:
+        raise ImportError("pypdf is required for PDF files. Install with: pip install pypdf")
+    reader = PdfReader(path)
+    parts = []
+    for page in reader.pages:
+        t = page.extract_text()
+        if t:
+            parts.append(t)
+    return "\n\n".join(parts)
+
+
 def read_doc_or_txt(path: str) -> str:
     """Read file; if it looks like HTML, strip tags and return plain text."""
     with open(path, "rb") as f:
@@ -48,6 +65,14 @@ def read_doc_or_txt(path: str) -> str:
     if "<html" in text.lower() or "<body" in text.lower() or "<div" in text.lower():
         return strip_html(text)
     return text
+
+
+def read_file(path: str) -> str:
+    """Read file based on extension; return plain text."""
+    ext = os.path.splitext(path)[1].lower()
+    if ext == ".pdf":
+        return read_pdf(path)
+    return read_doc_or_txt(path)
 
 
 def chunk_text(text: str, max_chunk_size: int = 4000) -> list[dict]:
@@ -81,7 +106,7 @@ def chunk_text(text: str, max_chunk_size: int = 4000) -> list[dict]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Add document to Raw + Json for ingestion.")
-    parser.add_argument("input", help="Path to .doc or .txt file")
+    parser.add_argument("input", help="Path to .doc, .txt, or .pdf file")
     parser.add_argument("--basename", default="soliq_kodeksi", help="Base name for output files (no extension)")
     parser.add_argument("--title", default="Soliq kodeksi", help="Document title for metadata")
     parser.add_argument("--chunk-size", type=int, default=4000, help="Max characters per chunk")
@@ -98,7 +123,7 @@ def main() -> None:
         sys.exit(1)
 
     print(f"Reading {args.input}...")
-    text = read_doc_or_txt(args.input)
+    text = read_file(args.input)
     print(f"Extracted {len(text)} characters.")
 
     raw_path = os.path.join(raw_dir, f"{args.basename}.txt")
