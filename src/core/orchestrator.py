@@ -1,4 +1,4 @@
-from src.data.graph_rag import query_graph
+from src.data.graph_rag import hybrid_retrieve, fallback_text_search, _is_weak_result
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -170,13 +170,14 @@ def process_query(user_query: str) -> str:
             refined_query = refine_query(user_query)
             logger.info("query_refined", original=user_query, refined=refined_query)
 
-            # 2. Retrieve from Graph
-            # Check if the refined query suggests it's just a greeting (heuristic or LLM based)
-            # For simplicity, we send everything to the graph unless it's obviously non-query.
-            # But GraphCypherQAChain can be expensive/slow for "Hi". 
-            # For this iteration, we accept the cost for robustness.
-            graph_result = query_graph(refined_query)
-            logger.info("graph_query_completed", result_length=len(graph_result))
+            # 2. Retrieve: hybrid (vector + CONTAINS) or Cypher chain
+            graph_result = hybrid_retrieve(refined_query)
+            logger.info("retrieve_completed", result_length=len(graph_result))
+
+            # 2b. Fallback: if result still weak, try CONTAINS text search
+            if _is_weak_result(graph_result):
+                graph_result = fallback_text_search(refined_query)
+                logger.info("fallback_used", refined_query=refined_query)
 
             # 3. Synthesize Answer
             final_answer = synthesize_response(user_query, graph_result)

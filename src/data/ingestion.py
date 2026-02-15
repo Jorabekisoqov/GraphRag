@@ -125,12 +125,16 @@ def ingest_json_data(json_dir: str) -> None:
             for chunk in graph_data:
                 chunk_id = chunk.get("chunk_id")
                 original_text = chunk.get("original_text")
-                
+                section = chunk.get("section", "")
+                chapter = chunk.get("chapter", "")
+
                 # Create Chunk Node (optional, but good for grounding)
                 chunk_cypher = """
                 MERGE (c:Chunk {id: $chunk_id})
                 SET c.text = $text,
-                    c.document_file = $file_name
+                    c.document_file = $file_name,
+                    c.section = $section,
+                    c.chapter = $chapter
                 WITH c
                 MATCH (d:Document {file_name: $file_name})
                 MERGE (d)-[:CONTAINS]->(c)
@@ -138,7 +142,9 @@ def ingest_json_data(json_dir: str) -> None:
                 graph.query(chunk_cypher, {
                     "chunk_id": f"{metadata.get('file_name')}_{chunk_id}",
                     "text": original_text,
-                    "file_name": metadata.get("file_name")
+                    "file_name": metadata.get("file_name"),
+                    "section": section,
+                    "chapter": chapter,
                 })
                 
                 # Create Nodes

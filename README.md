@@ -125,6 +125,11 @@ Load the knowledge graph from the source JSON files:
 python3 -m src.data.ingestion
 ```
 
+Optional steps for improved retrieval:
+- **Vector embeddings** (for hybrid search): `python scripts/add_embeddings.py` (requires `langchain-neo4j`)
+- **Full-text index**: `python scripts/create_fulltext_index.py`
+- **Re-chunk documents** with overlap: `python scripts/add_doc_to_source.py path/to/doc.txt --chunk-size 800 --chunk-overlap 150`
+
 Or with Docker:
 ```bash
 docker compose exec graphrag-app python3 -m src.data.ingestion
@@ -166,6 +171,12 @@ ruff check src/ tests/
 Type checking:
 ```bash
 mypy src/
+```
+
+### Evaluation
+Run evaluation on predefined questions:
+```bash
+python scripts/run_eval.py --questions tests/eval_questions.json
 ```
 
 ### Backup and Restore

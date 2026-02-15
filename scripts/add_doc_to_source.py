@@ -75,8 +75,50 @@ def read_file(path: str) -> str:
     return read_doc_or_txt(path)
 
 
-def chunk_text(text: str, max_chunk_size: int = 4000) -> list[dict]:
-    """Split text into chunks; each chunk has chunk_id, original_text, nodes, relationships."""
+# Uzbek document header patterns (chapter, section)
+CHAPTER_PATTERN = re.compile(
+    r"^(I{1,3}|IV|V|VI|VII|VIII|IX|X+)\s+[бБ]об\.?\s*(.*)$",
+    re.MULTILINE,
+)
+SECTION_PATTERN = re.compile(
+    r"^(I{1,3}|IV|V|VI|VII|VIII|IX|X+)\s+[қК]исм\.?\s*(.*)$",
+    re.MULTILINE,
+)
+INTRO_PATTERN = re.compile(r"^Муқаддима\s*$", re.MULTILINE)
+
+
+def _detect_section_chapter(text_slice: str) -> tuple[str, str]:
+    """Detect section and chapter from text. Returns (section, chapter)."""
+    section = ""
+    chapter = ""
+    for line in text_slice.split("\n")[:50]:
+        line = line.strip()
+        if not line:
+            continue
+        m = CHAPTER_PATTERN.match(line)
+        if m:
+            chapter = f"{m.group(1)} боб"
+            if m.group(2).strip():
+                section = m.group(2).strip()[:50]
+            continue
+        m = SECTION_PATTERN.match(line)
+        if m:
+            section = f"{m.group(1)} қисм"
+            if m.group(2).strip():
+                section = m.group(2).strip()[:50]
+            continue
+        if INTRO_PATTERN.match(line):
+            section = "Муқаддима"
+            chapter = ""
+    return (section or "Unknown", chapter or "Unknown")
+
+
+def chunk_text(
+    text: str,
+    max_chunk_size: int = 800,
+    chunk_overlap: int = 150,
+) -> list[dict]:
+    """Split text into chunks with overlap; each chunk has chunk_id, original_text, section, chapter, nodes, relationships."""
     chunks = []
     start = 0
     i = 0
@@ -93,14 +135,20 @@ def chunk_text(text: str, max_chunk_size: int = 4000) -> list[dict]:
                     end = break_at + 2
         part = text[start:end].strip()
         if part:
+            section, chapter = _detect_section_chapter(part)
             chunks.append({
                 "chunk_id": str(i),
                 "original_text": part,
+                "section": section,
+                "chapter": chapter,
                 "nodes": [],
                 "relationships": [],
             })
             i += 1
-        start = end
+        # Overlap: next chunk starts before the end of current chunk
+        start = end - chunk_overlap if end < len(text) else end
+        if start >= len(text):
+            break
     return chunks
 
 
@@ -109,7 +157,8 @@ def main() -> None:
     parser.add_argument("input", help="Path to .doc, .txt, or .pdf file")
     parser.add_argument("--basename", default="soliq_kodeksi", help="Base name for output files (no extension)")
     parser.add_argument("--title", default="Soliq kodeksi", help="Document title for metadata")
-    parser.add_argument("--chunk-size", type=int, default=4000, help="Max characters per chunk")
+    parser.add_argument("--chunk-size", type=int, default=800, help="Max characters per chunk")
+    parser.add_argument("--chunk-overlap", type=int, default=150, help="Overlap between chunks (chars)")
     args = parser.parse_args()
 
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -131,7 +180,11 @@ def main() -> None:
         f.write(text)
     print(f"Wrote {raw_path}")
 
-    graph_data = chunk_text(text, max_chunk_size=args.chunk_size)
+    graph_data = chunk_text(
+        text,
+        max_chunk_size=args.chunk_size,
+        chunk_overlap=args.chunk_overlap,
+    )
     payload = {
         "metadata": {
             "file_name": f"{args.basename}.json",

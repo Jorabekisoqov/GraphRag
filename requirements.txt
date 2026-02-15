@@ -8,6 +8,9 @@ langchain-openai>=0.1.0,<0.2.0
 # Database
 neo4j>=5.0.0,<6.0.0
 
+# Optional: Neo4j vector store for hybrid retrieval (pip install langchain-neo4j)
+# May conflict with constraints-langchain.txt; install separately if needed
+
 # CentOS 7 compatibility
 # langchain -> SQLAlchemy -> greenlet
 # Newer greenlet versions may not provide a compatible wheel on older distros,
