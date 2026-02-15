@@ -47,20 +47,93 @@ def _extract_simple_keywords(query: str, max_keywords: int = 3) -> list[str]:
     return keywords if keywords else [query.strip()[:50]]  # fallback to first 50 chars
 
 
-def fallback_text_search(query: str, keywords: list[str] | None = None, limit_per_keyword: int = 5) -> str:
+# Domain term patterns for bilingual keyword extraction (Uzbek accounting/BHMS)
+_DOMAIN_PATTERNS = [
+    r"\d+-?son\s*(?:li\s*)?(?:BHMS|БҲМС)?",  # 1-son, 21-sonli BHMS (Latin)
+    r"\d+-?сон\s*(?:ли\s*)?(?:BHMS|БҲМС)?",  # 1-сон (Cyrillic)
+    r"БҲМС|BHMS",
+    r"\b(?:0\d{3})\b",  # 4-digit account codes: 0110, 4610
+    r"hisobvarak|ҳисобварақ|hisobvaraklar",
+    r"Moliya|Молия",
+]
+
+
+def _extract_domain_terms(text: str) -> list[str]:
+    """Extract domain-specific terms (BHMS numbers, account codes, etc.) from text."""
+    found: list[str] = []
+    for pattern in _DOMAIN_PATTERNS:
+        for m in re.finditer(pattern, text, re.IGNORECASE):
+            term = m.group(0).strip()
+            if term and term not in found:
+                found.append(term)
+    return found
+
+
+def _extract_bilingual_keywords(
+    refined_query: str, original_query: str, max_keywords: int = 5
+) -> list[str]:
+    """
+    Extract keywords from both refined and original queries, prioritizing original (Uzbek) terms.
+
+    Merges keywords from both sources and adds domain-term extraction (BHMS numbers,
+    account codes, etc.) to improve retrieval for Uzbek questions.
+    """
+    # Domain terms first (from both queries)
+    domain_terms = _extract_domain_terms(original_query) + _extract_domain_terms(
+        refined_query
+    )
+    seen: set[str] = set()
+    result: list[str] = []
+    for t in domain_terms:
+        t_lower = t.lower()
+        if t_lower not in seen:
+            seen.add(t_lower)
+            result.append(t)
+
+    # Original query keywords (prioritize Uzbek terms)
+    original_kw = _extract_simple_keywords(original_query, max_keywords=4)
+    for w in original_kw:
+        if w.lower() not in seen and len(w) >= 2:
+            seen.add(w.lower())
+            result.append(w)
+
+    # Refined query keywords (fill remaining slots)
+    refined_kw = _extract_simple_keywords(refined_query, max_keywords=3)
+    for w in refined_kw:
+        if w.lower() not in seen and len(w) >= 2:
+            seen.add(w.lower())
+            result.append(w)
+
+    return result[:max_keywords] if result else _extract_simple_keywords(
+        refined_query, max_keywords
+    )
+
+
+def fallback_text_search(
+    query: str,
+    keywords: list[str] | None = None,
+    original_query: str | None = None,
+    limit_per_keyword: int = 5,
+) -> str:
     """
     Fallback text search using Cypher CONTAINS on Chunk.text when primary retrieval fails.
 
     Args:
-        query: The search query string.
+        query: The search query string (typically refined query).
         keywords: Optional list of keywords to search for. If None, extracted from query.
+        original_query: Optional original user query for bilingual keyword extraction.
         limit_per_keyword: Max chunks to return per keyword.
 
     Returns:
         Concatenated chunk texts that match the search.
     """
     graph = get_neo4j_graph()
-    search_terms = keywords if keywords else _extract_simple_keywords(query)
+    if keywords is not None:
+        search_terms = keywords
+    elif original_query is not None:
+        search_terms = _extract_bilingual_keywords(query, original_query)
+    else:
+        search_terms = _extract_simple_keywords(query)
     seen_texts: set[str] = set()
     results: list[str] = []
 
@@ -209,6 +282,7 @@ def query_graph(query: str) -> str:
 
 def hybrid_retrieve(
     query: str,
+    original_query: str | None = None,
     k_vector: int = 3,
 ) -> str:
     """
@@ -218,7 +292,8 @@ def hybrid_retrieve(
     Both return raw chunk text for synthesis.
 
     Args:
-        query: The search query.
+        query: The search query (typically refined query).
+        original_query: Optional original user query for bilingual keyword extraction.
         k_vector: Number of chunks to retrieve via vector search.
 
     Returns:
@@ -244,7 +319,7 @@ def hybrid_retrieve(
         logger.warning("hybrid_vector_skip", error=str(e))
 
     # 2. CONTAINS text search (Cypher on Chunk.text) - always run for keyword coverage
-    fallback_result = fallback_text_search(query)
+    fallback_result = fallback_text_search(query, original_query=original_query)
     if fallback_result:
         for part in fallback_result.split("\n\n---\n\n"):
             if part.strip() and part.strip() not in seen_texts:

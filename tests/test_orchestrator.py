@@ -52,7 +52,7 @@ class TestProcessQuery:
         result = process_query("test query")
         assert result == "final answer"
         mock_refine.assert_called_once_with("test query")
-        mock_hybrid.assert_called_once_with("refined query")
+        mock_hybrid.assert_called_once_with("refined query", original_query="test query")
         mock_synthesize.assert_called_once_with("test query", "Detailed graph result with accounting standards and regulations.")
         mock_fallback.assert_not_called()
 
@@ -69,7 +69,9 @@ class TestProcessQuery:
 
         result = process_query("test query")
         assert result == "final answer from fallback"
-        mock_fallback.assert_called_once_with("refined query")
+        mock_fallback.assert_called_once_with(
+            "refined query", original_query="test query"
+        )
         mock_synthesize.assert_called_once_with("test query", "Fallback chunk text with relevant content.")
 
     def test_process_query_empty(self):

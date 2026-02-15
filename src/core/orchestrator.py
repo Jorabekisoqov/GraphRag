@@ -37,6 +37,12 @@ def refine_query(user_query: str) -> str:
     prompt = ChatPromptTemplate.from_messages([
         ("system", """You are an expert at translating user questions into specific Cypher-ready search intents for a knowledge graph about legal regulations and accounting standards (BHMS).
 
+CRITICAL: Preserve domain-specific terms from the user's question in your output. NEVER translate or omit:
+- BHMS numbers: "1-son", "21-son", "7-son BHMS" etc. - keep exactly as written
+- Uzbek terms: "hisobvarak", "hisob", "Moliya", "BHMS" - include these in your search query
+- Account codes: "0110", "4610", etc. - keep as-is
+Your output will be used for keyword search; missing these terms causes retrieval failure.
+
 The graph contains Documents, Chunks, and Entities with properties like:
 - Account codes (account, hisob, kod)
 - Accounting entries (debit, credit)
@@ -171,12 +177,14 @@ def process_query(user_query: str) -> str:
             logger.info("query_refined", original=user_query, refined=refined_query)
 
             # 2. Retrieve: hybrid (vector + CONTAINS) or Cypher chain
-            graph_result = hybrid_retrieve(refined_query)
+            graph_result = hybrid_retrieve(refined_query, original_query=user_query)
             logger.info("retrieve_completed", result_length=len(graph_result))
 
-            # 2b. Fallback: if result still weak, try CONTAINS text search
+            # 2b. Fallback: if result still weak, try CONTAINS text search with original query
             if _is_weak_result(graph_result):
-                graph_result = fallback_text_search(refined_query)
+                graph_result = fallback_text_search(
+                    refined_query, original_query=user_query
+                )
                 logger.info("fallback_used", refined_query=refined_query)
 
             # 3. Synthesize Answer
