@@ -10,9 +10,14 @@ logger = get_logger(__name__)
 
 def normalize_document_file_name(file_name: str | None) -> str:
     """Normalize metadata file names so JSON/TXT pairs share a stable document key."""
-    if not file_name:
-        return ""
-    base_name = os.path.basename(file_name)
+    if file_name is None:
+        raise ValueError("metadata.file_name cannot be null")
+
+    normalized_input = file_name.strip()
+    if not normalized_input:
+        raise ValueError("metadata.file_name cannot be empty")
+
+    base_name = os.path.basename(normalized_input)
     stem, ext = os.path.splitext(base_name)
     if ext.lower() in {".json", ".txt"}:
         return stem
@@ -47,6 +52,16 @@ def validate_json_structure(data: Dict[str, Any]) -> tuple[bool, str]:
     for field in required_metadata_fields:
         if field not in metadata:
             return False, f"Missing required metadata field: {field}"
+
+    file_name = metadata.get("file_name")
+    if file_name is None:
+        return False, "metadata.file_name cannot be null."
+
+    if not isinstance(file_name, str):
+        return False, "metadata.file_name must be a string."
+
+    if not file_name.strip():
+        return False, "metadata.file_name cannot be empty."
     
     graph_data = data.get("graph_data", [])
     if not isinstance(graph_data, list):
