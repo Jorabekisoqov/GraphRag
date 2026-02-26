@@ -7,6 +7,17 @@ from src.core.logging_config import get_logger
 
 logger = get_logger(__name__)
 
+
+def normalize_document_file_name(file_name: str | None) -> str:
+    """Normalize metadata file names so JSON/TXT pairs share a stable document key."""
+    if not file_name:
+        return ""
+    base_name = os.path.basename(file_name)
+    stem, ext = os.path.splitext(base_name)
+    if ext.lower() in {".json", ".txt"}:
+        return stem
+    return base_name
+
 def validate_json_structure(data: Dict[str, Any]) -> tuple[bool, str]:
     """
     Validates the structure of JSON data for ingestion.
@@ -104,6 +115,14 @@ def ingest_json_data(json_dir: str) -> None:
                 continue
             
             metadata = data.get("metadata", {})
+            raw_file_name = metadata.get("file_name")
+            document_file_name = normalize_document_file_name(raw_file_name)
+            if raw_file_name != document_file_name:
+                logger.info(
+                    "normalized_document_file_name",
+                    original=raw_file_name,
+                    normalized=document_file_name,
+                )
             graph_data = data.get("graph_data", [])
             
             # Create Document Node
@@ -115,7 +134,7 @@ def ingest_json_data(json_dir: str) -> None:
                 d.authority = $authority
             """
             graph.query(doc_cypher, {
-                "file_name": metadata.get("file_name"),
+                "file_name": document_file_name,
                 "title": metadata.get("document_title"),
                 "reg_number": metadata.get("reg_number"),
                 "date_signed": metadata.get("date_signed"),
@@ -140,9 +159,9 @@ def ingest_json_data(json_dir: str) -> None:
                 MERGE (d)-[:CONTAINS]->(c)
                 """
                 graph.query(chunk_cypher, {
-                    "chunk_id": f"{metadata.get('file_name')}_{chunk_id}",
+                    "chunk_id": f"{document_file_name}_{chunk_id}",
                     "text": original_text,
-                    "file_name": metadata.get("file_name"),
+                    "file_name": document_file_name,
                     "section": section,
                     "chapter": chapter,
                 })
@@ -174,7 +193,7 @@ def ingest_json_data(json_dir: str) -> None:
                     MERGE (c)-[:MENTIONS]->(n)
                     """
                     graph.query(link_cypher, {
-                        "chunk_id": f"{metadata.get('file_name')}_{chunk_id}",
+                        "chunk_id": f"{document_file_name}_{chunk_id}",
                         "node_id": node_id
                     })
 
