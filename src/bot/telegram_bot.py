@@ -5,7 +5,7 @@ import tempfile
 import uuid
 from dotenv import load_dotenv
 from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, DocumentHandler, filters
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 from src.core.orchestrator import process_query
 from src.bot.rate_limiter import rate_limiter
 from src.api.health import get_health_status
@@ -188,7 +188,7 @@ if __name__ == '__main__':
     start_handler = CommandHandler('start', start)
     health_handler = CommandHandler('health', health)
     message_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), handle_message)
-    document_handler = DocumentHandler(filters.ALL, handle_document)
+    document_handler = MessageHandler(filters.Document.ALL, handle_document)
 
     application.add_handler(start_handler)
     application.add_handler(health_handler)

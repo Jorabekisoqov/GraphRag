@@ -36,6 +36,8 @@ services:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
     env_file:
       - .env
+    volumes:
+      - ./scripts:/app/scripts
     networks:
       - graphrag-network
     restart: unless-stopped
