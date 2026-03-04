@@ -27,7 +27,7 @@ async def health(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     status_text = f"System Status: {health_status['status'].upper()}\n\n"
     status_text += f"Neo4j: {'✓' if health_status['neo4j']['healthy'] else '✗'} {health_status['neo4j']['message']}\n"
-    status_text += f"OpenAI: {'✓' if health_status['openai']['healthy'] else '✗'} {health_status['openai']['message']}"
+    status_text += f"DeepSeek: {'✓' if health_status['openai']['healthy'] else '✗'} {health_status['openai']['message']}"
     
     await context.bot.send_message(
         chat_id=update.effective_chat.id,

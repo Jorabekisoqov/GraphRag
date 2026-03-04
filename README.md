@@ -5,7 +5,7 @@ A Graph Retrieval-Augmented Generation (GraphRAG) system designed to answer ques
 ## Features
 
 - **Knowledge Graph Ingestion**: Automatically ingests structured JSON data (Nodes, Relationships, Documents) into Neo4j.
-- **Natural Language Understanding**: Uses LLM (GPT-4o) to refine user queries and translate terms (e.g., English -> Uzbek).
+- **Natural Language Understanding**: Uses LLM (DeepSeek) to refine user queries and translate terms (e.g., English -> Uzbek).
 - **Graph Retrieval**: Executes specialized Cypher queries to retrieve relevant context from the graph.
 - **Intelligent Synthesis**: Combines graph context with LLM capabilities to generate accurate, natural language answers.
 - **Telegram Bot Interface**: Provides a user-friendly chat interface for interacting with the system.
@@ -24,7 +24,7 @@ The system is built using:
 - **Python 3.10, 3.11, or 3.12** (3.13 is not yet supported: dependencies like numpy have no pre-built wheels and would require a C compiler to build from source)
 - **Neo4j**: Graph Database for storing entities and relationships.
 - **LangChain**: Framework for RAG chains and LLM interactions.
-- **OpenAI GPT-4o**: Large Language Model for reasoning and generation.
+- **DeepSeek**: Large Language Model for reasoning and generation (OpenAI-compatible API).
 - **python-telegram-bot**: Interface for user interaction.
 
 ## Quick Start
@@ -70,7 +70,7 @@ The bot will start automatically and Neo4j will be available at `http://localhos
 ### Option 2: Manual Deployment
 
 #### Prerequisites
-- Valid OpenAI API Key
+- Valid DeepSeek API Key (for LLM)
 - Neo4j Database (Remote or Local)
 - Python 3.10+ (The deployment script can parse this for you, and a helper installer is included for older servers)
 
@@ -116,7 +116,7 @@ The bot will start automatically and Neo4j will be available at `http://localhos
 ### Telegram Bot Commands
 
 - `/start` - Start the bot and get a welcome message
-- `/health` - Check system health status (Neo4j and OpenAI connectivity)
+- `/health` - Check system health status (Neo4j and DeepSeek LLM connectivity)
 - Send any text message to query the knowledge graph
 
 ### Data Ingestion
@@ -200,7 +200,7 @@ cp .env.example .env
 ```
 
 Required variables:
-- `OPENAI_API_KEY` - Your OpenAI API key
+- `DEEPSEEK_API_KEY` - Your DeepSeek API key (for LLM chat/completion)
 - `NEO4J_URI` - Neo4j connection URI (e.g., `bolt://localhost:7687` or `neo4j+s://...`)
 - `NEO4J_USERNAME` - Neo4j username
 - `NEO4J_PASSWORD` - Neo4j password

@@ -30,13 +30,13 @@ def extract_entities_from_chunk(chunk_text: str, chunk_id: str) -> tuple[list, l
     Returns (nodes, relationships).
     """
     try:
-        from langchain_openai import ChatOpenAI
+        from src.core.llm_config import get_llm
         from langchain_core.output_parsers import JsonOutputParser
         from langchain_core.prompts import PromptTemplate
     except ImportError:
         return [], []
 
-    llm = ChatOpenAI(temperature=0, model="gpt-4o")
+    llm = get_llm(temperature=0)
     parser = JsonOutputParser()
 
     prompt = PromptTemplate.from_template("""

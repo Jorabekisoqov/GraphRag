@@ -27,6 +27,22 @@ GraphRag/
 └── structure.md                  # This file.
 ```
 
+## JSON Metadata Schema (canonical)
+
+All JSON files in `src/data/source/Json/` should follow this metadata schema:
+
+| Field            | Description                    | Example                    |
+|------------------|--------------------------------|----------------------------|
+| file_name        | JSON filename                  | "soliq_kodeksi.json"       |
+| document_title   | Human-readable document title  | "Soliq kodeksi"            |
+| reg_number       | Registration number            | "ZRU-582", "1181"          |
+| date_signed      | Signing date (YYYY-MM-DD)      | "2019-12-30"               |
+| authority        | Issuing authority              | "O'zbekiston Respublikasi" |
+| doc_number       | Document number (optional)     | "103-son"                  |
+| date_registered  | Registration date (optional)   | "1998-11-04"               |
+| okoz_code        | OKOZ code (optional)           | "07.29.04.00"              |
+| tsz_code         | TSZ code (optional)            | "Buxgalteriya hisobi"      |
+
 ## Key Components
 
 - **src.core.orchestrator**: The "brain" of the application. It receives raw text from the bot, uses an LLM to refine it into a search query (handling language translation if needed), queries the graph, and synthesizes the final answer.

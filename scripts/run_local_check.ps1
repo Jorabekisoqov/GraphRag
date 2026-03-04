@@ -42,7 +42,7 @@ if (-not $py) {
 # 2. .env
 $envPath = Join-Path $root ".env"
 if (-not (Test-Path $envPath)) {
-    Write-Host "[WARN] .env not found. Copy .env.example to .env and set OPENAI_API_KEY, NEO4J_*, TELEGRAM_BOT_TOKEN." -ForegroundColor Yellow
+    Write-Host "[WARN] .env not found. Copy .env.example to .env and set DEEPSEEK_API_KEY, NEO4J_*, TELEGRAM_BOT_TOKEN." -ForegroundColor Yellow
 } else {
     Write-Host "[OK] .env exists" -ForegroundColor Green
 }

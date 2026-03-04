@@ -15,18 +15,18 @@ class TestGetGraphRagChain:
     """Tests for graph RAG chain creation."""
     
     @patch('src.data.graph_rag.get_neo4j_graph')
-    @patch('src.data.graph_rag.ChatOpenAI')
-    def test_get_graph_rag_chain_success(self, mock_chat_openai, mock_get_graph):
+    @patch('src.data.graph_rag.get_llm')
+    def test_get_graph_rag_chain_success(self, mock_get_llm, mock_get_graph):
         """Test successful chain creation."""
         mock_graph = Mock()
         mock_get_graph.return_value = mock_graph
         mock_llm = Mock()
-        mock_chat_openai.return_value = mock_llm
+        mock_get_llm.return_value = mock_llm
         
         chain = get_graph_rag_chain()
         assert chain is not None
         mock_get_graph.assert_called_once()
-        mock_chat_openai.assert_called_once()
+        mock_get_llm.assert_called_once()
 
 
 class TestQueryGraph:

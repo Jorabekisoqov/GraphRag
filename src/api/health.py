@@ -27,31 +27,31 @@ def check_neo4j_health() -> tuple[bool, str]:
 
 def check_openai_health() -> tuple[bool, str]:
     """
-    Check OpenAI API health (basic connectivity test).
+    Check DeepSeek (LLM) API health (basic connectivity test).
     
     Returns:
         Tuple of (is_healthy, message).
     """
     try:
-        from langchain_openai import ChatOpenAI
+        from src.core.llm_config import get_llm
         from langchain_core.prompts import ChatPromptTemplate
         from langchain_core.output_parsers import StrOutputParser
         
-        llm = ChatOpenAI(temperature=0, model="gpt-4o", max_tokens=10)
+        llm = get_llm(temperature=0, max_tokens=10)
         prompt = ChatPromptTemplate.from_messages([("human", "Say 'ok'")])
         chain = prompt | llm | StrOutputParser()
         response = chain.invoke({})
         
         if response:
             openai_api_status.set(1)
-            return True, "OpenAI API connection healthy"
+            return True, "DeepSeek API connection healthy"
         else:
             openai_api_status.set(0)
-            return False, "OpenAI API returned empty response"
+            return False, "DeepSeek API returned empty response"
     except Exception as e:
         logger.error("openai_health_check_failed", error=str(e), exc_info=True)
         openai_api_status.set(0)
-        return False, f"OpenAI API connection failed: {str(e)}"
+        return False, f"DeepSeek API connection failed: {str(e)}"
 
 
 def get_health_status() -> Dict[str, Any]:

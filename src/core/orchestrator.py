@@ -1,5 +1,5 @@
 from src.data.graph_rag import hybrid_retrieve, fallback_text_search, _is_weak_result
-from langchain_openai import ChatOpenAI
+from src.core.llm_config import get_llm
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
@@ -10,7 +10,7 @@ from src.core.metrics import QueryTimer, openai_api_calls
 
 logger = get_logger(__name__)
 
-llm = ChatOpenAI(temperature=0, model="gpt-4o")
+llm = get_llm(temperature=0)
 
 @retry(
     stop=stop_after_attempt(3),

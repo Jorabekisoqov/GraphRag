@@ -1,5 +1,5 @@
 from langchain_community.chains.graph_qa.cypher import GraphCypherQAChain
-from langchain_openai import ChatOpenAI
+from src.core.llm_config import get_llm
 from src.data.neo4j_client import get_neo4j_graph
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from typing import Any
@@ -182,19 +182,19 @@ def fallback_text_search(
     logger.info("fallback_text_search_used", query=query, results_count=len(results))
     return combined
 
-def get_graph_rag_chain(model_name: str = "gpt-4o") -> GraphCypherQAChain:
+def get_graph_rag_chain(model_name: str | None = None) -> GraphCypherQAChain:
     """
     Creates a GraphCypherQAChain for querying the GraphRAG.
     
     Args:
-        model_name: The OpenAI model name to use.
+        model_name: The DeepSeek model name (default: deepseek-chat).
         
     Returns:
         A configured GraphCypherQAChain instance.
     """
     graph = get_neo4j_graph()
     
-    llm = ChatOpenAI(temperature=0, model=model_name)
+    llm = get_llm(temperature=0, model=model_name)
     
     from langchain_core.prompts import PromptTemplate
 
