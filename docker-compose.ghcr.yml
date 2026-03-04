@@ -37,6 +37,7 @@ services:
     env_file:
       - .env
     volumes:
+      - ./src:/app/src
       - ./scripts:/app/scripts
     networks:
       - graphrag-network
