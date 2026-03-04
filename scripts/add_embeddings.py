@@ -48,16 +48,21 @@ def main() -> None:
     embeddings = OpenAIEmbeddings()
 
     print("Creating vector index and populating embeddings on Chunk nodes...")
-    store = Neo4jVector.from_existing_graph(
+    kwargs = dict(
         embedding=embeddings,
         url=url,
         username=username,
         password=password,
         index_name=index_name,
         node_label="Chunk",
-        text_node_property="text",
         embedding_node_property="embedding",
     )
+    try:
+        # langchain-neo4j uses text_node_properties (plural, list)
+        store = Neo4jVector.from_existing_graph(**kwargs, text_node_properties=["text"])
+    except TypeError:
+        # langchain-community uses text_node_property (singular)
+        store = Neo4jVector.from_existing_graph(**kwargs, text_node_property="text")
     print(f"Done. Vector index '{index_name}' is ready.")
 
 

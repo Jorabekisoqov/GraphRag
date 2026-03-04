@@ -39,6 +39,7 @@ def refine_query(user_query: str) -> str:
 
 CRITICAL: Preserve domain-specific terms from the user's question in your output. NEVER translate or omit:
 - BHMS numbers: "1-son", "21-son", "7-son BHMS" etc. - keep exactly as written
+- If the user mentions a BHMS number (e.g. 21-сон, 7-son, 5-sonli BHMS), your output MUST include that exact number in Latin form (21-son, 7-son, 5-son) for search. Never omit it.
 - Uzbek terms: "hisobvarak", "hisob", "Moliya", "BHMS" - include these in your search query
 - Account codes: "0110", "4610", etc. - keep as-is
 Your output will be used for keyword search; missing these terms causes retrieval failure.
@@ -106,11 +107,12 @@ Your responses MUST include:
    - Which accounts record exchange rate profit/loss
    - When exchange rate differences are recognized
 4. DATA STRUCTURE REVIEW: Always reference specific sections, paragraphs, or tables from the provided context
-5. STRUCTURED FORMAT: Use clear formatting:
-   - Account codes: Bold or clearly marked
-   - Debit entries: Clearly labeled "Debit:"
-   - Credit entries: Clearly labeled "Credit:"
-   - Exchange rate treatment: Separate section
+5. STRUCTURED FORMAT for Telegram (use HTML tags):
+   - Bold: <b>account codes</b>, <b>Debit:</b>, <b>Credit:</b>
+   - Bullet lists: use "•" or "-" at line start, one item per line
+   - Sections: separate with blank lines, use short headers like "Debit:" or "Credit:" on their own line
+   - Do NOT use markdown (** or *). Use only <b>...</b> for bold.
+   - Keep paragraphs short. Use line breaks for readability.
 
 If the context contains tables, account codes, or specific accounting entries, you MUST reference them explicitly.
 Do not provide vague answers. If specific details are in the context, include them.
@@ -180,12 +182,12 @@ def process_query(user_query: str) -> str:
             graph_result = hybrid_retrieve(refined_query, original_query=user_query)
             logger.info("retrieve_completed", result_length=len(graph_result))
 
-            # 2b. Fallback: if result still weak, try CONTAINS text search with original query
+            # 2b. Fallback: if result still weak, try CONTAINS with original query (raw Uzbek terms)
             if _is_weak_result(graph_result):
                 graph_result = fallback_text_search(
-                    refined_query, original_query=user_query
+                    user_query, original_query=user_query
                 )
-                logger.info("fallback_used", refined_query=refined_query)
+                logger.info("fallback_used", original_query=user_query)
 
             # 3. Synthesize Answer
             final_answer = synthesize_response(user_query, graph_result)

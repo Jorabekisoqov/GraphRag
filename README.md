@@ -134,7 +134,7 @@ python3 -m src.data.ingestion
 ```
 
 Optional steps for improved retrieval:
-- **Vector embeddings** (for hybrid search): `python scripts/add_embeddings.py` (uses langchain-community)
+- **Vector embeddings** (for hybrid search): `python scripts/add_embeddings.py` (uses langchain-community). With Docker: `docker compose exec graphrag-app python scripts/add_embeddings.py`
 - **Full-text index**: `python scripts/create_fulltext_index.py`
 - **Re-chunk documents** with overlap: `python scripts/add_doc_to_source.py path/to/doc.txt --chunk-size 800 --chunk-overlap 150`
 

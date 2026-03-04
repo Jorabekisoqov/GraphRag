@@ -25,6 +25,7 @@ COPY --from=builder /root/.local /root/.local
 
 # Copy application code
 COPY src/ ./src/
+COPY scripts/ ./scripts/
 COPY .env.example .env.example
 
 # Make sure scripts are executable

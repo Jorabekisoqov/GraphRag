@@ -51,11 +51,34 @@ def _extract_simple_keywords(query: str, max_keywords: int = 3) -> list[str]:
 _DOMAIN_PATTERNS = [
     r"\d+-?son\s*(?:li\s*)?(?:BHMS|БҲМС)?",  # 1-son, 21-sonli BHMS (Latin)
     r"\d+-?сон\s*(?:ли\s*)?(?:BHMS|БҲМС)?",  # 1-сон (Cyrillic)
+    r"\d+-?son\b",  # 21-son alone (Latin)
+    r"\d+-?сон\b",  # 21-сон alone (Cyrillic)
     r"БҲМС|BHMS",
     r"\b(?:0\d{3})\b",  # 4-digit account codes: 0110, 4610
     r"hisobvarak|ҳисобварақ|hisobvaraklar",
     r"Moliya|Молия",
 ]
+
+# Cyrillic to Latin mapping for BHMS terms (сон <-> son, ли <-> li)
+_CYRILLIC_TO_LATIN = str.maketrans("сонли", "sonli")
+_LATIN_TO_CYRILLIC = str.maketrans("sonli", "сонли")
+
+
+def _normalize_bhms_for_search(term: str) -> list[str]:
+    """
+    Return both Cyrillic and Latin variants of a BHMS term for CONTAINS search.
+    E.g. '21-сон' -> ['21-сон', '21-son'], '21-son' -> ['21-son', '21-сон']
+    """
+    variants = [term]
+    if "сон" in term or "ли" in term:
+        latin = term.translate(_CYRILLIC_TO_LATIN)
+        if latin != term and latin not in variants:
+            variants.append(latin)
+    if "son" in term or "li" in term:
+        cyrillic = term.translate(_LATIN_TO_CYRILLIC)
+        if cyrillic != term and cyrillic not in variants:
+            variants.append(cyrillic)
+    return variants
 
 
 def _extract_domain_terms(text: str) -> list[str]:
@@ -70,15 +93,16 @@ def _extract_domain_terms(text: str) -> list[str]:
 
 
 def _extract_bilingual_keywords(
-    refined_query: str, original_query: str, max_keywords: int = 5
+    refined_query: str, original_query: str, max_keywords: int = 8
 ) -> list[str]:
     """
     Extract keywords from both refined and original queries, prioritizing original (Uzbek) terms.
 
     Merges keywords from both sources and adds domain-term extraction (BHMS numbers,
-    account codes, etc.) to improve retrieval for Uzbek questions.
+    account codes, etc.). BHMS terms get both Cyrillic and Latin variants for search.
+    Domain terms are always included (not capped by max_keywords).
     """
-    # Domain terms first (from both queries)
+    # Domain terms first (from both queries) - always include, with search variants
     domain_terms = _extract_domain_terms(original_query) + _extract_domain_terms(
         refined_query
     )
@@ -89,6 +113,13 @@ def _extract_bilingual_keywords(
         if t_lower not in seen:
             seen.add(t_lower)
             result.append(t)
+        # Add Cyrillic/Latin variants for BHMS-like terms
+        if re.search(r"\d+.*(?:son|сон)", t, re.IGNORECASE):
+            for v in _normalize_bhms_for_search(t):
+                v_lower = v.lower()
+                if v_lower not in seen:
+                    seen.add(v_lower)
+                    result.append(v)
 
     # Original query keywords (prioritize Uzbek terms)
     original_kw = _extract_simple_keywords(original_query, max_keywords=4)
@@ -131,7 +162,7 @@ def fallback_text_search(
     if keywords is not None:
         search_terms = keywords
     elif original_query is not None:
-        search_terms = _extract_bilingual_keywords(query, original_query)
+        search_terms = _extract_bilingual_keywords(query, original_query, max_keywords=8)
     else:
         search_terms = _extract_simple_keywords(query)
     seen_texts: set[str] = set()
