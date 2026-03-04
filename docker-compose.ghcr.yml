@@ -1,0 +1,51 @@
+# Use pre-built image from GitHub Container Registry (no local build).
+# Run: docker compose -f docker-compose.ghcr.yml up -d
+#
+# Images are built by GitHub Actions on push to main/develop.
+# ghcr.io/<owner>/graphrag:latest (main) or :develop (develop branch)
+
+services:
+  neo4j:
+    image: neo4j:5.15-community
+    container_name: graphrag-neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD}
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    networks:
+      - graphrag-network
+
+  graphrag-app:
+    image: ghcr.io/jorabekisoqov/graphrag:latest
+    container_name: graphrag-app
+    depends_on:
+      neo4j:
+        condition: service_started
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USERNAME=neo4j
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+    env_file:
+      - .env
+    networks:
+      - graphrag-network
+    restart: unless-stopped
+
+volumes:
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+
+networks:
+  graphrag-network:
+    driver: bridge

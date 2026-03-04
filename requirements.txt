@@ -8,9 +8,11 @@ langchain-openai>=0.1.0,<0.2.0
 # Database
 neo4j>=5.0.0,<6.0.0
 
-# Neo4j vector store for hybrid retrieval (add_embeddings.py)
-langchain-neo4j>=0.1.0
-
+# Neo4j vector store (optional - for add_embeddings.py hybrid retrieval).
+# Omitted from main deps: langchain-neo4j>=0.6 requires langchain-core>=1.0, which conflicts
+# with our pinned langchain 0.2.x stack. Install separately if needed:
+#   pip install langchain-neo4j  # may require upgrading langchain packages
+#
 # CentOS 7 compatibility
 # langchain -> SQLAlchemy -> greenlet
 # Newer greenlet versions may not provide a compatible wheel on older distros,

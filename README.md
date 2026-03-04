@@ -53,11 +53,17 @@ This checks for Python 3.10+, creates a venv, installs dependencies, and runs te
    # Edit .env with your actual credentials
    ```
 
-3. **Start with Docker Compose**:
+3. **Start with Docker Compose** (build locally):
    ```bash
    docker compose up -d
    # or if you have docker-compose v1: docker-compose up -d
    ```
+
+   **Or use pre-built image from GitHub Container Registry** (no build, faster start):
+   ```bash
+   docker compose -f docker-compose.ghcr.yml up -d
+   ```
+   Images are built automatically on push to `main` and `develop`. Use `:latest` (main) or `:develop` (develop branch).
 
 4. **Ingest data** (in a separate terminal):
    ```bash
@@ -66,6 +72,8 @@ This checks for Python 3.10+, creates a venv, installs dependencies, and runs te
    ```
 
 The bot will start automatically and Neo4j will be available at `http://localhost:7474`.
+
+**Pre-built images (GHCR):** Images are built and pushed to GitHub Container Registry on every push to `main` and `develop`. Pull with `docker compose -f docker-compose.ghcr.yml up -d`. For private repos, run `docker login ghcr.io` first (use a [PAT](https://github.com/settings/tokens) with `read:packages`).
 
 ### Option 2: Manual Deployment
 
@@ -126,7 +134,7 @@ python3 -m src.data.ingestion
 ```
 
 Optional steps for improved retrieval:
-- **Vector embeddings** (for hybrid search): `python scripts/add_embeddings.py` (requires `langchain-neo4j`)
+- **Vector embeddings** (for hybrid search): `python scripts/add_embeddings.py` (uses langchain-community)
 - **Full-text index**: `python scripts/create_fulltext_index.py`
 - **Re-chunk documents** with overlap: `python scripts/add_doc_to_source.py path/to/doc.txt --chunk-size 800 --chunk-overlap 150`
 
