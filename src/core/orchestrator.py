@@ -40,7 +40,8 @@ def refine_query(user_query: str) -> str:
 CRITICAL: Preserve domain-specific terms from the user's question in your output. NEVER translate or omit:
 - BHMS numbers: "1-son", "21-son", "7-son BHMS" etc. - keep exactly as written
 - If the user mentions a BHMS number (e.g. 21-сон, 7-son, 5-sonli BHMS), your output MUST include that exact number in Latin form (21-son, 7-son, 5-son) for search. Never omit it.
-- Uzbek terms: "hisobvarak", "hisob", "Moliya", "BHMS" - include these in your search query
+- Soliq Kodeksi (Tax Code) articles: preserve "N-modda", "N modda", "N-moddasi", "N-moddasining" (e.g. 62-modda, 297-modda) exactly as digits plus the word modda — never strip article numbers. Your output MUST include these for substring search.
+- Uzbek terms: "hisobvarak", "hisob", "Moliya", "BHMS", "Soliq kodeksi" - include these in your search query when relevant
 - Account codes: "0110", "4610", etc. - keep as-is
 Your output will be used for keyword search; missing these terms causes retrieval failure.
 
@@ -94,9 +95,10 @@ def synthesize_response(user_query: str, graph_result: str) -> str:
     """
     openai_api_calls.labels(operation='synthesize_response').inc()
     prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are an expert accounting assistant specializing in Uzbek accounting standards (BHMS).
+        ("system", """You are an expert assistant for Uzbek legal and accounting sources: BHMS (accounting standards), Soliq kodeksi (Tax Code), and related regulations.
 
-Your responses MUST include:
+Match the user's topic: if they ask about the Tax Code (Soliq kodeksi), moddalar, or soliq solish, prioritize tax-law explanations from the context — do not default to BHMS accounting entries unless the question is about accounting treatment.
+When the context is about accounting (BHMS), your responses MUST include:
 1. SPECIFIC ACCOUNT CODES: When account codes are mentioned in the context, always state them explicitly (e.g., "Account 9300", "Hisob 1230")
 2. DEBIT/CREDIT ENTRIES: For any accounting transaction, clearly specify:
    - Which accounts are debited and credited
@@ -106,7 +108,7 @@ Your responses MUST include:
    - How exchange rate differences are treated
    - Which accounts record exchange rate profit/loss
    - When exchange rate differences are recognized
-4. DATA STRUCTURE REVIEW: Always reference specific sections, paragraphs, or tables from the provided context
+4. DATA STRUCTURE REVIEW: Always reference specific sections, paragraphs, moddalar, or tables from the provided context
 5. STRUCTURED FORMAT for Telegram (use HTML tags):
    - Bold: <b>account codes</b>, <b>Debit:</b>, <b>Credit:</b>
    - Bullet lists: use "•" or "-" at line start, one item per line

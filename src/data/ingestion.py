@@ -71,6 +71,29 @@ def validate_json_structure(data: Dict[str, Any]) -> tuple[bool, str]:
     
     return True, ""
 
+
+def _chunk_modda_numbers(chunk: dict) -> list[str]:
+    """
+    Collect Modda entity raqam values from chunk JSON for Chunk.modda_numbers in Neo4j.
+    Enables fast retrieval by article number (Soliq Kodeksi).
+    """
+    nums: list[str] = []
+    for node in chunk.get("nodes") or []:
+        if not isinstance(node, dict):
+            continue
+        if node.get("type") != "Modda":
+            continue
+        props = node.get("properties") or {}
+        r = props.get("raqam")
+        if r is not None and str(r).strip():
+            nums.append(str(r).strip())
+    # Dedupe, sort numerically when possible
+    try:
+        return sorted(set(nums), key=lambda x: int(x) if x.isdigit() else 0)
+    except Exception:
+        return sorted(set(nums))
+
+
 def ingest_json_data(json_dir: str) -> None:
     """
     Ingests graph data from JSON files into Neo4j.
@@ -127,6 +150,7 @@ def ingest_json_data(json_dir: str) -> None:
                 original_text = chunk.get("original_text")
                 section = chunk.get("section", "")
                 chapter = chunk.get("chapter", "")
+                modda_numbers = _chunk_modda_numbers(chunk)
 
                 # Create Chunk Node (optional, but good for grounding)
                 chunk_cypher = """
@@ -134,7 +158,8 @@ def ingest_json_data(json_dir: str) -> None:
                 SET c.text = $text,
                     c.document_file = $file_name,
                     c.section = $section,
-                    c.chapter = $chapter
+                    c.chapter = $chapter,
+                    c.modda_numbers = $modda_numbers
                 WITH c
                 MATCH (d:Document {file_name: $file_name})
                 MERGE (d)-[:CONTAINS]->(c)
@@ -145,6 +170,7 @@ def ingest_json_data(json_dir: str) -> None:
                     "file_name": metadata.get("file_name"),
                     "section": section,
                     "chapter": chapter,
+                    "modda_numbers": modda_numbers,
                 })
                 
                 # Create Nodes

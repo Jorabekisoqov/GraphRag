@@ -8,6 +8,8 @@ from src.data.graph_rag import (
     _is_weak_result,
     _extract_bilingual_keywords,
     _extract_domain_terms,
+    _parse_modda_raqam_from_queries,
+    _normalize_modda_for_search,
 )
 
 
@@ -94,6 +96,33 @@ class TestExtractDomainTerms:
         result = _extract_domain_terms("Молия вазирлиги")
         assert "Молия" in result
 
+    def test_extracts_modda_latin(self):
+        """Soliq Kodeksi article references (Latin)."""
+        result = _extract_domain_terms("62-modda va 297-moddasi haqida")
+        assert any("62-modda" in t or "62" in t for t in result)
+        assert any("297-moddasi" in t for t in result)
+
+    def test_extracts_modda_cyrillic(self):
+        """Tax article Cyrillic модда."""
+        result = _extract_domain_terms("12-модда бўйича")
+        assert any("12-модда" in t for t in result)
+
+
+class TestParseModdaRaqam:
+    """Tests for _parse_modda_raqam_from_queries."""
+
+    def test_parses_hyphen_modda(self):
+        assert _parse_modda_raqam_from_queries("62-modda mazmuni", "") == "62"
+
+    def test_parses_moddasi(self):
+        assert _parse_modda_raqam_from_queries("", "297-moddasi") == "297"
+
+
+class TestNormalizeModdaForSearch:
+    def test_cyrillic_to_latin_variant(self):
+        v = _normalize_modda_for_search("62-модда")
+        assert "62-modda" in v
+
 
 class TestExtractBilingualKeywords:
     """Tests for _extract_bilingual_keywords."""
@@ -118,6 +147,14 @@ class TestExtractBilingualKeywords:
         refined = "chart of accounts buxgalteriya"
         result = _extract_bilingual_keywords(refined, original, max_keywords=6)
         assert len(result) >= 2
+
+    def test_modda_terms_in_keywords(self):
+        """62-modda must appear in bilingual keywords for retrieval."""
+        original = "Soliq kodeksining 62-moddasi nimani tartibga soladi?"
+        refined = "Find Tax Code article 62-modda"
+        result = _extract_bilingual_keywords(refined, original, max_keywords=8)
+        joined = " ".join(result).lower()
+        assert "62-modda" in joined or "62" in joined
 
     def test_fallback_when_empty(self):
         """Test fallback to simple extraction when no domain terms."""

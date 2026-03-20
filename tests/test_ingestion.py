@@ -4,7 +4,21 @@ import json
 import tempfile
 import os
 from unittest.mock import Mock, patch, MagicMock
-from src.data.ingestion import ingest_json_data
+from src.data.ingestion import ingest_json_data, _chunk_modda_numbers
+
+
+class TestChunkModdaNumbers:
+    """Tests for Modda aggregation on chunks."""
+
+    def test_collects_modda_raqam(self):
+        chunk = {
+            "nodes": [
+                {"type": "Modda", "properties": {"raqam": "62"}},
+                {"type": "Modda", "properties": {"raqam": "1"}},
+                {"type": "HisobKodi", "properties": {"kod": "6410"}},
+            ]
+        }
+        assert _chunk_modda_numbers(chunk) == ["1", "62"]
 
 
 class TestIngestJsonData:

@@ -138,6 +138,14 @@ Optional steps for improved retrieval:
 - **Full-text index**: `python scripts/create_fulltext_index.py`
 - **Re-chunk documents** with overlap: `python scripts/add_doc_to_source.py path/to/doc.txt --chunk-size 800 --chunk-overlap 150`
 
+**Retrieval quality (Soliq Kodeksi / hybrid search):** Run ingestion, then embeddings, then the full-text index (order matters for first-time setup). Optional environment variables (defaults in parentheses):
+- `HYBRID_VECTOR_K` — chunks retrieved by vector similarity (`8`)
+- `FALLBACK_CHUNK_LIMIT` — max chunks per keyword in text fallback (`8`)
+- `FALLBACK_MERGE_CAP` — max chunks merged into the LLM context (`12`)
+- `CHUNK_FULLTEXT_INDEX` — Neo4j full-text index name if not `chunk_text_index`
+
+Chunks ingested from JSON that include **Modda** entities get a `modda_numbers` property on `:Chunk` for faster lookup of tax-article questions (e.g. `62-modda`). Re-ingest after updating entity extraction. Questions like “total number of articles in the Code” still require that fact to appear in the corpus.
+
 Or with Docker:
 ```bash
 docker compose exec graphrag-app python3 -m src.data.ingestion

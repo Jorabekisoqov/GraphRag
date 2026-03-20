@@ -6,9 +6,26 @@ from typing import Any
 from neo4j.exceptions import ServiceUnavailable, TransientError
 from src.core.logging_config import get_logger
 from src.core.metrics import neo4j_queries
+import os
 import re
 
 logger = get_logger(__name__)
+
+# Retrieval tuning (env overrides)
+def _env_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    try:
+        return max(1, int(raw))
+    except ValueError:
+        return default
+
+
+FALLBACK_CHUNK_LIMIT = _env_int("FALLBACK_CHUNK_LIMIT", 8)
+HYBRID_VECTOR_K = _env_int("HYBRID_VECTOR_K", 8)
+FALLBACK_MERGE_CAP = _env_int("FALLBACK_MERGE_CAP", 12)
+FULLTEXT_INDEX_NAME = os.getenv("CHUNK_FULLTEXT_INDEX", "chunk_text_index")
 
 # Minimum result length to consider retrieval successful
 WEAK_RESULT_MIN_LENGTH = 50
@@ -47,7 +64,7 @@ def _extract_simple_keywords(query: str, max_keywords: int = 3) -> list[str]:
     return keywords if keywords else [query.strip()[:50]]  # fallback to first 50 chars
 
 
-# Domain term patterns for bilingual keyword extraction (Uzbek accounting/BHMS)
+# Domain term patterns for bilingual keyword extraction (Uzbek accounting/BHMS/Soliq Kodeksi)
 _DOMAIN_PATTERNS = [
     r"\d+-?son\s*(?:li\s*)?(?:BHMS|БҲМС)?",  # 1-son, 21-sonli BHMS (Latin)
     r"\d+-?сон\s*(?:ли\s*)?(?:BHMS|БҲМС)?",  # 1-сон (Cyrillic)
@@ -57,11 +74,33 @@ _DOMAIN_PATTERNS = [
     r"\b(?:0\d{3})\b",  # 4-digit account codes: 0110, 4610
     r"hisobvarak|ҳисобварақ|hisobvaraklar",
     r"Moliya|Молия",
+    # Soliq Kodeksi / tax articles (Latin)
+    r"\d{1,3}-moddasi",
+    r"\d{1,3}-moddasining",
+    r"\d{1,3}-modda",
+    r"\d{1,3}\s+modda\b",
+    # Cyrillic variants (модда)
+    r"\d{1,3}-модда",
+    r"\d{1,3}\s+модда\b",
 ]
 
 # Cyrillic to Latin mapping for BHMS terms (сон <-> son, ли <-> li)
 _CYRILLIC_TO_LATIN = str.maketrans("сонли", "sonli")
 _LATIN_TO_CYRILLIC = str.maketrans("sonli", "сонли")
+
+
+def _normalize_modda_for_search(term: str) -> list[str]:
+    """Latin/Cyrillic variants for tax article references (CONTAINS search)."""
+    variants = [term]
+    if re.search(r"модда", term, re.IGNORECASE):
+        latin = re.sub(r"модда", "modda", term, flags=re.IGNORECASE)
+        if latin != term and latin not in variants:
+            variants.append(latin)
+    if re.search(r"modda", term, re.IGNORECASE) and not re.search(r"модда", term, re.IGNORECASE):
+        cyr = re.sub(r"modda", "модда", term, flags=re.IGNORECASE)
+        if cyr != term and cyr not in variants:
+            variants.append(cyr)
+    return variants
 
 
 def _normalize_bhms_for_search(term: str) -> list[str]:
@@ -99,89 +138,203 @@ def _extract_bilingual_keywords(
     Extract keywords from both refined and original queries, prioritizing original (Uzbek) terms.
 
     Merges keywords from both sources and adds domain-term extraction (BHMS numbers,
-    account codes, etc.). BHMS terms get both Cyrillic and Latin variants for search.
-    Domain terms are always included (not capped by max_keywords).
+    account codes, Soliq Kodeksi modda references, etc.). BHMS/modda terms get
+    Cyrillic/Latin variants for search. Domain terms are never truncated; filler
+    keywords from the queries are capped by max_keywords.
     """
     # Domain terms first (from both queries) - always include, with search variants
     domain_terms = _extract_domain_terms(original_query) + _extract_domain_terms(
         refined_query
     )
     seen: set[str] = set()
-    result: list[str] = []
+    domain_result: list[str] = []
     for t in domain_terms:
         t_lower = t.lower()
         if t_lower not in seen:
             seen.add(t_lower)
-            result.append(t)
+            domain_result.append(t)
         # Add Cyrillic/Latin variants for BHMS-like terms
         if re.search(r"\d+.*(?:son|сон)", t, re.IGNORECASE):
             for v in _normalize_bhms_for_search(t):
                 v_lower = v.lower()
                 if v_lower not in seen:
                     seen.add(v_lower)
-                    result.append(v)
+                    domain_result.append(v)
+        # Modda (tax article) variants
+        if re.search(r"\d+.*(?:modda|модда)", t, re.IGNORECASE):
+            for v in _normalize_modda_for_search(t):
+                v_lower = v.lower()
+                if v_lower not in seen:
+                    seen.add(v_lower)
+                    domain_result.append(v)
 
+    filler: list[str] = []
     # Original query keywords (prioritize Uzbek terms)
     original_kw = _extract_simple_keywords(original_query, max_keywords=4)
     for w in original_kw:
         if w.lower() not in seen and len(w) >= 2:
             seen.add(w.lower())
-            result.append(w)
+            filler.append(w)
 
     # Refined query keywords (fill remaining slots)
     refined_kw = _extract_simple_keywords(refined_query, max_keywords=3)
     for w in refined_kw:
         if w.lower() not in seen and len(w) >= 2:
             seen.add(w.lower())
-            result.append(w)
+            filler.append(w)
 
-    return result[:max_keywords] if result else _extract_simple_keywords(
-        refined_query, max_keywords
-    )
+    if not domain_result and not filler:
+        return _extract_simple_keywords(refined_query, max_keywords)
+
+    # Domain terms always kept; filler capped so total keyword queries stay bounded
+    return domain_result + filler[:max_keywords]
+
+
+def _parse_modda_raqam_from_queries(*texts: str) -> str | None:
+    """Extract first tax-article number (N-modda) from user/refined queries."""
+    for t in texts:
+        if not t:
+            continue
+        m = re.search(r"(\d{1,3})-moddasi", t, re.IGNORECASE)
+        if m:
+            return m.group(1)
+        m = re.search(r"(\d{1,3})-moddasining", t, re.IGNORECASE)
+        if m:
+            return m.group(1)
+        m = re.search(r"(\d{1,3})-modda", t, re.IGNORECASE)
+        if m:
+            return m.group(1)
+        m = re.search(r"(\d{1,3})\s+modda\b", t, re.IGNORECASE)
+        if m:
+            return m.group(1)
+        m = re.search(r"(\d{1,3})-модда", t, re.IGNORECASE)
+        if m:
+            return m.group(1)
+    return None
+
+
+def _modda_fast_path_chunk_texts(
+    graph: Any, modda: str, limit: int
+) -> list[str]:
+    """Return chunk texts where modda_numbers (from ingest) contains this article number."""
+    out: list[str] = []
+    try:
+        cypher = """
+        MATCH (c:Chunk)
+        WHERE c.modda_numbers IS NOT NULL AND $modda IN c.modda_numbers AND c.text IS NOT NULL
+        RETURN c.text AS text
+        LIMIT $lim
+        """
+        raw = graph.query(cypher, {"modda": str(modda), "lim": limit})
+        for row in raw if isinstance(raw, list) else []:
+            text = row.get("text") if isinstance(row, dict) else (row[0] if row else None)
+            if text:
+                out.append(text)
+    except Exception as e:
+        logger.warning("modda_fast_path_error", modda=modda, error=str(e))
+    return out
+
+
+def _fulltext_search_chunks(
+    graph: Any, query: str, limit: int
+) -> list[str]:
+    """Full-text search on Chunk.text using Neo4j full-text index (if present)."""
+    if not query or len(query.strip()) < 2:
+        return []
+    out: list[str] = []
+    try:
+        cypher = f"""
+        CALL db.index.fulltext.queryNodes($index_name, $q) YIELD node, score
+        RETURN node.text AS text
+        LIMIT $lim
+        """
+        raw = graph.query(
+            cypher,
+            {"index_name": FULLTEXT_INDEX_NAME, "q": query.strip()[:500], "lim": limit},
+        )
+        for row in raw if isinstance(raw, list) else []:
+            text = row.get("text") if isinstance(row, dict) else (row[0] if row else None)
+            if text:
+                out.append(text)
+    except Exception as e:
+        logger.debug("fulltext_search_skipped", error=str(e))
+    return out
 
 
 def fallback_text_search(
     query: str,
     keywords: list[str] | None = None,
     original_query: str | None = None,
-    limit_per_keyword: int = 5,
+    limit_per_keyword: int | None = None,
 ) -> str:
     """
-    Fallback text search using Cypher CONTAINS on Chunk.text when primary retrieval fails.
+    Fallback text search: optional modda fast path, full-text index, then CONTAINS on Chunk.text.
 
     Args:
         query: The search query string (typically refined query).
         keywords: Optional list of keywords to search for. If None, extracted from query.
         original_query: Optional original user query for bilingual keyword extraction.
-        limit_per_keyword: Max chunks to return per keyword.
+        limit_per_keyword: Max chunks per keyword (default: FALLBACK_CHUNK_LIMIT env).
 
     Returns:
         Concatenated chunk texts that match the search.
     """
     graph = get_neo4j_graph()
+    lim = limit_per_keyword if limit_per_keyword is not None else FALLBACK_CHUNK_LIMIT
+    merge_cap = FALLBACK_MERGE_CAP
+
     if keywords is not None:
         search_terms = keywords
     elif original_query is not None:
         search_terms = _extract_bilingual_keywords(query, original_query, max_keywords=8)
     else:
         search_terms = _extract_simple_keywords(query)
+
     seen_texts: set[str] = set()
     results: list[str] = []
 
+    def _add_texts(texts: list[str]) -> None:
+        for text in texts:
+            if text and text not in seen_texts:
+                seen_texts.add(text)
+                results.append(text)
+
+    # 1) Fast path: chunk.modda_numbers from ingest (Soliq Kodeksi Modda entities)
+    modda_n = _parse_modda_raqam_from_queries(
+        query, original_query or "", *(search_terms[:3] if search_terms else [])
+    )
+    if modda_n:
+        _add_texts(_modda_fast_path_chunk_texts(graph, modda_n, lim))
+
+    # 2) Full-text index (best-effort; 1–2 query strings)
+    if original_query:
+        ft_queries: list[str] = []
+        strong = next(
+            (t for t in search_terms if re.search(r"modda|модда", t, re.IGNORECASE)),
+            None,
+        )
+        if strong:
+            ft_queries.append(strong)
+        qstrip = query.strip()[:200]
+        if qstrip and qstrip not in ft_queries:
+            ft_queries.append(qstrip)
+        for ftq in ft_queries[:2]:
+            _add_texts(_fulltext_search_chunks(graph, ftq, lim))
+    else:
+        _add_texts(_fulltext_search_chunks(graph, query.strip()[:200], lim))
+
+    # 3) CONTAINS per keyword (parameterized LIMIT)
+    cypher_contains = """
+    MATCH (c:Chunk)
+    WHERE c.text IS NOT NULL AND toLower(c.text) CONTAINS toLower($keyword)
+    RETURN c.text AS text
+    LIMIT $lim
+    """
     for term in search_terms:
         if not term or len(term) < 2:
             continue
         try:
-            # Use parameterized query; CONTAINS is case-sensitive, use toLower for both
-            # Note: LIMIT must be literal in some Neo4j versions; use fixed cap
-            cypher = """
-            MATCH (c:Chunk)
-            WHERE c.text IS NOT NULL AND toLower(c.text) CONTAINS toLower($keyword)
-            RETURN c.text AS text
-            LIMIT 5
-            """
-            raw = graph.query(cypher, {"keyword": term})
-            # Neo4jGraph.query may return list of dicts or list of lists
+            raw = graph.query(cypher_contains, {"keyword": term, "lim": lim})
             for row in raw if isinstance(raw, list) else []:
                 text = row.get("text") if isinstance(row, dict) else (row[0] if row else None)
                 if text and text not in seen_texts:
@@ -194,13 +347,7 @@ def fallback_text_search(
         # Last resort: try full query as single keyword (truncated)
         try:
             keyword = query.strip()[:100]
-            cypher = """
-            MATCH (c:Chunk)
-            WHERE c.text IS NOT NULL AND toLower(c.text) CONTAINS toLower($keyword)
-            RETURN c.text AS text
-            LIMIT 5
-            """
-            raw = graph.query(cypher, {"keyword": keyword})
+            raw = graph.query(cypher_contains, {"keyword": keyword, "lim": lim})
             for row in raw if isinstance(raw, list) else []:
                 text = row.get("text") if isinstance(row, dict) else (row[0] if row else None)
                 if text and text not in seen_texts:
@@ -209,7 +356,7 @@ def fallback_text_search(
         except Exception as e:
             logger.warning("fallback_text_search_final_error", error=str(e))
 
-    combined = "\n\n---\n\n".join(results[:10])  # cap total chunks
+    combined = "\n\n---\n\n".join(results[:merge_cap])
     logger.info("fallback_text_search_used", query=query, results_count=len(results))
     return combined
 
@@ -314,7 +461,7 @@ def query_graph(query: str) -> str:
 def hybrid_retrieve(
     query: str,
     original_query: str | None = None,
-    k_vector: int = 3,
+    k_vector: int | None = None,
 ) -> str:
     """
     Hybrid retrieval: combine vector search (if available) with CONTAINS text search.
@@ -325,11 +472,12 @@ def hybrid_retrieve(
     Args:
         query: The search query (typically refined query).
         original_query: Optional original user query for bilingual keyword extraction.
-        k_vector: Number of chunks to retrieve via vector search.
+        k_vector: Number of chunks to retrieve via vector search (default: HYBRID_VECTOR_K env).
 
     Returns:
         Merged context string from both retrieval sources.
     """
+    kv = k_vector if k_vector is not None else HYBRID_VECTOR_K
     seen_texts: set[str] = set()
     results: list[str] = []
 
@@ -339,7 +487,7 @@ def hybrid_retrieve(
 
         store = get_neo4j_vector_store()
         if store is not None:
-            docs_with_score = store.similarity_search_with_score(query, k=k_vector)
+            docs_with_score = store.similarity_search_with_score(query, k=kv)
             for doc, _ in docs_with_score:
                 text = doc.page_content if hasattr(doc, "page_content") else str(doc)
                 if text and text not in seen_texts:
@@ -349,7 +497,7 @@ def hybrid_retrieve(
     except Exception as e:
         logger.warning("hybrid_vector_skip", error=str(e))
 
-    # 2. CONTAINS text search (Cypher on Chunk.text) - always run for keyword coverage
+    # 2. Fallback: modda fast path + full-text + CONTAINS on Chunk.text
     fallback_result = fallback_text_search(query, original_query=original_query)
     if fallback_result:
         for part in fallback_result.split("\n\n---\n\n"):
@@ -357,9 +505,9 @@ def hybrid_retrieve(
                 seen_texts.add(part.strip())
                 results.append(part.strip())
 
-    # 3. If we have vector store, use hybrid result; else run full Cypher chain
+    # 3. If we have any chunks, return merged context
     if results:
-        combined = "\n\n---\n\n".join(results[:10])
+        combined = "\n\n---\n\n".join(results[:FALLBACK_MERGE_CAP])
         return combined
 
     # No vector + empty fallback: run GraphCypherQAChain (may return LLM answer)
