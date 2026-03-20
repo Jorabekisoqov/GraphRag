@@ -17,6 +17,34 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# Uzbek Cyrillic to Latin (official 1995 script)
+_CYRILLIC_TO_LATIN = {
+    "А": "A", "а": "a", "Б": "B", "б": "b", "В": "V", "в": "v", "Г": "G", "г": "g",
+    "Д": "D", "д": "d", "Е": "E", "е": "e", "Ё": "Yo", "ё": "yo", "Ж": "J", "ж": "j",
+    "З": "Z", "з": "z", "И": "I", "и": "i", "Й": "Y", "й": "y", "К": "K", "к": "k",
+    "Қ": "Q", "қ": "q", "Л": "L", "л": "l", "М": "M", "м": "m", "Н": "N", "н": "n",
+    "О": "O", "о": "o", "П": "P", "п": "p", "Р": "R", "р": "r", "С": "S", "с": "s",
+    "Т": "T", "т": "t", "У": "U", "у": "u", "Ҳ": "H", "ҳ": "h", "Ф": "F", "ф": "f",
+    "Х": "X", "х": "x", "Ц": "Ts", "ц": "ts", "Ч": "Ch", "ч": "ch", "Ш": "Sh", "ш": "sh",
+    "Щ": "Sh", "щ": "sh", "Ъ": "'", "ъ": "'", "Ь": "", "ь": "", "Э": "E", "э": "e",
+    "Ю": "Yu", "ю": "yu", "Я": "Ya", "я": "ya", "Ў": "O'", "ў": "o'", "Ғ": "G'", "ғ": "g'",
+    "Ҳ": "H", "ҳ": "h",
+}
+
+
+def _cyrillic_to_latin(text: str) -> str:
+    """Convert Uzbek Cyrillic text to Latin script."""
+    result = []
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if c in _CYRILLIC_TO_LATIN:
+            result.append(_CYRILLIC_TO_LATIN[c])
+        else:
+            result.append(c)
+        i += 1
+    return "".join(result)
+
 
 # Tax types from 17-modda (Soliqlarning va yig'imlarning turlari)
 SOLIQ_TURLARI = [
@@ -52,6 +80,10 @@ DATE_PATTERN = re.compile(
 BHMS_CYRILLIC_PATTERN = re.compile(r"(\d{1,2})-сон\s*БҲМС", re.IGNORECASE)
 BOB_CYRILLIC_PATTERN = re.compile(r"(I{1,3}|IV|V|VI|VII|VIII|IX|X+)\s+[бБ][оО][бБ]")
 QISM_CYRILLIC_PATTERN = re.compile(r"(I{1,3}|IV|V|VI)\s+[қК][иИ][сС][мМ]")
+# Buxgalteriya (Latin) patterns
+BHMS_LATIN_PATTERN = re.compile(r"(\d{1,2})-son\s*(?:li\s*)?BHMS", re.IGNORECASE)
+BOB_LATIN_PATTERN = re.compile(r"(I{1,3}|IV|V|VI|VII|VIII|IX|X+)\s+bob\b", re.IGNORECASE)
+QISM_LATIN_PATTERN = re.compile(r"(I{1,3}|IV|V|VI)\s+qism\b", re.IGNORECASE)
 # Account codes: 3-digit (001-014) or 4-digit (0110, 6410) - exclude years 19xx, 20xx
 HISOB_KODI_PATTERN = re.compile(r"\b(0\d{2,3}|[1-9]\d{3})\b")
 ORG_PATTERNS = [
@@ -234,16 +266,78 @@ def extract_qism_cyrillic(text: str) -> list[dict]:
     return nodes
 
 
-def extract_entities_from_chunk(chunk: dict, file_name: str) -> tuple[list, list]:
+def extract_bhms_latin(text: str) -> list[dict]:
+    """Extract BHMS references (Latin): 21-son BHMS, 5-sonli BHMS."""
+    seen = set()
+    nodes = []
+    for m in BHMS_LATIN_PATTERN.finditer(text):
+        num = m.group(1)
+        nid = f"BHMS_{num}"
+        if nid not in seen:
+            seen.add(nid)
+            nodes.append({
+                "id": nid,
+                "type": "BHMS",
+                "properties": {"raqam": num, "nomi": f"{num}-son BHMS"}
+            })
+    return nodes
+
+
+def extract_bob_latin(text: str) -> list[dict]:
+    """Extract Bob (Latin): I bob, II bob."""
+    seen = set()
+    nodes = []
+    for m in BOB_LATIN_PATTERN.finditer(text):
+        num = m.group(1)
+        nid = f"Bob_{num}"
+        if nid not in seen:
+            seen.add(nid)
+            nodes.append({
+                "id": nid,
+                "type": "Bob",
+                "properties": {"raqam": num, "nomi": f"{num} bob"}
+            })
+    return nodes
+
+
+def extract_qism_latin(text: str) -> list[dict]:
+    """Extract Qism (Latin): I qism, II qism."""
+    seen = set()
+    nodes = []
+    for m in QISM_LATIN_PATTERN.finditer(text):
+        num = m.group(1)
+        nid = f"Qism_{num}"
+        if nid not in seen:
+            seen.add(nid)
+            nodes.append({
+                "id": nid,
+                "type": "Qism",
+                "properties": {"raqam": num, "nomi": f"{num} qism"}
+            })
+    return nodes
+
+
+def _is_buxgalteriya_file(file_name: str, doc_title: str = "") -> bool:
+    """Detect if file is buxgalteriya by name or document title."""
+    combined = (file_name + " " + doc_title).lower()
+    return "buxgalteriya" in combined or "hisobvar" in combined
+
+
+def extract_entities_from_chunk(chunk: dict, file_name: str, doc_title: str = "", convert_to_latin: bool = False) -> tuple[list, list]:
     """Extract nodes and relationships from a chunk's original_text."""
     text = chunk.get("original_text", "")
+    if convert_to_latin and any("\u0400" <= c <= "\u04FF" for c in text):
+        text = _cyrillic_to_latin(text)
+        chunk["original_text"] = text
     chunk_id = chunk.get("chunk_id", str(id(chunk)))
     file_chunk_id = f"{file_name}_{chunk_id}"
 
     nodes = []
     relationships = []
+    is_cyrillic_bux = _is_buxgalteriya(text)
+    is_latin_bux = _is_buxgalteriya_file(file_name, doc_title) and not is_cyrillic_bux
 
-    if _is_buxgalteriya(text):
+    if is_cyrillic_bux:
         # Buxgalteriya (Cyrillic) extraction
         hisob_nodes = extract_hisob_kodlari(text)
         bhms_nodes = extract_bhms_cyrillic(text)
@@ -254,6 +348,20 @@ def extract_entities_from_chunk(chunk: dict, file_name: str) -> tuple[list, list
         nodes.extend(bob_nodes)
         nodes.extend(qism_nodes)
         # REFERENCES between HisobKodi nodes mentioned together
+        hisob_ids = [n["id"] for n in hisob_nodes]
+        for i, a in enumerate(hisob_ids):
+            for b in hisob_ids[i + 1 :]:
+                relationships.append({"source": a, "target": b, "type": "REFERENCES"})
+    elif is_latin_bux:
+        # Buxgalteriya (Latin) extraction
+        hisob_nodes = extract_hisob_kodlari(text)
+        bhms_nodes = extract_bhms_latin(text)
+        bob_nodes = extract_bob_latin(text)
+        qism_nodes = extract_qism_latin(text)
+        nodes.extend(hisob_nodes)
+        nodes.extend(bhms_nodes)
+        nodes.extend(bob_nodes)
+        nodes.extend(qism_nodes)
         hisob_ids = [n["id"] for n in hisob_nodes]
         for i, a in enumerate(hisob_ids):
             for b in hisob_ids[i + 1 :]:
@@ -308,6 +416,11 @@ def main() -> None:
         action="store_true",
         help="Print stats without writing"
     )
+    parser.add_argument(
+        "--convert-to-latin",
+        action="store_true",
+        help="Convert Cyrillic original_text to Latin Uzbek before extraction (for buxgalteriya)"
+    )
     args = parser.parse_args()
 
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -322,6 +435,7 @@ def main() -> None:
         data = json.load(f)
 
     file_name = data.get("metadata", {}).get("file_name", "soliq_kodeksi.json")
+    doc_title = data.get("metadata", {}).get("document_title", "")
     graph_data = data.get("graph_data", [])
 
     total_nodes = 0
@@ -329,7 +443,9 @@ def main() -> None:
     chunks_with_entities = 0
 
     for chunk in graph_data:
-        nodes, rels = extract_entities_from_chunk(chunk, file_name)
+        nodes, rels = extract_entities_from_chunk(
+            chunk, file_name, doc_title=doc_title, convert_to_latin=args.convert_to_latin
+        )
         chunk["nodes"] = nodes
         chunk["relationships"] = rels
         if nodes or rels:
