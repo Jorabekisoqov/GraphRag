@@ -40,6 +40,13 @@ openai_api_status = Gauge(
     'OpenAI API status (1 = healthy, 0 = unhealthy)'
 )
 
+# Embedding verification (answer vs retrieved context)
+embedding_verify_outcomes = Counter(
+    'graphrag_embedding_verify_total',
+    'Embedding verification outcomes',
+    ['outcome'],  # skipped, passed, low_score, error
+)
+
 
 class QueryTimer(ContextManager):
     """Context manager for timing queries."""

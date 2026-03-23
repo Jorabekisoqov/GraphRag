@@ -70,7 +70,7 @@ class TestProcessQuery:
         result = process_query("test query")
         assert result == "final answer from fallback"
         mock_fallback.assert_called_once_with(
-            "refined query", original_query="test query"
+            "test query", original_query="test query"
         )
         mock_synthesize.assert_called_once_with("test query", "Fallback chunk text with relevant content.")
 

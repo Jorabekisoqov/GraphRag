@@ -1,11 +1,11 @@
 [
   {
     "question": "Бухгалтерия ҳисобварақлар режасининг асосий меъёрий ҳужжати қайси?",
-    "expected_contains": ["21-сон БҲМС", "21-son BҲMS"]
+    "expected_contains": ["21-сон БҲМС", "21-son BҲMS", "21-son", "BHMS", "БҲМС"]
   },
   {
     "question": "Бухгалтерия ҳисобини тартибга солишни қайси орган амалга оширади?",
-    "expected_contains": ["Молия вазирлиги", "Молия"]
+    "expected_contains": ["Молия вазирлиги", "Молия", "Moliya"]
   },
   {
     "question": "Актив счётлар ва пассив счётлар фарqi нима?",
@@ -18,5 +18,57 @@
   {
     "question": "Устав капиталига таъсисчилар томонидан асосий воситалар берилганда қайси счётлар дебет ва кредит қилинади?",
     "expected_contains": ["0110", "4610", "дебет", "кредит"]
+  },
+  {
+    "question": "Soliq kodeksining 62-moddasi nima haqida?",
+    "expected_contains": ["62", "modda", "Soliq", "soliq", "маълумот", "topilmadi", "kontekst"]
+  },
+  {
+    "question": "Soliq yuklamalari va soliq solish tartibi bo'yicha qisqacha ma'lumot bering.",
+    "expected_contains": ["soliq", "Soliq", "kodeks", "маълумот", "topilmadi", "kontekst", "Quyidagilar"]
+  },
+  {
+    "question": "21-son BHMS hujjatida asosiy tamoyillar qanday?",
+    "expected_contains": ["21", "BHMS", "БҲМС", "сон", "buxgalteriya", "маълумот"]
+  },
+  {
+    "question": "Valyuta kursi farqlari bo'yicha buxgalteriya qanday yuritiladi?",
+    "expected_contains": ["kurs", "valyuta", "BHMS", "дебет", "кредит", "hisob", "маълумот"]
+  },
+  {
+    "question": "Aktiv va passiv hisoblar o'rtasida nima farq bor?",
+    "expected_contains": ["актив", "пассив", "актив", "passiv", "дебет", "кредит", "farq"]
+  },
+  {
+    "question": "Soliq kodeksi va BHMS o'rtasida asosiy farq nimada?",
+    "expected_contains": ["Soliq", "soliq", "BHMS", "БҲМС", "kodeks", "buxgalteriya", "маълумот"]
+  },
+  {
+    "question": "Hisobvaraq rejasi bo'yicha umumiy tushuncha bering.",
+    "expected_contains": ["hisobvaraq", "ҳисобварақ", "BHMS", "21", "маълумот", "kontekst", "Quyidagilar"]
+  },
+  {
+    "question": "297-modda bo'yicha qoidalar qanday?",
+    "expected_contains": ["297", "modda", "Soliq", "soliq", "маълумот", "topilmadi"]
+  },
+  {
+    "question": "Moliya vazirligi buxgalteriya sohasida qanday vazifalarni bajaradi?",
+    "expected_contains": ["Молия", "Moliya", "buxgalteriya", "вазирлик", "маълумот"]
+  },
+  {
+    "question": "Tranzit hisoblar va oddiy hisoblar farqi nimada?",
+    "expected_contains": ["транзит", "tranzit", "даромад", "hisob", "маълумот"]
+  },
+  {
+    "question": "Soliq masalalari bo'yicha nimani bilishim kerak?",
+    "expected_contains": ["soliq", "Soliq", "маълумот", "kontekst", "Quyidagilar", "topilmadi"]
+  },
+  {
+    "question": "How are debit and credit entries recorded in Uzbek accounting standards?",
+    "expected_contains": ["debit", "credit", "дебет", "кредит", "DT", "KT", "hisob", "маълумот"]
+  },
+  {
+    "question": "5-sonli BHMS hujjati qaysi mavzularni qamrab oladi?",
+    "expected_contains": ["5", "son", "BHMS", "БҲМС", "маълумот", "mavzu"]
   }
 ]

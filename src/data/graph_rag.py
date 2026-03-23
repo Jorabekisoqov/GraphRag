@@ -376,25 +376,19 @@ def get_graph_rag_chain(model_name: str | None = None) -> GraphCypherQAChain:
     
     from langchain_core.prompts import PromptTemplate
 
-    CYPHER_GENERATION_TEMPLATE = """Task: Generate Cypher statement to query a graph database about accounting standards.
+    CYPHER_GENERATION_TEMPLATE = """Task: Generate Cypher to query a graph database of Uzbek legal and accounting texts (Soliq kodeksi, BHMS, regulations).
 
 Instructions:
 - Use only the provided relationship types and property keys in the schema
 - Do not use any other relationship types or property keys that are not provided
 - The graph has Document and Chunk nodes. Chunk has a "text" property with full content.
-- For content questions (regulations, standards, documents): MATCH (d:Document)-[:CONTAINS]->(c:Chunk) WHERE c.text CONTAINS $keyword RETURN c.text
+- For content questions (laws, standards, documents): MATCH (d:Document)-[:CONTAINS]->(c:Chunk) WHERE c.text CONTAINS $keyword RETURN c.text
 - If full-text index "chunk_text_index" exists: CALL db.index.fulltext.queryNodes("chunk_text_index", $query) YIELD node, score RETURN node.text AS text
-- Always return Chunk.text when answering content questions. Use CONTAINS on c.text or fulltext query.
-- For accounting queries, prioritize retrieving:
-  1. Nodes with "account", "hisob", "kod" properties (account codes)
-  2. Relationships showing debit/credit flows
-  3. Nodes related to "valyuta", "kurs", "exchange" (currency/exchange rate)
-  4. Properties containing accounting methods ("hisob usuli")
-- When searching for account codes, use CONTAINS or exact match on "account" property
-- For debit/credit entries, look for relationships or properties indicating transaction flows
-- The database content is primarily in Uzbek language (e.g. 'Buxgalteriya', 'Asosiy vositalar')
-- When searching for string values, always try to translate the user's English keywords into Uzbek or use broad CONTAINS queries if unsure
-- Example: 'accounting' -> 'buxgalteriya', 'account code' -> search for 'account' or 'hisob' property
+- Always return Chunk.text for content questions. Use CONTAINS on c.text or fulltext query.
+- If the question mentions modda, Soliq kodeksi, soliq, band, or tax articles: prioritize Chunk text search with those Uzbek/legal keywords (and digits from article numbers). Do not assume accounting-only content.
+- If the question is about accounting, hisob, debit/credit, BHMS, valyuta, or kurs: also retrieve nodes/properties related to account codes ("account", "hisob", "kod"), debit/credit flows, valyuta/kurs/exchange, or "hisob usuli" when present in the schema.
+- The database content is primarily in Uzbek (e.g. 'Buxgalteriya', 'Soliq kodeksi', 'modda')
+- Translate English keywords into Uzbek when helpful, or use broad CONTAINS if unsure
 
 Note: Do not include any explanations or apologies in your responses.
 Do not respond to any questions that might ask anything else than for you to construct a Cypher statement.

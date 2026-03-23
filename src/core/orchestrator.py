@@ -1,12 +1,16 @@
 from src.data.graph_rag import hybrid_retrieve, fallback_text_search, _is_weak_result
+from src.core.prompts import REFINE_QUERY_SYSTEM, SYNTHESIZE_SYSTEM
+from src.core.embedding_verify import (
+    format_answer_with_optional_warning,
+    verify_answer_grounding,
+)
 from src.core.llm_config import get_llm
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
-import os
 from openai import APIError, RateLimitError, APIConnectionError
 from src.core.logging_config import get_logger
-from src.core.metrics import QueryTimer, openai_api_calls
+from src.core.metrics import QueryTimer, embedding_verify_outcomes, openai_api_calls
 
 logger = get_logger(__name__)
 
@@ -35,37 +39,7 @@ def refine_query(user_query: str) -> str:
     """
     openai_api_calls.labels(operation='refine_query').inc()
     prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are an expert at translating user questions into specific Cypher-ready search intents for a knowledge graph about legal regulations and accounting standards (BHMS).
-
-CRITICAL: Preserve domain-specific terms from the user's question in your output. NEVER translate or omit:
-- BHMS numbers: "1-son", "21-son", "7-son BHMS" etc. - keep exactly as written
-- If the user mentions a BHMS number (e.g. 21-сон, 7-son, 5-sonli BHMS), your output MUST include that exact number in Latin form (21-son, 7-son, 5-son) for search. Never omit it.
-- Soliq Kodeksi (Tax Code) articles: preserve "N-modda", "N modda", "N-moddasi", "N-moddasining" (e.g. 62-modda, 297-modda) exactly as digits plus the word modda — never strip article numbers. Your output MUST include these for substring search.
-- Uzbek terms: "hisobvarak", "hisob", "Moliya", "BHMS", "Soliq kodeksi" - include these in your search query when relevant
-- Account codes: "0110", "4610", etc. - keep as-is
-Your output will be used for keyword search; missing these terms causes retrieval failure.
-
-The graph contains Documents, Chunks, and Entities with properties like:
-- Account codes (account, hisob, kod)
-- Accounting entries (debit, credit)
-- Exchange rate information (valyuta, kurs, exchange)
-- Accounting methods (hisob usuli)
-
-When the user asks about accounting topics, prioritize finding:
-1. Specific account codes and their usage
-2. Debit/credit entry structures
-3. Exchange rate profit/loss treatment
-4. Accounting methods and procedures
-
-Translate accounting terms:
-- "account" -> "hisob" or search for "account" property
-- "debit" -> "debit" or "DT"
-- "credit" -> "credit" or "KT"
-- "exchange rate" -> "valyuta kursi" or "kurs"
-- "profit/loss" -> "foyda/zarar"
-
-If the user asks broadly like 'Tell me about X', convert it to 'Find all information relative to X including account codes, debit/credit entries, and exchange rate treatment'.
-Do NOT ask the user for clarification. Make your best guess for a search query."""),
+        ("system", REFINE_QUERY_SYSTEM),
         ("human", "{question}")
     ])
     chain = prompt | llm | StrOutputParser()
@@ -95,33 +69,7 @@ def synthesize_response(user_query: str, graph_result: str) -> str:
     """
     openai_api_calls.labels(operation='synthesize_response').inc()
     prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are an expert assistant for Uzbek legal and accounting sources: BHMS (accounting standards), Soliq kodeksi (Tax Code), and related regulations.
-
-Match the user's topic: if they ask about the Tax Code (Soliq kodeksi), moddalar, or soliq solish, prioritize tax-law explanations from the context — do not default to BHMS accounting entries unless the question is about accounting treatment.
-When the context is about accounting (BHMS), your responses MUST include:
-1. SPECIFIC ACCOUNT CODES: When account codes are mentioned in the context, always state them explicitly (e.g., "Account 9300", "Hisob 1230")
-2. DEBIT/CREDIT ENTRIES: For any accounting transaction, clearly specify:
-   - Which accounts are debited and credited
-   - The amounts (if available)
-   - The accounting treatment
-3. EXCHANGE RATE TREATMENT: For currency/exchange rate questions, explain:
-   - How exchange rate differences are treated
-   - Which accounts record exchange rate profit/loss
-   - When exchange rate differences are recognized
-4. DATA STRUCTURE REVIEW: Always reference specific sections, paragraphs, moddalar, or tables from the provided context
-5. STRUCTURED FORMAT for Telegram (use HTML tags):
-   - Bold: <b>account codes</b>, <b>Debit:</b>, <b>Credit:</b>
-   - Bullet lists: use "•" or "-" at line start, one item per line
-   - Sections: separate with blank lines, use short headers like "Debit:" or "Credit:" on their own line
-   - Do NOT use markdown (** or *). Use only <b>...</b> for bold.
-   - Keep paragraphs short. Use line breaks for readability.
-
-If the context contains tables, account codes, or specific accounting entries, you MUST reference them explicitly.
-Do not provide vague answers. If specific details are in the context, include them.
-
-Context from Knowledge Graph: {context}
-
-If the context says 'I don't know' or is empty, politely inform the user you couldn't find relevant information in the specific documents."""),
+        ("system", SYNTHESIZE_SYSTEM),
         ("human", "{question}")
     ])
     chain = prompt | llm | StrOutputParser()
@@ -194,7 +142,43 @@ def process_query(user_query: str) -> str:
             # 3. Synthesize Answer
             final_answer = synthesize_response(user_query, graph_result)
             logger.info("response_synthesized", answer_length=len(final_answer))
-            
+
+            # 4. Optional: embedding-based grounding check (non-LLM)
+            try:
+                weak_ctx = _is_weak_result(graph_result)
+                gr = verify_answer_grounding(
+                    final_answer, graph_result, is_weak_context=weak_ctx
+                )
+                if gr.skipped:
+                    reason = gr.skipped_reason or ""
+                    if reason.startswith("embed_error") or reason == "embed_length_mismatch":
+                        embedding_verify_outcomes.labels(outcome="error").inc()
+                    else:
+                        embedding_verify_outcomes.labels(outcome="skipped").inc()
+                    logger.info(
+                        "embedding_verify_skipped",
+                        reason=gr.skipped_reason,
+                        low_sentence_count=gr.low_sentence_count,
+                    )
+                else:
+                    logger.info(
+                        "embedding_verify_result",
+                        min_score=gr.min_score,
+                        mean_score=gr.mean_score,
+                        threshold=gr.threshold,
+                        low_sentence_count=gr.low_sentence_count,
+                    )
+                    if gr.min_score is not None and gr.min_score < gr.threshold:
+                        embedding_verify_outcomes.labels(outcome="low_score").inc()
+                    else:
+                        embedding_verify_outcomes.labels(outcome="passed").inc()
+                    final_answer = format_answer_with_optional_warning(
+                        final_answer, gr
+                    )
+            except Exception as ev_err:
+                embedding_verify_outcomes.labels(outcome="error").inc()
+                logger.warning("embedding_verify_failed", error=str(ev_err))
+
             return final_answer
 
         except (APIError, RateLimitError, APIConnectionError) as e:
