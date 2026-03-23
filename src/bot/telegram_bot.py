@@ -1,5 +1,4 @@
 import os
-import re
 import asyncio
 import tempfile
 import uuid
@@ -12,6 +11,7 @@ from src.api.health import get_health_status
 from src.core.logging_config import setup_logging, get_logger
 from src.data.document_utils import read_file, chunk_text
 from src.data.ingest_single import ingest_single_document
+from src.bot.telegram_format import format_telegram_html
 
 load_dotenv()
 
@@ -21,6 +21,7 @@ logger = get_logger(__name__)
 
 MAX_FILE_SIZE_MB = 10
 SUPPORTED_EXTENSIONS = {".pdf", ".txt", ".doc", ".docx"}
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /start command."""
@@ -60,14 +61,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Run synchronous process_query in a thread pool to avoid blocking the event loop
     try:
         response = await asyncio.to_thread(process_query, user_text)
-        text = str(response)
-        # Convert markdown bold **text** to HTML <b>text</b> for Telegram
-        text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
-        # Escape HTML entities so parse_mode works safely
-        text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        # Restore intentional <b>/<i> tags
-        text = text.replace("&lt;b&gt;", "<b>").replace("&lt;/b&gt;", "</b>")
-        text = text.replace("&lt;i&gt;", "<i>").replace("&lt;/i&gt;", "</i>")
+        text = format_telegram_html(str(response))
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=text,
