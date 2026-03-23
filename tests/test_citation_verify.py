@@ -54,3 +54,28 @@ def test_apply_strict_redacts(monkeypatch, sample_chunks):
     r = verify_citations("12% hech qayerda", sample_chunks)
     out = apply_citation_result("12% hech qayerda", r)
     assert "tasdiqlanmagan" in out or "12%" not in out
+
+
+def test_foiz_in_chunk_percent_in_line(monkeypatch):
+    """Chunk uses Uzbek 'foiz', answer uses % — should pass."""
+    monkeypatch.setenv("CITATION_VERIFY_MODE", "warn")
+    chunks = [
+        RetrievedChunk(
+            id="doc_a",
+            text="Rezident uchun stavka 12 foiz miqdorida belgilanadi.",
+        )
+    ]
+    r = verify_citations("12% stavka qo‘llaniladi [CHUNK doc_a]", chunks)
+    assert r.passed
+
+
+def test_two_chunks_tokens_split_across_bodies(monkeypatch):
+    """Each token must match at least one cited chunk (union)."""
+    monkeypatch.setenv("CITATION_VERIFY_MODE", "warn")
+    chunks = [
+        RetrievedChunk(id="c1", text="Birinchi holat: 5% soliq."),
+        RetrievedChunk(id="c2", text="Ikkinchi holat: 12% stavka."),
+    ]
+    line = "5% va 12% [CHUNK c1] [CHUNK c2]"
+    r = verify_citations(line, chunks)
+    assert r.passed

@@ -41,10 +41,8 @@ def _line_has_chunk_tag(line: str) -> bool:
     return bool(CHUNK_TAG.search(line))
 
 
-def _must_appear_in_chunk(line: str, body: str) -> bool:
-    """Check that % and modda tokens in line appear in chunk body (normalized)."""
-    line_clean = CHUNK_TAG.sub("", _strip_html(line))
-    b = _norm_compact(body)
+def _extract_tokens(line_clean: str) -> list[str]:
+    """Compact tokens for % rates and modda references (same shapes as before)."""
     toks: list[str] = []
     for m in re.finditer(r"\d+(?:[.,]\d+)?\s*%", line_clean):
         toks.append(_norm_compact(m.group(0)))
@@ -52,9 +50,46 @@ def _must_appear_in_chunk(line: str, body: str) -> bool:
         r"\d{1,3}\s*[-]?\s*(?:modda|модда|moddasi|moddasining)", line_clean, re.I
     ):
         toks.append(_norm_compact(m.group(0)))
+    return toks
+
+
+def _token_supported_by_body(tok: str, body: str) -> bool:
+    """
+    True if tok (from the answer line) is evidenced in body.
+
+    Treats N% in the answer as matching N foiz / N% in the source (Uzbek legal text).
+    """
+    b = _norm_compact(body)
+    if tok in b:
+        return True
+    if re.search(r"modda|модда", tok):
+        return tok in b
+    m = re.fullmatch(r"(\d+(?:[.,]\d+)?)%", tok)
+    if not m:
+        return False
+    num = m.group(1)
+    # N% <-> Nfoiz / N% in body (already handled tok in b)
+    foiz_compact = f"{num}foiz"
+    if foiz_compact in b:
+        return True
+    # Some texts use comma as decimal: already in num
+    if "," in num or "." in num:
+        alt = num.replace(",", ".")
+        if f"{alt}foiz".replace(".", "") in b.replace(".", ""):
+            return True
+    return False
+
+
+def _line_tokens_supported(line: str, bodies: list[str]) -> bool:
+    """Every extracted token must appear in at least one cited chunk body."""
+    line_clean = CHUNK_TAG.sub("", _strip_html(line))
+    toks = _extract_tokens(line_clean)
     if not toks:
         return True
-    return all(t in b for t in toks)
+    for tok in toks:
+        if not any(_token_supported_by_body(tok, body) for body in bodies):
+            return False
+    return True
 
 
 @dataclass
@@ -71,6 +106,7 @@ def verify_citations(answer: str, chunks: list) -> CitationVerifyResult:
     Check risky lines for [CHUNK id] and token presence in cited chunk text.
 
     chunks: list of RetrievedChunk from graph_rag.
+    Multiple [CHUNK id] on one line: each rate/modda token must match at least one cited body.
     """
     mode = _env_str("CITATION_VERIFY_MODE", "off")
     if mode not in ("warn", "strict"):
@@ -89,17 +125,25 @@ def verify_citations(answer: str, chunks: list) -> CitationVerifyResult:
     for line in lines:
         if not _RISKY_LINE.search(line):
             continue
-        m = CHUNK_TAG.search(line)
-        if not m:
+        matches = list(CHUNK_TAG.finditer(line))
+        if not matches:
             uncited.append(line[:240])
             continue
-        cid = m.group(1).strip()
-        if cid not in id_to_text:
-            unknown_ids.append(cid)
+        ids: list[str] = []
+        seen: set[str] = set()
+        for m in matches:
+            cid = m.group(1).strip()
+            if cid not in seen:
+                seen.add(cid)
+                ids.append(cid)
+        bad = [cid for cid in ids if cid not in id_to_text]
+        if bad:
+            for cid in bad:
+                unknown_ids.append(cid)
             failed.append(line[:240])
             continue
-        body = id_to_text[cid]
-        if not _must_appear_in_chunk(line, body):
+        bodies = [id_to_text[cid] for cid in ids]
+        if not _line_tokens_supported(line, bodies):
             failed.append(line[:240])
 
     passed = not uncited and not failed and not unknown_ids
