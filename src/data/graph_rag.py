@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+import hashlib
+
 from langchain_community.chains.graph_qa.cypher import GraphCypherQAChain
 from src.core.llm_config import get_llm
 from src.data.neo4j_client import get_neo4j_graph
@@ -8,6 +12,8 @@ from src.core.logging_config import get_logger
 from src.core.metrics import neo4j_queries
 import os
 import re
+
+from src.data.retrieval_types import RetrievedChunk, RetrievalResult
 
 logger = get_logger(__name__)
 
@@ -26,6 +32,53 @@ FALLBACK_CHUNK_LIMIT = _env_int("FALLBACK_CHUNK_LIMIT", 8)
 HYBRID_VECTOR_K = _env_int("HYBRID_VECTOR_K", 8)
 FALLBACK_MERGE_CAP = _env_int("FALLBACK_MERGE_CAP", 12)
 FULLTEXT_INDEX_NAME = os.getenv("CHUNK_FULLTEXT_INDEX", "chunk_text_index")
+
+
+def _synthetic_chunk_id(text: str) -> str:
+    """Stable id when Neo4j id is missing (dedupe/debug only)."""
+    h = hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+    return f"hash_{h}"
+
+
+def _chunk_from_row(row: dict[str, Any] | Any, text_key: str = "text") -> RetrievedChunk | None:
+    """Build RetrievedChunk from a Cypher row dict."""
+    if not isinstance(row, dict):
+        return None
+    text = row.get(text_key)
+    if not text:
+        return None
+    cid = row.get("id")
+    if cid is None or str(cid).strip() == "":
+        cid = _synthetic_chunk_id(str(text))
+    return RetrievedChunk(id=str(cid), text=str(text))
+
+
+def _lookup_chunk_id_by_text(graph: Any, text: str) -> str | None:
+    """Resolve Chunk.id from exact text match (vector path fallback)."""
+    try:
+        raw = graph.query(
+            "MATCH (c:Chunk) WHERE c.text = $t RETURN c.id AS id LIMIT 1",
+            {"t": text},
+        )
+        if not raw or not isinstance(raw, list):
+            return None
+        row = raw[0]
+        if isinstance(row, dict):
+            cid = row.get("id")
+            return str(cid) if cid is not None else None
+        return str(row[0]) if row else None
+    except Exception as e:
+        logger.debug("lookup_chunk_id_by_text_failed", error=str(e))
+        return None
+
+
+def format_chunks_for_llm(chunks: list[RetrievedChunk]) -> str:
+    """Format labeled chunks for the synthesizer (matches citation prompt)."""
+    if not chunks:
+        return ""
+    parts = [f"[CHUNK {c.id}]\n{c.text}" for c in chunks]
+    return "\n\n---\n\n".join(parts)
+
 
 # Minimum result length to consider retrieval successful
 WEAK_RESULT_MIN_LENGTH = 50
@@ -213,23 +266,23 @@ def _parse_modda_raqam_from_queries(*texts: str) -> str | None:
     return None
 
 
-def _modda_fast_path_chunk_texts(
+def _modda_fast_path_chunks(
     graph: Any, modda: str, limit: int
-) -> list[str]:
-    """Return chunk texts where modda_numbers (from ingest) contains this article number."""
-    out: list[str] = []
+) -> list[RetrievedChunk]:
+    """Return chunks where modda_numbers (from ingest) contains this article number."""
+    out: list[RetrievedChunk] = []
     try:
         cypher = """
         MATCH (c:Chunk)
         WHERE c.modda_numbers IS NOT NULL AND $modda IN c.modda_numbers AND c.text IS NOT NULL
-        RETURN c.text AS text
+        RETURN c.id AS id, c.text AS text
         LIMIT $lim
         """
         raw = graph.query(cypher, {"modda": str(modda), "lim": limit})
         for row in raw if isinstance(raw, list) else []:
-            text = row.get("text") if isinstance(row, dict) else (row[0] if row else None)
-            if text:
-                out.append(text)
+            ch = _chunk_from_row(row) if isinstance(row, dict) else None
+            if ch:
+                out.append(ch)
     except Exception as e:
         logger.warning("modda_fast_path_error", modda=modda, error=str(e))
     return out
@@ -237,15 +290,15 @@ def _modda_fast_path_chunk_texts(
 
 def _fulltext_search_chunks(
     graph: Any, query: str, limit: int
-) -> list[str]:
+) -> list[RetrievedChunk]:
     """Full-text search on Chunk.text using Neo4j full-text index (if present)."""
     if not query or len(query.strip()) < 2:
         return []
-    out: list[str] = []
+    out: list[RetrievedChunk] = []
     try:
-        cypher = f"""
+        cypher = """
         CALL db.index.fulltext.queryNodes($index_name, $q) YIELD node, score
-        RETURN node.text AS text
+        RETURN node.id AS id, node.text AS text
         LIMIT $lim
         """
         raw = graph.query(
@@ -253,12 +306,23 @@ def _fulltext_search_chunks(
             {"index_name": FULLTEXT_INDEX_NAME, "q": query.strip()[:500], "lim": limit},
         )
         for row in raw if isinstance(raw, list) else []:
-            text = row.get("text") if isinstance(row, dict) else (row[0] if row else None)
-            if text:
-                out.append(text)
+            ch = _chunk_from_row(row) if isinstance(row, dict) else None
+            if ch:
+                out.append(ch)
     except Exception as e:
         logger.debug("fulltext_search_skipped", error=str(e))
     return out
+
+
+def _merge_chunks(
+    seen_texts: set[str],
+    bucket: list[RetrievedChunk],
+    new_chunks: list[RetrievedChunk],
+) -> None:
+    for ch in new_chunks:
+        if ch.text and ch.text not in seen_texts:
+            seen_texts.add(ch.text)
+            bucket.append(ch)
 
 
 def fallback_text_search(
@@ -266,7 +330,7 @@ def fallback_text_search(
     keywords: list[str] | None = None,
     original_query: str | None = None,
     limit_per_keyword: int | None = None,
-) -> str:
+) -> RetrievalResult:
     """
     Fallback text search: optional modda fast path, full-text index, then CONTAINS on Chunk.text.
 
@@ -277,7 +341,7 @@ def fallback_text_search(
         limit_per_keyword: Max chunks per keyword (default: FALLBACK_CHUNK_LIMIT env).
 
     Returns:
-        Concatenated chunk texts that match the search.
+        RetrievalResult with labeled context_for_llm and RetrievedChunk list.
     """
     graph = get_neo4j_graph()
     lim = limit_per_keyword if limit_per_keyword is not None else FALLBACK_CHUNK_LIMIT
@@ -291,20 +355,14 @@ def fallback_text_search(
         search_terms = _extract_simple_keywords(query)
 
     seen_texts: set[str] = set()
-    results: list[str] = []
-
-    def _add_texts(texts: list[str]) -> None:
-        for text in texts:
-            if text and text not in seen_texts:
-                seen_texts.add(text)
-                results.append(text)
+    results: list[RetrievedChunk] = []
 
     # 1) Fast path: chunk.modda_numbers from ingest (Soliq Kodeksi Modda entities)
     modda_n = _parse_modda_raqam_from_queries(
         query, original_query or "", *(search_terms[:3] if search_terms else [])
     )
     if modda_n:
-        _add_texts(_modda_fast_path_chunk_texts(graph, modda_n, lim))
+        _merge_chunks(seen_texts, results, _modda_fast_path_chunks(graph, modda_n, lim))
 
     # 2) Full-text index (best-effort; 1–2 query strings)
     if original_query:
@@ -319,15 +377,17 @@ def fallback_text_search(
         if qstrip and qstrip not in ft_queries:
             ft_queries.append(qstrip)
         for ftq in ft_queries[:2]:
-            _add_texts(_fulltext_search_chunks(graph, ftq, lim))
+            _merge_chunks(seen_texts, results, _fulltext_search_chunks(graph, ftq, lim))
     else:
-        _add_texts(_fulltext_search_chunks(graph, query.strip()[:200], lim))
+        _merge_chunks(
+            seen_texts, results, _fulltext_search_chunks(graph, query.strip()[:200], lim)
+        )
 
     # 3) CONTAINS per keyword (parameterized LIMIT)
     cypher_contains = """
     MATCH (c:Chunk)
     WHERE c.text IS NOT NULL AND toLower(c.text) CONTAINS toLower($keyword)
-    RETURN c.text AS text
+    RETURN c.id AS id, c.text AS text
     LIMIT $lim
     """
     for term in search_terms:
@@ -336,10 +396,9 @@ def fallback_text_search(
         try:
             raw = graph.query(cypher_contains, {"keyword": term, "lim": lim})
             for row in raw if isinstance(raw, list) else []:
-                text = row.get("text") if isinstance(row, dict) else (row[0] if row else None)
-                if text and text not in seen_texts:
-                    seen_texts.add(text)
-                    results.append(text)
+                ch = _chunk_from_row(row) if isinstance(row, dict) else None
+                if ch:
+                    _merge_chunks(seen_texts, results, [ch])
         except Exception as e:
             logger.warning("fallback_text_search_error", keyword=term, error=str(e))
 
@@ -349,16 +408,16 @@ def fallback_text_search(
             keyword = query.strip()[:100]
             raw = graph.query(cypher_contains, {"keyword": keyword, "lim": lim})
             for row in raw if isinstance(raw, list) else []:
-                text = row.get("text") if isinstance(row, dict) else (row[0] if row else None)
-                if text and text not in seen_texts:
-                    seen_texts.add(text)
-                    results.append(text)
+                ch = _chunk_from_row(row) if isinstance(row, dict) else None
+                if ch:
+                    _merge_chunks(seen_texts, results, [ch])
         except Exception as e:
             logger.warning("fallback_text_search_final_error", error=str(e))
 
-    combined = "\n\n---\n\n".join(results[:merge_cap])
+    capped = results[:merge_cap]
+    combined = format_chunks_for_llm(capped)
     logger.info("fallback_text_search_used", query=query, results_count=len(results))
-    return combined
+    return RetrievalResult(context_for_llm=combined, chunks=capped)
 
 def get_graph_rag_chain(model_name: str | None = None) -> GraphCypherQAChain:
     """
@@ -456,12 +515,12 @@ def hybrid_retrieve(
     query: str,
     original_query: str | None = None,
     k_vector: int | None = None,
-) -> str:
+) -> RetrievalResult:
     """
     Hybrid retrieval: combine vector search (if available) with CONTAINS text search.
 
     Vector search provides semantic similarity; CONTAINS provides keyword match.
-    Both return raw chunk text for synthesis.
+    Returns labeled context and chunk ids for citation verification.
 
     Args:
         query: The search query (typically refined query).
@@ -469,11 +528,12 @@ def hybrid_retrieve(
         k_vector: Number of chunks to retrieve via vector search (default: HYBRID_VECTOR_K env).
 
     Returns:
-        Merged context string from both retrieval sources.
+        RetrievalResult with context_for_llm and chunks list.
     """
     kv = k_vector if k_vector is not None else HYBRID_VECTOR_K
     seen_texts: set[str] = set()
-    results: list[str] = []
+    merged: list[RetrievedChunk] = []
+    graph = get_neo4j_graph()
 
     # 1. Vector search (optional - skip if not available)
     try:
@@ -484,28 +544,39 @@ def hybrid_retrieve(
             docs_with_score = store.similarity_search_with_score(query, k=kv)
             for doc, _ in docs_with_score:
                 text = doc.page_content if hasattr(doc, "page_content") else str(doc)
-                if text and text not in seen_texts:
-                    seen_texts.add(text)
-                    results.append(text)
-            logger.info("hybrid_vector_results", count=len(results))
+                if not text or not str(text).strip():
+                    continue
+                text = str(text).strip()
+                if text in seen_texts:
+                    continue
+                meta = getattr(doc, "metadata", None) or {}
+                cid = meta.get("id") or meta.get("chunk_id")
+                if not cid:
+                    cid = _lookup_chunk_id_by_text(graph, text) or _synthetic_chunk_id(text)
+                seen_texts.add(text)
+                merged.append(RetrievedChunk(id=str(cid), text=text))
+            logger.info("hybrid_vector_results", count=len(merged))
     except Exception as e:
         logger.warning("hybrid_vector_skip", error=str(e))
 
     # 2. Fallback: modda fast path + full-text + CONTAINS on Chunk.text
-    fallback_result = fallback_text_search(query, original_query=original_query)
-    if fallback_result:
-        for part in fallback_result.split("\n\n---\n\n"):
-            if part.strip() and part.strip() not in seen_texts:
-                seen_texts.add(part.strip())
-                results.append(part.strip())
+    fb = fallback_text_search(query, original_query=original_query)
+    for ch in fb.chunks:
+        if ch.text and ch.text not in seen_texts:
+            seen_texts.add(ch.text)
+            merged.append(ch)
 
-    # 3. If we have any chunks, return merged context
-    if results:
-        combined = "\n\n---\n\n".join(results[:FALLBACK_MERGE_CAP])
-        return combined
+    # 3. If we have any chunks, return merged labeled context
+    if merged:
+        capped = merged[:FALLBACK_MERGE_CAP]
+        return RetrievalResult(
+            context_for_llm=format_chunks_for_llm(capped),
+            chunks=capped,
+        )
 
     # No vector + empty fallback: run GraphCypherQAChain (may return LLM answer)
-    return query_graph(query)
+    qg = query_graph(query)
+    return RetrievalResult(context_for_llm=qg, chunks=[])
 
 
 if __name__ == "__main__":

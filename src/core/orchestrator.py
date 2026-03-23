@@ -1,5 +1,7 @@
-from src.data.graph_rag import hybrid_retrieve, fallback_text_search, _is_weak_result
+from src.data.retrieval_types import RetrievalResult
+from src.data.graph_rag import fallback_text_search, hybrid_retrieve, _is_weak_result
 from src.core.prompts import REFINE_QUERY_SYSTEM, SYNTHESIZE_SYSTEM
+from src.core.citation_verify import apply_citation_result, verify_citations
 from src.core.embedding_verify import (
     format_answer_with_optional_warning,
     verify_answer_grounding,
@@ -10,7 +12,12 @@ from langchain_core.output_parsers import StrOutputParser
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from openai import APIError, RateLimitError, APIConnectionError
 from src.core.logging_config import get_logger
-from src.core.metrics import QueryTimer, embedding_verify_outcomes, openai_api_calls
+from src.core.metrics import (
+    QueryTimer,
+    citation_verify_outcomes,
+    embedding_verify_outcomes,
+    openai_api_calls,
+)
 
 logger = get_logger(__name__)
 
@@ -129,25 +136,51 @@ def process_query(user_query: str) -> str:
             logger.info("query_refined", original=user_query, refined=refined_query)
 
             # 2. Retrieve: hybrid (vector + CONTAINS) or Cypher chain
-            graph_result = hybrid_retrieve(refined_query, original_query=user_query)
-            logger.info("retrieve_completed", result_length=len(graph_result))
+            rr: RetrievalResult = hybrid_retrieve(
+                refined_query, original_query=user_query
+            )
+            logger.info(
+                "retrieve_completed",
+                result_length=len(rr.context_for_llm),
+                chunk_count=len(rr.chunks),
+            )
 
             # 2b. Fallback: if result still weak, try CONTAINS with original query (raw Uzbek terms)
-            if _is_weak_result(graph_result):
-                graph_result = fallback_text_search(
-                    user_query, original_query=user_query
-                )
+            if _is_weak_result(rr.context_for_llm):
+                rr = fallback_text_search(user_query, original_query=user_query)
                 logger.info("fallback_used", original_query=user_query)
 
+            graph_context = rr.context_for_llm
+            retrieved_chunks = rr.chunks
+
             # 3. Synthesize Answer
-            final_answer = synthesize_response(user_query, graph_result)
+            final_answer = synthesize_response(user_query, graph_context)
             logger.info("response_synthesized", answer_length=len(final_answer))
+
+            # 3b. Citation verification (non-LLM; stavka/modda vs chunk text)
+            try:
+                cv = verify_citations(final_answer, retrieved_chunks)
+                if cv.mode in ("warn", "strict"):
+                    if cv.passed:
+                        citation_verify_outcomes.labels(outcome="passed").inc()
+                    else:
+                        citation_verify_outcomes.labels(outcome="failed").inc()
+                    logger.info(
+                        "citation_verify",
+                        passed=cv.passed,
+                        uncited=len(cv.uncited_risky_lines),
+                        failed_match=len(cv.failed_chunk_match_lines),
+                        unknown_ids=len(cv.unknown_chunk_ids),
+                    )
+                final_answer = apply_citation_result(final_answer, cv)
+            except Exception as cv_err:
+                logger.warning("citation_verify_failed", error=str(cv_err))
 
             # 4. Optional: embedding-based grounding check (non-LLM)
             try:
-                weak_ctx = _is_weak_result(graph_result)
+                weak_ctx = _is_weak_result(graph_context)
                 gr = verify_answer_grounding(
-                    final_answer, graph_result, is_weak_context=weak_ctx
+                    final_answer, graph_context, is_weak_context=weak_ctx
                 )
                 if gr.skipped:
                     reason = gr.skipped_reason or ""

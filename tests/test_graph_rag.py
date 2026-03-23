@@ -171,14 +171,15 @@ class TestFallbackTextSearch:
         """Test fallback returns concatenated chunk texts."""
         mock_graph = Mock()
         mock_graph.query.return_value = [
-            {"text": "Chunk 1 content"},
-            {"text": "Chunk 2 content"},
+            {"id": "f_0", "text": "Chunk 1 content"},
+            {"id": "f_1", "text": "Chunk 2 content"},
         ]
         mock_get_graph.return_value = mock_graph
 
         result = fallback_text_search("BҲMS", keywords=["BҲMS"])
-        assert "Chunk 1 content" in result
-        assert "Chunk 2 content" in result
+        assert "Chunk 1 content" in result.context_for_llm
+        assert "Chunk 2 content" in result.context_for_llm
+        assert "[CHUNK f_0]" in result.context_for_llm
         mock_graph.query.assert_called()
 
     @patch('src.data.graph_rag.get_neo4j_graph')
@@ -189,19 +190,20 @@ class TestFallbackTextSearch:
         mock_get_graph.return_value = mock_graph
 
         result = fallback_text_search("nonexistent")
-        assert result == ""
+        assert result.context_for_llm == ""
+        assert result.chunks == []
 
     @patch('src.data.graph_rag.get_neo4j_graph')
     def test_fallback_with_original_query_uses_bilingual_keywords(self, mock_get_graph):
         """Test fallback with original_query uses bilingual keyword extraction."""
         mock_graph = Mock()
-        mock_graph.query.return_value = [{"text": "1-sonli BHMS content"}]
+        mock_graph.query.return_value = [{"id": "doc_0", "text": "1-sonli BHMS content"}]
         mock_get_graph.return_value = mock_graph
 
         result = fallback_text_search(
             "Find info about BHMS 1",
             original_query="1-сон БҲМС нима ҳақида?",
         )
-        assert "1-sonli BHMS content" in result
+        assert "1-sonli BHMS content" in result.context_for_llm
         # Should have been called with keywords derived from both queries
         mock_graph.query.assert_called()

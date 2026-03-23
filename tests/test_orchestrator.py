@@ -1,6 +1,7 @@
 """Tests for orchestrator module."""
 import pytest
 from unittest.mock import Mock, patch, MagicMock
+from src.data.retrieval_types import RetrievalResult
 from src.core.orchestrator import refine_query, synthesize_response, process_query
 
 
@@ -46,7 +47,10 @@ class TestProcessQuery:
         """Test successful query processing."""
         mock_refine.return_value = "refined query"
         # Return non-weak result (>=50 chars, no weak patterns) so fallback is not triggered
-        mock_hybrid.return_value = "Detailed graph result with accounting standards and regulations."
+        mock_hybrid.return_value = RetrievalResult(
+            context_for_llm="Detailed graph result with accounting standards and regulations.",
+            chunks=[],
+        )
         mock_synthesize.return_value = "final answer"
 
         result = process_query("test query")
@@ -63,8 +67,13 @@ class TestProcessQuery:
     def test_process_query_fallback_used(self, mock_synthesize, mock_refine, mock_hybrid, mock_fallback):
         """Test that fallback text search is used when hybrid returns weak result."""
         mock_refine.return_value = "refined query"
-        mock_hybrid.return_value = "I don't know"  # weak result
-        mock_fallback.return_value = "Fallback chunk text with relevant content."
+        mock_hybrid.return_value = RetrievalResult(
+            context_for_llm="I don't know", chunks=[]
+        )  # weak result
+        mock_fallback.return_value = RetrievalResult(
+            context_for_llm="Fallback chunk text with relevant content.",
+            chunks=[],
+        )
         mock_synthesize.return_value = "final answer from fallback"
 
         result = process_query("test query")

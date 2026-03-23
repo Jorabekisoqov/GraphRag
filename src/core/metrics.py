@@ -47,6 +47,12 @@ embedding_verify_outcomes = Counter(
     ['outcome'],  # skipped, passed, low_score, error
 )
 
+citation_verify_outcomes = Counter(
+    'graphrag_citation_verify_total',
+    'Citation verification outcomes',
+    ['outcome'],  # off, passed, failed
+)
+
 
 class QueryTimer(ContextManager):
     """Context manager for timing queries."""
