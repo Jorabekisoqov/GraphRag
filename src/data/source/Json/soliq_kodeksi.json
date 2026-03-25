@@ -8973,6 +8973,13 @@
                         "raqam": "44",
                         "nomi": "44-bob"
                     }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
+                    }
                 }
             ],
             "relationships": []
@@ -9043,6 +9050,13 @@
                     "properties": {
                         "nomi": "qo'shilgan qiymat solig'i"
                     }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
+                    }
                 }
             ],
             "relationships": [
@@ -9085,6 +9099,13 @@
                         "yil": "2021",
                         "oy": "dekabrdan",
                         "kun": "31"
+                    }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
                     }
                 }
             ],
@@ -9149,6 +9170,13 @@
                         "oy": "yanvardan",
                         "kun": "1"
                     }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
+                    }
                 }
             ],
             "relationships": []
@@ -9181,6 +9209,13 @@
                         "yil": "2021",
                         "oy": "yanvargacha",
                         "kun": "1"
+                    }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
                     }
                 }
             ],
@@ -9220,6 +9255,13 @@
                     "properties": {
                         "raqam": "308",
                         "nomi": "308-modda"
+                    }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
                     }
                 }
             ],
@@ -9279,6 +9321,13 @@
                         "raqam": "317",
                         "nomi": "317-modda"
                     }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
+                    }
                 }
             ],
             "relationships": [
@@ -9316,6 +9365,13 @@
                         "raqam": "310",
                         "nomi": "310-modda"
                     }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
+                    }
                 }
             ],
             "relationships": []
@@ -9339,6 +9395,13 @@
                         "raqam": "311",
                         "nomi": "311-modda"
                     }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
+                    }
                 }
             ],
             "relationships": []
@@ -9353,6 +9416,13 @@
                     "properties": {
                         "raqam": "312",
                         "nomi": "312-modda"
+                    }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
                     }
                 }
             ],
@@ -9440,6 +9510,13 @@
                     "properties": {
                         "nomi": "qo'shilgan qiymat solig'i"
                     }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
+                    }
                 }
             ],
             "relationships": [
@@ -9471,6 +9548,13 @@
                         "raqam": "317",
                         "nomi": "317-modda"
                     }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
+                    }
                 }
             ],
             "relationships": []
@@ -9493,6 +9577,13 @@
                     "properties": {
                         "raqam": "377",
                         "nomi": "377-modda"
+                    }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
                     }
                 }
             ],
@@ -9531,6 +9622,13 @@
                     "type": "SoliqTuri",
                     "properties": {
                         "nomi": "qo'shilgan qiymat solig'i"
+                    }
+                },
+                {
+                    "id": "Soliq_foyda_solig_i",
+                    "type": "SoliqTuri",
+                    "properties": {
+                        "nomi": "foyda solig'i"
                     }
                 }
             ],
@@ -12795,13 +12893,6 @@
                     "type": "SoliqTuri",
                     "properties": {
                         "nomi": "yer solig'i"
-                    }
-                },
-                {
-                    "id": "Soliq_yuridik_shaxslardan_olinadigan_yer_solig",
-                    "type": "SoliqTuri",
-                    "properties": {
-                        "nomi": "yuridik shaxslardan olinadigan yer solig'i"
                     }
                 },
                 {

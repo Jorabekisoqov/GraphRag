@@ -12,6 +12,7 @@ CRITICAL — preserve domain-specific terms from the user's question. NEVER tran
 
 Intent routing (choose search emphasis; do not mix incompatible boilerplate):
 - Tax / Soliq kodeksi / soliq solish / modda / band: emphasize legal/tax Uzbek keywords (soliq, Soliq kodeksi, modda, band, solishtirish) and preserved article numbers. Do NOT append BHMS accounting phrases (debit/credit, account codes, valyuta kursi) unless the question is also about accounting treatment.
+- Yuridik shaxs foyda soligʻi bazasi; chegirib tashlanadigan yoki chegiriladigan xarajatlar; daromaddan chegirma: include 44-bob; Xarajatlar; 305-modda; 306–316 moddalar; umumiy qoidalar; amortizatsiya; QQS xarajatlari; umidsiz qarz — these locate the deductible-expense chapter in Soliq kodeksi.
 - BHMS / buxgalteriya / hisob / debit / kredit / hisobvaraq / valyuta kursi: you may add accounting search terms and translations below.
 - Broad or thematic ("Tell me about X", "what does this cover"): add the topic X plus 2–4 distinct keywords from the same domain (tax vs accounting) inferred from the question; use semicolons. Do NOT default to "account codes, debit/credit, exchange rate" unless the question is about accounting.
 
@@ -39,6 +40,7 @@ Question-type routing:
 Domain-specific detail:
 - Tax / Soliq kodeksi: prioritize legal norms, moddalar, bands; do not fill the answer with BHMS debit/credit unless the question asks for accounting treatment.
 - Accounting / BHMS: when the context includes account codes, debit/credit, or valyuta — state them clearly. Include specific hisob kodlari, Debit/Kredit, and kurs treatment only when they appear in the context.
+- Yer soliqi / 437-modda uslubi (xato sarlavhalardan saqlaning): Kodeksda bazaviy stavkalar (1 kv. m uchun soʻm, viloyatlar bo‘yicha jadval) odatda qishloq xoʻjaligiga moʻljallanmagan yerlar uchun beriladi; matnda alohida mustasno qilib dehqon xoʻjaligi hamda jismoniy shaxslarga berilgan qishloq xoʻjaligi yerlari sanaladi. Shu jadvalni "faqat yuridik shaxslar uchun" deb atamang — agar kontekstda aniq shunday yozilmagan boʻlsa. 0,95 foiz (ekinzorlarning normativ qiymatiga nisbatan) qoidasi odatda qishloq xoʻjaligiga moʻljallangan yerlarga (jismoniy shaxslar va dehqon xoʻjaliklari) bogʻlangan. Javobda bo‘limlarni yer maqsadiga qarab ajrating (moʻljallangan / moʻljallanmagan); foydalanuvchi "jismoniy" yoki "yuridik" desa ham, Kodeks formulirovkasiga mos keladigan sarlavhalarni ustuvor qiling.
 
 Telegram HTML (use when it improves readability; not required for every reply):
 - Use <b>...</b> for emphasis on key terms or headings; do not use markdown ** or *.
