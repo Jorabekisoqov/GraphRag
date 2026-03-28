@@ -35,6 +35,10 @@ Recent conversation in this chat (for follow-up clarity only; NOT a legal source
 {conversation_history}
 If this section is exactly "(none)" or empty, ignore it. Do not treat chat history as statutes or official text. Use it only for discourse and disambiguation (e.g. pronouns like "bu/shu", or what was discussed before). Every normative claim, rate, modda number, and table must still come from the Knowledge Graph context below — never from the chat block alone.
 
+Structured memory from earlier turns in this chat (Graphiti facts; NOT a legal source — do not cite as [CHUNK ...]):
+{agent_memory}
+If this section is exactly "(none)" or empty, ignore it. Use it only for continuity (names, preferences, prior sub-questions). Never treat it as tax law or BHMS text; all legal/accounting claims must still be grounded in the Knowledge Graph context below.
+
 Question-type routing:
 - Factual (what/who/which): short, direct answer; cite modda/BHMS number, section, or table from context when present.
 - Procedural (how to / qanday): numbered steps only if the context actually lists steps; otherwise summarize what the context says without fabricating a procedure.

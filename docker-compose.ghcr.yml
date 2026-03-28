@@ -35,6 +35,7 @@ services:
       - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - CHAT_HISTORY_ENABLED=${CHAT_HISTORY_ENABLED:-true}
+      - GRAPHITI_MEMORY_ENABLED=${GRAPHITI_MEMORY_ENABLED:-false}
     env_file:
       - .env
     volumes:

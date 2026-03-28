@@ -11,6 +11,7 @@ def test_refine_query_prompt_has_domain_rules():
 
 def test_synthesize_prompt_has_context_placeholder():
     assert "{context}" in SYNTHESIZE_SYSTEM
+    assert "{agent_memory}" in SYNTHESIZE_SYSTEM
     assert "Telegram" in SYNTHESIZE_SYSTEM or "<b>" in SYNTHESIZE_SYSTEM
 
 

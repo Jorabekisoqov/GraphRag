@@ -61,6 +61,7 @@ class TestProcessQuery:
             "test query",
             "Detailed graph result with accounting standards and regulations.",
             conversation_history="(none)",
+            agent_memory="(none)",
         )
         mock_fallback.assert_not_called()
 
@@ -89,6 +90,7 @@ class TestProcessQuery:
             "test query",
             "Fallback chunk text with relevant content.",
             conversation_history="(none)",
+            agent_memory="(none)",
         )
 
     def test_process_query_empty(self):
@@ -140,5 +142,6 @@ class TestProcessQuery:
             "new question",
             "Detailed graph result with accounting standards and regulations.",
             conversation_history="User: Old question",
+            agent_memory="(none)",
         )
         mock_append.assert_called_once_with(111, 222, "new question", "final answer")

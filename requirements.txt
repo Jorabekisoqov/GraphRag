@@ -5,8 +5,11 @@ langchain-core>=0.2.0,<0.3.0
 langchain-community>=0.2.0,<0.3.0
 langchain-openai>=0.1.0,<0.2.0
 
-# Database
-neo4j>=5.0.0,<6.0.0
+# Database (5.26+ required if graphiti-core is installed)
+neo4j>=5.26.0,<6.0.0
+
+# Optional agent memory (Graphiti temporal graph on Neo4j; uses OPENAI_API_KEY by default)
+graphiti-core>=0.28.0,<0.29.0
 
 # Neo4j vector store (optional - for add_embeddings.py hybrid retrieval).
 # Omitted from main deps: langchain-neo4j>=0.6 requires langchain-core>=1.0, which conflicts
@@ -31,8 +34,8 @@ pypdf>=4.0.0,<6.0.0
 # DOCX support (for file upload)
 python-docx>=1.0.0
 
-# Retry logic
-tenacity>=8.0.0,<9.0.0
+# Retry logic (graphiti-core needs tenacity>=9; langchain 0.2 metadata is conservative but works)
+tenacity>=8.1.0,!=8.4.0,<10.0.0
 
 # Structured logging
 structlog>=23.0.0,<24.0.0

@@ -19,6 +19,12 @@ from src.data.chat_history import (
     format_conversation_history,
     is_chat_history_enabled,
 )
+from src.data.graphiti_memory import (
+    append_episode as graphiti_append_episode,
+    format_memory_for_prompt,
+    is_graphiti_memory_enabled,
+    search_memory_facts,
+)
 from src.core.metrics import (
     QueryTimer,
     citation_verify_outcomes,
@@ -69,6 +75,7 @@ def synthesize_response(
     user_query: str,
     graph_result: str,
     conversation_history: str = "(none)",
+    agent_memory: str = "(none)",
 ) -> str:
     """
     Synthesizes a final response based on the user's original query and the graph's output.
@@ -77,6 +84,7 @@ def synthesize_response(
         user_query: The original user query string.
         graph_result: The result from the graph database query.
         conversation_history: Short prior chat turns for follow-ups; not a legal source.
+        agent_memory: Graphiti-derived memory lines for this chat; not a legal source.
 
     Returns:
         A synthesized natural language response.
@@ -97,6 +105,7 @@ def synthesize_response(
             "question": user_query,
             "context": graph_result,
             "conversation_history": conversation_history or "(none)",
+            "agent_memory": agent_memory or "(none)",
         }
     )
 
@@ -184,21 +193,29 @@ def process_query(
             retrieved_chunks = rr.chunks
 
             history_block = "(none)"
-            if (
-                telegram_user_id is not None
-                and telegram_chat_id is not None
-                and is_chat_history_enabled()
-            ):
-                prior = fetch_recent_messages(
-                    telegram_chat_id, limit=chat_history_limit()
-                )
-                formatted = format_conversation_history(prior)
-                if formatted.strip():
-                    history_block = formatted
+            memory_block = "(none)"
+            if telegram_user_id is not None and telegram_chat_id is not None:
+                if is_chat_history_enabled():
+                    prior = fetch_recent_messages(
+                        telegram_chat_id, limit=chat_history_limit()
+                    )
+                    formatted = format_conversation_history(prior)
+                    if formatted.strip():
+                        history_block = formatted
+                if is_graphiti_memory_enabled():
+                    facts = search_memory_facts(
+                        telegram_chat_id,
+                        telegram_user_id,
+                        user_query,
+                    )
+                    memory_block = format_memory_for_prompt(facts)
 
             # 3. Synthesize Answer
             final_answer = synthesize_response(
-                user_query, graph_context, conversation_history=history_block
+                user_query,
+                graph_context,
+                conversation_history=history_block,
+                agent_memory=memory_block,
             )
             logger.info("response_synthesized", answer_length=len(final_answer))
 
@@ -257,20 +274,24 @@ def process_query(
                 embedding_verify_outcomes.labels(outcome="error").inc()
                 logger.warning("embedding_verify_failed", error=str(ev_err))
 
-            if (
-                telegram_user_id is not None
-                and telegram_chat_id is not None
-                and is_chat_history_enabled()
-            ):
-                try:
-                    append_exchange(
-                        telegram_user_id,
+            if telegram_user_id is not None and telegram_chat_id is not None:
+                if is_chat_history_enabled():
+                    try:
+                        append_exchange(
+                            telegram_user_id,
+                            telegram_chat_id,
+                            user_query,
+                            final_answer,
+                        )
+                    except Exception as hist_err:
+                        logger.warning("chat_history_append_skipped", error=str(hist_err))
+                if is_graphiti_memory_enabled():
+                    graphiti_append_episode(
                         telegram_chat_id,
+                        telegram_user_id,
                         user_query,
                         final_answer,
                     )
-                except Exception as hist_err:
-                    logger.warning("chat_history_append_skipped", error=str(hist_err))
 
             return final_answer
 

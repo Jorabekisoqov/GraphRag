@@ -298,6 +298,15 @@ The bot can store recent **per-chat** messages in Neo4j (`TelegramUser`, `Telegr
 - Set `CHAT_HISTORY_ENABLED=true` on the **graphrag-app** service (see `docker-compose.yml`). If unset or `false`, no chat nodes are written and synthesis gets no history block.
 - Optional: `CHAT_HISTORY_LIMIT` (default `10`) — max prior messages loaded for the prompt (not including the current user turn).
 
+## Graphiti semantic memory (optional)
+
+[Graphiti](https://github.com/getzep/graphiti) can run on the **same** Neo4j instance and ingest each Telegram turn as an **episode**, then **hybrid-search** related facts before synthesis. This complements linear `ChatMessage` history with extracted entities and relationships.
+
+- Set `GRAPHITI_MEMORY_ENABLED=true` on **graphrag-app**. **Requires `OPENAI_API_KEY`** in the environment (Graphiti defaults to OpenAI for LLM extraction and embeddings unless you configure another provider in Graphiti’s own setup).
+- Optional: `GRAPHITI_SEARCH_LIMIT` (default `8`) — max fact lines injected into the prompt after per-chat filtering.
+- Optional: `GRAPHITI_NEO4J_DATABASE` (default `neo4j`) — Neo4j database name passed to Graphiti’s driver. On **Neo4j Community** you only have one user database, so keep the default unless you use Enterprise multi-database.
+- **Isolation:** Episodes are tagged with a per-chat token; search results are filtered to facts that contain that token or the chat id. This is best-effort (extracted facts may omit the token); for strict multi-tenant separation, use a dedicated Neo4j or Zep Cloud.
+
 ## Backup Neo4j Data
 
 ```bash
