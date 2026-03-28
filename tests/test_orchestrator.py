@@ -57,7 +57,11 @@ class TestProcessQuery:
         assert result == "final answer"
         mock_refine.assert_called_once_with("test query")
         mock_hybrid.assert_called_once_with("refined query", original_query="test query")
-        mock_synthesize.assert_called_once_with("test query", "Detailed graph result with accounting standards and regulations.")
+        mock_synthesize.assert_called_once_with(
+            "test query",
+            "Detailed graph result with accounting standards and regulations.",
+            conversation_history="(none)",
+        )
         mock_fallback.assert_not_called()
 
     @patch('src.core.orchestrator.fallback_text_search')
@@ -81,7 +85,11 @@ class TestProcessQuery:
         mock_fallback.assert_called_once_with(
             "test query", original_query="test query"
         )
-        mock_synthesize.assert_called_once_with("test query", "Fallback chunk text with relevant content.")
+        mock_synthesize.assert_called_once_with(
+            "test query",
+            "Fallback chunk text with relevant content.",
+            conversation_history="(none)",
+        )
 
     def test_process_query_empty(self):
         """Test processing empty query."""
@@ -95,3 +103,42 @@ class TestProcessQuery:
         mock_refine.side_effect = Exception("Test error")
         result = process_query("test query")
         assert "error" in result.lower() or "sorry" in result.lower()
+
+    @patch("src.core.orchestrator.append_exchange")
+    @patch("src.core.orchestrator.fetch_recent_messages")
+    @patch("src.core.orchestrator.is_chat_history_enabled", return_value=True)
+    @patch("src.core.orchestrator.fallback_text_search")
+    @patch("src.core.orchestrator.hybrid_retrieve")
+    @patch("src.core.orchestrator.refine_query")
+    @patch("src.core.orchestrator.synthesize_response")
+    def test_process_query_passes_conversation_history_and_appends(
+        self,
+        mock_synthesize,
+        mock_refine,
+        mock_hybrid,
+        mock_fallback,
+        _mock_enabled,
+        mock_fetch,
+        mock_append,
+    ):
+        mock_refine.return_value = "refined"
+        mock_hybrid.return_value = RetrievalResult(
+            context_for_llm="Detailed graph result with accounting standards and regulations.",
+            chunks=[],
+        )
+        mock_fetch.return_value = [{"role": "user", "text": "Old question"}]
+        mock_synthesize.return_value = "final answer"
+
+        result = process_query(
+            "new question",
+            telegram_user_id=111,
+            telegram_chat_id=222,
+        )
+        assert result == "final answer"
+        mock_fetch.assert_called_once()
+        mock_synthesize.assert_called_once_with(
+            "new question",
+            "Detailed graph result with accounting standards and regulations.",
+            conversation_history="User: Old question",
+        )
+        mock_append.assert_called_once_with(111, 222, "new question", "final answer")

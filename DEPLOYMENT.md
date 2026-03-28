@@ -278,6 +278,26 @@ docker-compose exec graphrag-app python3 -m src.data.ingestion
 sudo systemctl restart graphrag-bot
 ```
 
+## Upgrading Neo4j (Docker, same major 5.x)
+
+Compose files pin a **Neo4j 5.x Community** image (e.g. `neo4j:5.26.0-community`). To move to a newer 5.x patch release:
+
+1. **Backup** the `neo4j_data` volume or run a dump (see [Backup Neo4j Data](#backup-neo4j-data) below, or `./scripts/backup_neo4j.sh` if it matches your setup).
+2. Stop the stack: `docker compose down` (or `docker-compose down`).
+3. Update the `neo4j:` image tag in `docker-compose.yml` / `docker-compose.ghcr.yml` to the desired **5.x** tag from [Docker Hub — neo4j](https://hub.docker.com/_/neo4j).
+4. Pull and start: `docker compose pull neo4j && docker compose up -d`.
+5. **Smoke-test:** open Neo4j Browser (`http://<host>:7474`), connect Bolt to port `7687`, run `MATCH (c:Chunk) RETURN count(c) LIMIT 1`.
+6. If you use hybrid search, re-run as needed: `docker compose exec graphrag-app python scripts/add_embeddings.py` and `python scripts/create_fulltext_index.py`.
+
+Bolt URL and credentials are unchanged if `.env` is the same. Jumping to **Neo4j 6.x** is a separate migration and not covered here.
+
+## Telegram chat history (Neo4j)
+
+The bot can store recent **per-chat** messages in Neo4j (`TelegramUser`, `TelegramChat`, `ChatMessage`) so follow-up questions can use short conversational context in synthesis (legal facts still come only from retrieved chunks).
+
+- Set `CHAT_HISTORY_ENABLED=true` on the **graphrag-app** service (see `docker-compose.yml`). If unset or `false`, no chat nodes are written and synthesis gets no history block.
+- Optional: `CHAT_HISTORY_LIMIT` (default `10`) — max prior messages loaded for the prompt (not including the current user turn).
+
 ## Backup Neo4j Data
 
 ```bash

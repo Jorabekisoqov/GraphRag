@@ -12,6 +12,13 @@ from langchain_core.output_parsers import StrOutputParser
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from openai import APIError, RateLimitError, APIConnectionError
 from src.core.logging_config import get_logger
+from src.data.chat_history import (
+    append_exchange,
+    chat_history_limit,
+    fetch_recent_messages,
+    format_conversation_history,
+    is_chat_history_enabled,
+)
 from src.core.metrics import (
     QueryTimer,
     citation_verify_outcomes,
@@ -58,14 +65,19 @@ def refine_query(user_query: str) -> str:
     retry=retry_if_exception_type((APIError, RateLimitError, APIConnectionError)),
     reraise=True
 )
-def synthesize_response(user_query: str, graph_result: str) -> str:
+def synthesize_response(
+    user_query: str,
+    graph_result: str,
+    conversation_history: str = "(none)",
+) -> str:
     """
     Synthesizes a final response based on the user's original query and the graph's output.
     
     Args:
         user_query: The original user query string.
         graph_result: The result from the graph database query.
-        
+        conversation_history: Short prior chat turns for follow-ups; not a legal source.
+
     Returns:
         A synthesized natural language response.
         
@@ -80,7 +92,13 @@ def synthesize_response(user_query: str, graph_result: str) -> str:
         ("human", "{question}")
     ])
     chain = prompt | llm | StrOutputParser()
-    return chain.invoke({"question": user_query, "context": graph_result})
+    return chain.invoke(
+        {
+            "question": user_query,
+            "context": graph_result,
+            "conversation_history": conversation_history or "(none)",
+        }
+    )
 
 def validate_query(user_query: str) -> tuple[bool, str]:
     """
@@ -110,17 +128,29 @@ def validate_query(user_query: str) -> tuple[bool, str]:
     
     return True, ""
 
-def process_query(user_query: str) -> str:
+def process_query(
+    user_query: str,
+    *,
+    telegram_user_id: int | None = None,
+    telegram_chat_id: int | None = None,
+) -> str:
     """
     Orchestrates the flow from user query to GraphRAG retrieval.
     
     Args:
         user_query: The user's query string.
-        
+        telegram_user_id: With telegram_chat_id and chat history enabled, loads prior turns.
+        telegram_chat_id: Telegram chat id for conversation scoping.
+
     Returns:
         A natural language response to the user's query.
     """
-    logger.info("query_received", query=user_query)
+    logger.info(
+        "query_received",
+        query=user_query,
+        telegram_user_id=telegram_user_id,
+        telegram_chat_id=telegram_chat_id,
+    )
     
     # Validate input
     is_valid, error_message = validate_query(user_query)
@@ -153,8 +183,23 @@ def process_query(user_query: str) -> str:
             graph_context = rr.context_for_llm
             retrieved_chunks = rr.chunks
 
+            history_block = "(none)"
+            if (
+                telegram_user_id is not None
+                and telegram_chat_id is not None
+                and is_chat_history_enabled()
+            ):
+                prior = fetch_recent_messages(
+                    telegram_chat_id, limit=chat_history_limit()
+                )
+                formatted = format_conversation_history(prior)
+                if formatted.strip():
+                    history_block = formatted
+
             # 3. Synthesize Answer
-            final_answer = synthesize_response(user_query, graph_context)
+            final_answer = synthesize_response(
+                user_query, graph_context, conversation_history=history_block
+            )
             logger.info("response_synthesized", answer_length=len(final_answer))
 
             # 3b. Citation verification (non-LLM; stavka/modda vs chunk text)
@@ -211,6 +256,21 @@ def process_query(user_query: str) -> str:
             except Exception as ev_err:
                 embedding_verify_outcomes.labels(outcome="error").inc()
                 logger.warning("embedding_verify_failed", error=str(ev_err))
+
+            if (
+                telegram_user_id is not None
+                and telegram_chat_id is not None
+                and is_chat_history_enabled()
+            ):
+                try:
+                    append_exchange(
+                        telegram_user_id,
+                        telegram_chat_id,
+                        user_query,
+                        final_answer,
+                    )
+                except Exception as hist_err:
+                    logger.warning("chat_history_append_skipped", error=str(hist_err))
 
             return final_answer
 

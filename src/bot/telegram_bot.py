@@ -60,7 +60,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Run synchronous process_query in a thread pool to avoid blocking the event loop
     try:
-        response = await asyncio.to_thread(process_query, user_text)
+        response = await asyncio.to_thread(
+            process_query,
+            user_text,
+            telegram_user_id=user_id,
+            telegram_chat_id=update.effective_chat.id,
+        )
         text = format_telegram_html(str(response))
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
